@@ -4,6 +4,7 @@ require 'veye'
 
 include GLI::App
 
+
 program_desc 'VersionEye commandline tool'
 
 version Veye::VERSION
@@ -16,22 +17,15 @@ default_value 'the default'
 arg_name 'The name of the argument'
 flag [:f,:flagname]
 
+
+public_api = Veye::API::Resource.new
+
 desc 'check service status'
 arg_name 'Describe arguments to ping here'
 command :ping do |c|
   c.flag :f
   c.action do |global_options,options,args|
-	api = Veye::Api::Resource.new
-	begin
-		response = api.resource['/ping.json'].get
-	rescue => e
-		response = {:code => -1}
-		error(e.response)
-	end
-	
-	if response.code == 200
-		puts JSON.parse(response)
-	end
+	puts public_api.getJSON('/ping.json')
   end
 end
 

@@ -1,10 +1,26 @@
 module Veye
-	module Api
+	module JSONRequest
+		require 'json'
+
+		def getJSON(path)
+			response = nil
+			begin
+			 response = @resource[path].get :content_type  => "json", 
+			 	 							:accept 		=> "json"
+			 response = JSON.parse(response)
+			rescue => e
+			  error(e.response)
+			end
+			response
+		end
+	end
+
+	module API
   	  require 'rest_client'
-      require 'json'
 
   	  CONFIGS = {:path => "https://www.versioneye.com/api/v1"}
-  	  class Resource
+  	  class Resource 
+  		include JSONRequest
     	attr_reader :resource
     	def initialize   
       	  @resource = RestClient::Resource.new(CONFIGS[:path])
