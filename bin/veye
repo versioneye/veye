@@ -28,10 +28,12 @@ command :ping do |c|
   c.action do |global_options,options,args|
 	response = public_api.getJSON('/ping.json')
   	unless response.nil?
-  		puts response.to_s.foreground(:green)
+  		status =  "up".foreground(:green)
   	else
-		puts "down".foreground(:red)
+		status =  "down".foreground(:red)
   	end
+
+  	puts "VersionEye is: #{status}"
   end
 end
 
