@@ -26,6 +26,7 @@ GEM
     gli (2.5.3)
     json (1.7.5)
     mime-types (1.19)
+    rainbow (1.1.4)
     rake (10.0.3)
     rdoc (3.12)
       json (~> 1.4)
@@ -39,6 +40,7 @@ PLATFORMS
 
 DEPENDENCIES
   aruba
+  rainbow
   rake
   rdoc
   rest-client

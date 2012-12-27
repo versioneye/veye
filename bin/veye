@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 require 'gli'
+require 'rainbow'
 require 'veye'
 
 include GLI::App
@@ -25,7 +26,12 @@ arg_name 'Describe arguments to ping here'
 command :ping do |c|
   c.flag :f
   c.action do |global_options,options,args|
-	puts public_api.getJSON('/ping.json')
+	response = public_api.getJSON('/ping.json')
+  	unless response.nil?
+  		puts response.to_s.foreground(:green)
+  	else
+		puts "down".foreground(:red)
+  	end
   end
 end
 
