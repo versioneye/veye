@@ -30,7 +30,7 @@ command :ping do |c|
   	unless response.nil?
   		status =  "up".foreground(:green)
   	else
-		status =  "down".foreground(:red)
+		  status =  "down".foreground(:red)
   	end
 
   	puts "VersionEye is: #{status}"
@@ -38,18 +38,58 @@ command :ping do |c|
 end
 
 desc 'Describe search here'
-arg_name 'Describe arguments to search here'
+arg_name 'search_term'
+
 command :search do |c|
   c.action do |global_options,options,args|
-    puts "search command ran"
+    help_now!("search term is mandatory.") if args.empty?
+    search_term = args.shift
+    search_api = Veye::API::Resource.new "/products/search"
+    puts search_api
+    search_api.resource["/#{search_term}.json"].get do |response, request, result, &block|
+        if result.code.to_i == 200
+          search_results = JSON.parse(response)
+          puts JSON.pretty_generate(search_results)
+        else
+          puts "Didnt found results for `#{search_term.foreground(:yellow)}`"
+          puts "Url: #{request.url}"
+        end
+    end
   end
 end
 
-desc 'Describe info here'
-arg_name 'Describe arguments to info here'
+desc 'returns package information'
+arg_name 'package_key'
 command :info do |c|
   c.action do |global_options,options,args|
-    puts "info command ran"
+    puts global_options, options, args
+    help_now!("package_key is missing") if args.empty?
+    package_key = args.shift
+    puts "Searching information about: #{package_key.foreground(:green)}"
+    public_api.resource["/products/#{package_key}.json"].get do |response, request, result, &block|
+        if result.code.to_i == 200
+          col_widths = [20, 60]
+          row_format = "%-#{25}s: %s\n"
+          package_info = JSON.parse(response)
+          package_info[:url] = request.url
+          package_info.each_pair do |key, value|
+            value = value.to_s.gsub(/\s+/, " ") 
+            if value.length < col_widths[1] 
+                printf row_format, key.to_s.foreground(:green), value
+            else
+                0.step(value.length, 40) do |pos|
+                  line = value[pos..pos+40].strip      
+                  printf row_format, key.to_s.foreground(:green), line
+                  key = "" 
+                end 
+            end    
+          end        
+        else
+          puts "Didnt found package key: `#{package_key.foreground(:yellow)}`"
+          puts "Code: #{result.code.foreground(:red)}"
+          puts request.url
+        end
+    end
   end
 end
 
