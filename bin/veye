@@ -46,22 +46,19 @@ desc 'Describe search here'
 arg_name 'search_term'
 
 command :search do |c|
-  c.action do |global_options,options,args|
-    help_now!("search term is mandatory.") if args.empty?
-    search_term = args.shift
-    search_api = Veye::API::Resource.new "/products/search"
-    search_api.resource["/#{search_term}.json"].get do |response, request, result, &block|
-        if result.code.to_i == 200
-          search_results = JSON.parse(response)
-          if search_results.empty?
-            puts "No results for `#{search_term.foreground(:yellow)}`"
-          else
-            ap search_results
-          end
-        else
-          puts "#{"Error".foreground(:yellow)}`: search request failed."
-        end
-    end
+    c.desc 'filter results by language'
+    c.flag [:l, :language, 'language-name']
+
+    c.desc 'filter result by Manven specific GroupId'
+    c.flag "group-id"
+
+    c.desc "get next N results, by default it only return 30 results."
+    c.flag [:page, 'page-number'], :default_value => 1
+
+    c.action do |global_options,options,args|
+        help_now!("search term is mandatory.") if args.empty?
+        search_term = args.shift
+        Veye::PackageSearch.search(search_term, options[:language], options["group-id"], options[:page])
   end
 end
 
