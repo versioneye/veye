@@ -2,7 +2,10 @@ PATH
   remote: .
   specs:
     veye (0.0.1)
+      awesome_print
       gli (= 2.5.3)
+      rainbow
+      rest-client
 
 GEM
   remote: http://rubygems.org/
@@ -41,9 +44,6 @@ PLATFORMS
 
 DEPENDENCIES
   aruba
-  awesome_print
-  rainbow
   rake
   rdoc
-  rest-client
   veye!

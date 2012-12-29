@@ -7,42 +7,23 @@ require 'awesome_print'
 
 require 'veye'
 
-
 include GLI::App
 
 program_desc 'VersionEye commandline tool'
+program_long_desc Veye::BIGEYE.foreground(:green)
 
+wrap_help_text :verbatim 
 version Veye::VERSION
 
-desc 'Describe some switch here'
-switch [:s,:switch]
-
-desc 'Describe some flag here'
-default_value 'the default'
-arg_name 'The name of the argument'
-flag [:f,:flagname]
-
-
-public_api = Veye::API::Resource.new
-
 desc 'check service status'
-arg_name 'Describe arguments to ping here'
+arg_name ''
 command :ping do |c|
   c.action do |global_options,options,args|
-    status = "no idea"
-    public_api.resource['/ping.json'].get do |response, request, result, &block|
-  	    if result.code.to_i == 200
-  		    status =  "up".foreground(:green)
-  	    else
-		      status =  "down".foreground(:red)
-          $stderr.puts "#{results.code.foreground(:red)} - #{request.url}"
-        end
-    end
-  	puts "VersionEye is: #{status}"
+    Veye::Service.ping()
   end
 end
 
-desc 'Describe search here'
+desc 'Search packages on VersionEye.'
 arg_name 'search_term'
 
 command :search do |c|
@@ -68,40 +49,8 @@ command :info do |c|
   c.action do |global_options,options,args|
     help_now!("package_key is missing") if args.empty?
     package_key = args.shift
-    
-    puts "Asking information about: #{package_key.foreground(:green)}"
-    package_key = package_key.gsub(/\//, "--").gsub(/\./, "~")
-    public_api.resource["/products/#{package_key}.json"].get do |response, request, result, &block|
-        if result.code.to_i == 200
-          ap JSON.parse(response)
-        else
-          puts "Didnt found package key: `#{package_key.foreground(:yellow)}`"
-          puts "Code: #{result.code.foreground(:red)}"
-          puts request.url
-        end
-    end
+    Veye::Package.info(package_key)
   end
-end
-
-pre do |global,command,options,args|
-  # Pre logic here
-  # Return true to proceed; false to abort and not call the
-  # chosen command
-  # Use skips_pre before a command to skip this block
-  # on that command only
-  true
-end
-
-post do |global,command,options,args|
-  # Post logic here
-  # Use skips_post before a command to skip this
-  # block on that command only
-end
-
-on_error do |exception|
-  # Error logic here
-  # return false to skip default error handling
-  true
 end
 
 exit run(ARGV)
