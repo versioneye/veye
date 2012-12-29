@@ -12,7 +12,7 @@ include GLI::App
 program_desc 'VersionEye commandline tool'
 program_long_desc Veye::BIGEYE.foreground(:green)
 
-wrap_help_text :verbatim 
+wrap_help_text :verbatim
 version Veye::VERSION
 
 desc 'check service status'
@@ -34,7 +34,7 @@ command :search do |c|
     c.flag "group-id"
 
     c.desc "get next N results, by default it only return 30 results."
-    c.flag [:page, 'page-number'], :default_value => 1
+    c.flag [:page, 'page-number']
 
     c.action do |global_options,options,args|
         help_now!("search term is mandatory.") if args.empty?
