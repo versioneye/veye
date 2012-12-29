@@ -5,12 +5,25 @@ Commandline tool for VersionEye. This tool ables to check availability of Versio
 
 ### Setup
 
+###### Download source
  ```bash
   $> git clone https://github.com/versioneye/veye.git
   $> cd veye
+ ```
+
+###### Run without installing
+ ```
   $> bundle
   $> bundle exec bin/veye ping
  ```
+ 
+###### Or build Gem file and install it as global command
+
+  ```
+  $> bundle build veye-0.0.1.gem
+  $> veye help
+  $> veye ping
+  ```
 
 ### Basic usage
 
