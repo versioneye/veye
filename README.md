@@ -9,7 +9,7 @@
 
 **veye** is commandline tool to make all this available on command-line and manipulate results with awesome tools and scripts. 
 
-![Main help](https://www.dropbox.com/s/s5fon8q06gm1muv/veye_help_main.png)
+![Main help](https://dl-web.dropbox.com/get/versioneye_video/veye_cli/veye_help_main.png?w=2907c1fc)
 
 
 ### Setup
@@ -82,7 +82,7 @@
     $> veye search json --format=pretty
   ```
  
-  ![Pretty format](https://www.dropbox.com/s/35pvplkeiaw796r/search_format_pretty.png)
+  ![Pretty format](https://dl-web.dropbox.com/get/versioneye_video/veye_cli/search_format_pretty.png?w=0991bcd0)
  
  **csv** - to pipeline output to [awk](http://www.gnu.org/software/gawk/manual/gawk.html)
  
@@ -90,21 +90,21 @@
   $> veye search json --format=csv
  ```
 
- ![CSV format](https://www.dropbox.com/s/xgzw72034j3vq9w/search_format_csv.png)
+ ![CSV format](https://dl-web.dropbox.com/get/versioneye_video/veye_cli/search_format_csv.png?w=778a61cf)
 
  **json** - for manipulating results with [jq](http://stedolan.github.com/jq/)
  ```bash
   $> veye search json --format=json
  ```
  
- ![Json format](https://www.dropbox.com/s/t5q09l6ta3f35yk/search_format_json.png)
+ ![Json format](https://dl-web.dropbox.com/get/versioneye_video/veye_cli/search_format_json.png?w=9495485e)
  
  **table**
  
  ```bash
   $> veye search json --format=table
  ```
- ![Table output](https://www.dropbox.com/s/25iou6sf8di4bjl/search_format_table.png)
+ ![Table output](https://dl-web.dropbox.com/get/versioneye_video/veye_cli/search_format_table.png?w=302b736f)
  
 
 ###### Empty response
@@ -125,5 +125,5 @@ It supports also `--format` flag with same values.
     Asking information about: junit/junit
   ```
   
-  ![Pretty print](https://www.dropbox.com/s/f20wy0bhx2sztih/info_format_pretty.png)
+  ![Pretty print](https://dl-web.dropbox.com/get/versioneye_video/veye_cli/info_format_pretty.png?w=09fdfbf6)
   
