@@ -78,7 +78,7 @@ command :search do |c|
                                              options[:page])
         search_results = response[:results]
         if search_results.empty?
-            error_msg = sprrintf("No results for `%s` with given params: %s",
+            error_msg = sprintf("No results for `%s` with given params: %s",
                                  response[:params][:q].foreground(:yellow),
                                  response[:params].to_s.foreground(:default))
             exit_now!(error_msg)
@@ -89,12 +89,23 @@ command :search do |c|
 end
 
 desc 'returns package information'
-arg_name 'package_key'
+arg_name 'product_key'
 command :info do |c|
-        c.action do |global_options, options, args|
-        help_now!("package_key is missing") if args.empty?
-        package_key = args.shift
-        Veye::Package.info(package_key)
+    c.desc "change output format"
+    c.flag [:format, 'format-name'], :default_value => 'pretty'
+
+    c.action do |global_options, options, args|
+      help_now!("package_key is missing") if args.empty?
+      package_key = args.shift
+      response = Veye::Package::Info.search(package_key)
+      
+      if response[:results].empty?
+          error_msg = sprintf("Didnt find any package with product_key: `%s`",
+                            "#{response[:params][:q]}".foreground(:yellow))
+          exit_now!(error_msg)
+      end
+
+      Veye::Package::Info.format(response[:results], options[:format])
     end
 end
 

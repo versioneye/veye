@@ -2,6 +2,6 @@
 # you just need to require this one file in your bin file
 require 'veye/version.rb'
 require 'veye/resource.rb'
-require 'veye/package.rb'
+require 'veye/info.rb'
 require 'veye/search.rb'
 require 'veye/service.rb'
