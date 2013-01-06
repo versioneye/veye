@@ -1,7 +1,16 @@
 # Veye
 
+[VersionEye](http://www.versioneye.com/) is a cross-platform search engine and crowdsourcing app for open source software libraries. 
+ * Take advantage of the extended search to find any library you look for. 
+ * Follow and track your favorite software packages
+ * Leave comments and add additional meta information to the libraries to improve the quality of the data. 
+ * Contribute to this crowdsourcing project to make the world a better place for software developers.
 
-Commandline tool for VersionEye. This tool ables to check availability of VersionEye API, search packages on commandline and check information about package.
+
+**veye** is commandline tool to make all this available on command-line and manipulate results with awesome tools and scripts. 
+
+![Main help](https://www.dropbox.com/s/s5fon8q06gm1muv/veye_help_main.png)
+
 
 ### Setup
 
@@ -25,25 +34,31 @@ Commandline tool for VersionEye. This tool ables to check availability of Versio
   $> veye ping
   ```
 
-### Basic usage
+###### Set up default configuration
+
+  ```bash
+  $> veye initconfig
+  ```
+
+# Basic usage
 
 
-###### Check service 
+### Check service 
 
  ```bash
    $> veye ping
    VersionEye is: up
  ```
 
-###### Search packages 
+### Search packages 
 
-* get command help
+###### Get command help
 
  ```bash
    $> veye search help
  ```
  
-* basic package search with language filtering
+###### Basic package search with language filtering
 
  ```bash
    $> veye search junit
@@ -52,29 +67,63 @@ Commandline tool for VersionEye. This tool ables to check availability of Versio
    $> veye search --language-name=java
  ```
 
-* use result paging
+###### Use result paging
 
   ```bash
     $> veye search junit --page 2
     $> veye search junit --page-number=2
   ```
 
-* Successful response
+###### Use different output format
 
+  **pretty print** - human readable output
  
+  ```bash
+    $> veye search json --format=pretty
+  ```
  
-* Empty response
+  ![Pretty format](https://www.dropbox.com/s/35pvplkeiaw796r/search_format_pretty.png)
  
-  ```ruby
+ **csv** - to pipeline output to [awk](http://www.gnu.org/software/gawk/manual/gawk.html)
+ 
+ ```bash
+  $> veye search json --format=csv
+ ```
+
+ ![CSV format](https://www.dropbox.com/s/xgzw72034j3vq9w/search_format_csv.png)
+
+ **json** - for manipulating results with [jq](http://stedolan.github.com/jq/)
+ ```bash
+  $> veye search json --format=json
+ ```
+ 
+ ![Json format](https://www.dropbox.com/s/t5q09l6ta3f35yk/search_format_json.png)
+ 
+ **table**
+ 
+ ```bash
+  $> veye search json --format=table
+ ```
+ ![Table output](https://www.dropbox.com/s/25iou6sf8di4bjl/search_format_table.png)
+ 
+
+###### Empty response
+
+There will be situation, when [VersionEye](http://versioneye.com) dont have information about your search, then you will see similar response on commandline:
+
+  ```
   No results for 'json' with given parameters: 
   {:q=>"json", :lang=>"python", :page=>1}
   ```
 
-###### Read information of the package
+### Package information
 
+It supports also `--format` flag with same values.
 
-  ```ruby
+  ```
     $> veye info junit/junit
     Asking information about: junit/junit
   ```
+  
+  ![Pretty print](https://www.dropbox.com/s/f20wy0bhx2sztih/info_format_pretty.png)
   
