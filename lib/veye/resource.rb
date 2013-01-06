@@ -15,7 +15,6 @@ module Veye
   	  class Resource < BaseResource
         def initialize(path = nil)
           super(path)  
-          p @full_path
           @resource = RestClient::Resource.new(@full_path)
         end
   	  end

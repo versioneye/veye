@@ -5,4 +5,3 @@ require 'veye/resource.rb'
 require 'veye/package.rb'
 require 'veye/search.rb'
 require 'veye/service.rb'
-

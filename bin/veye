@@ -1,9 +1,8 @@
 #!/usr/bin/env ruby
+
 require 'gli'
 require 'json'
-
 require 'rainbow'
-require 'awesome_print'
 
 require 'veye'
 
@@ -29,6 +28,9 @@ flag :path, :default_value => "api/v1"
 desc 'set connection protocol'
 flag :protocol, :default_value => "https"
 
+desc "don't use colors"
+switch 'color', :default_value => true, :negetable => true
+
 pre do |global_options, options, args|
     $global_options = global_options
    
@@ -45,18 +47,16 @@ pre do |global_options, options, args|
     $global_options[:url] = resource_url
 end
 
+desc 'check service status'
 command :ping do |c|
- c.desc 'check service status'
- c.action do |global_options,options,args|
+ c.action do |global_options, options, args|
     Veye::Service.ping()
-  end
+ end
 end
 
-
+desc 'Search packages on VersionEye.'
+arg_name 'search_term'
 command :search do |c|
-    c.desc 'Search packages on VersionEye.'
-    c.arg_name 'search_term'
-
     c.desc 'filter results by language'
     c.flag [:l, :language, 'language-name']
 
@@ -66,18 +66,32 @@ command :search do |c|
     c.desc "get next N results, by default it only return 30 results."
     c.flag [:page, 'page-number']
 
-    c.action do |global_options,options,args|
+    c.desc "change output format"
+    c.flag [:format,'format-name'], :default_value => "pretty"
+
+    c.action do |global_options, options, args|
         help_now!("search term is mandatory.") if args.empty?
         search_term = args.shift
-        Veye::PackageSearch.search(search_term, options[:language], options["group-id"], options[:page])
+        response = Veye::PackageSearch.search(search_term, 
+                                             options[:language], 
+                                             options["group-id"], 
+                                             options[:page])
+        search_results = response[:results]
+        if search_results.empty?
+            error_msg = sprrintf("No results for `%s` with given params: %s",
+                                 response[:params][:q].foreground(:yellow),
+                                 response[:params].to_s.foreground(:default))
+            exit_now!(error_msg)
+        end
+
+        Veye::PackageSearch.format(search_results, options[:format])
   end
 end
 
+desc 'returns package information'
+arg_name 'package_key'
 command :info do |c|
-    c.desc 'returns package information'
-    c.arg_name 'package_key'
-
-    c.action do |global_options,options,args|
+        c.action do |global_options, options, args|
         help_now!("package_key is missing") if args.empty?
         package_key = args.shift
         Veye::Package.info(package_key)
