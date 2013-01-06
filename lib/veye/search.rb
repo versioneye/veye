@@ -4,8 +4,8 @@ require_relative 'search_format/pretty.rb'
 require_relative 'search_format/table.rb'
 
 module Veye
-
-    class PackageSearch
+  module Package
+    class Search
         @@output_formats = {
             'csv'       => Veye::SearchFormat::CSV.new,
             'json'      => Veye::SearchFormat::JSON.new,
@@ -43,4 +43,6 @@ module Veye
         end
         
     end
+
+  end
 end
