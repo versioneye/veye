@@ -6,7 +6,7 @@ module Veye
             @@results = []
         end
         def after
-            p @@results.to_json 
+            printf("%s\n", @@results.to_json) 
         end
 
         def format(result, index)

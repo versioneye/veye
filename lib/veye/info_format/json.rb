@@ -5,7 +5,7 @@ module Veye
       def after; end
 
       def format(result, index = 0)
-        p result.to_json
+        printf("%s\n", result.to_json)
       end
     end
   
