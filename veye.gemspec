@@ -31,4 +31,5 @@ spec = Gem::Specification.new do |s|
   s.add_runtime_dependency('rest-client')
   s.add_runtime_dependency('awesome_print')
   s.add_runtime_dependency('rainbow')
+  s.add_runtime_dependency('terminal-table')
 end

@@ -15,18 +15,48 @@ program_long_desc Veye::BIGEYE.foreground(:green)
 wrap_help_text :verbatim
 version Veye::VERSION
 
-desc 'check service status'
-arg_name ''
+config_file '.veye.rc'
+
+desc 'set server url'
+flag :server, :default_value => "versioneye.com"
+
+desc 'set service port'
+flag :port, :default_value => ""
+
+desc 'set service path'
+flag :path, :default_value => "api/v1"
+
+desc 'set connection protocol'
+flag :protocol, :default_value => "https"
+
+pre do |global_options, options, args|
+    $global_options = global_options
+   
+    protocol = global_options[:protocol]
+    server = global_options[:server]
+    port = global_options.fetch(:port, "")
+    path = global_options[:path]
+    unless port.empty?
+        resource_url = "#{protocol}://#{server}:#{port}/#{path}"
+    else
+        resource_url = "#{protocol}://#{server}/#{path}"
+    end
+
+    $global_options[:url] = resource_url
+end
+
 command :ping do |c|
-  c.action do |global_options,options,args|
+ c.desc 'check service status'
+ c.action do |global_options,options,args|
     Veye::Service.ping()
   end
 end
 
-desc 'Search packages on VersionEye.'
-arg_name 'search_term'
 
 command :search do |c|
+    c.desc 'Search packages on VersionEye.'
+    c.arg_name 'search_term'
+
     c.desc 'filter results by language'
     c.flag [:l, :language, 'language-name']
 
@@ -43,14 +73,15 @@ command :search do |c|
   end
 end
 
-desc 'returns package information'
-arg_name 'package_key'
 command :info do |c|
-  c.action do |global_options,options,args|
-    help_now!("package_key is missing") if args.empty?
-    package_key = args.shift
-    Veye::Package.info(package_key)
-  end
+    c.desc 'returns package information'
+    c.arg_name 'package_key'
+
+    c.action do |global_options,options,args|
+        help_now!("package_key is missing") if args.empty?
+        package_key = args.shift
+        Veye::Package.info(package_key)
+    end
 end
 
 exit run(ARGV)

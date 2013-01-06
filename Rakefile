@@ -7,7 +7,7 @@ require 'cucumber/rake/task'
 Rake::RDocTask.new do |rd|
   rd.main = "README.rdoc"
   rd.rdoc_files.include("README.rdoc","lib/**/*.rb","bin/**/*")
-  rd.title = 'Your application title'
+  rd.title = 'VersionEye Commandline Tool'
 end
 
 spec = eval(File.read('veye.gemspec'))

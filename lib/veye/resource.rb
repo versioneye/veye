@@ -2,21 +2,28 @@ module Veye
 	module API
   	  require 'rest_client'
 
-  	  CONFIGS = {:url => "https://www.versioneye.com/api/v1"}
-  	  class Resource
+  	  #CONFIGS = {:url => "https://www.versioneye.com/api/v1"}
+      class  BaseResource
         attr_reader :resource
+        
         def initialize(path = nil)
-          @full_path = CONFIGS[:url]
+          @full_path = $global_options[:url]
           @full_path = "#{@full_path}#{path}" unless path.nil?
+        end
+      end
 
+  	  class Resource < BaseResource
+        def initialize(path = nil)
+          super(path)  
+          p @full_path
           @resource = RestClient::Resource.new(@full_path)
         end
   	  end
 
-  	  class PrivateResource
-    	  attr_reader :resource
+  	  class PrivateResource < BaseResource
     	  def initialize(username, password)
-      	  @resource = RestClient::Resource.new(CONFIGS[:url], username, password)
+            super(path)
+            @resource = RestClient::Resource.new(CONFIGS[:url], username, password)
     	  end
   	  end
 	end
