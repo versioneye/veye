@@ -29,6 +29,7 @@ Commandline tool for VersionEye. This tool ables to check availability of Versio
 
 
 ###### Check service 
+
  ```bash
    $> veye ping
    VersionEye is: up
@@ -41,6 +42,7 @@ Commandline tool for VersionEye. This tool ables to check availability of Versio
  ```bash
    $> veye search help
  ```
+ 
 * basic package search with language filtering
 
  ```bash
@@ -59,24 +61,13 @@ Commandline tool for VersionEye. This tool ables to check availability of Versio
 
 * Successful response
 
- ```ruby
- #Results
-   [[0], {
-          "artifact_id" => "junit",
-           "group_id" => "junit",
-           "language" => "Java",
-               "name" => "junit",
-           "prod_key" => "junit/junit",
-            "version" => "4.11"
-          }, ...]
- ```
  
  
 * Empty response
  
   ```ruby
-    No results for `json` with given parameters: {:q=>"json", :lang=>"python", :page=>1}
-
+  No results for 'json' with given parameters: 
+  {:q=>"json", :lang=>"python", :page=>1}
   ```
 
 ###### Read information of the package
@@ -84,21 +75,6 @@ Commandline tool for VersionEye. This tool ables to check availability of Versio
 
   ```ruby
     $> veye info junit/junit
-    Askining information about: junit/junit
-    {
-    "artifact_id" => "junit",
-    "description" => "JUnit is a regression testing framework written by Erich Gamma and Kent Beck.
-                      It is used by the developer who implements unit tests in Java.",
-       "group_id" => "junit",
-       "language" => "Java",
-        "license" => "Common Public License Version 1.0",
-           "link" => "http://mvn.carbonfive.com/nexus/content/groups/public/junit/junit/",
-           "name" => "junit",
-       "prod_key" => "junit/junit",
-      "prod_type" => "Maven2",
-        "version" => "4.11"
-    }
+    Asking information about: junit/junit
   ```
   
-Coming soon...
-
