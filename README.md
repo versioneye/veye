@@ -92,7 +92,10 @@
 
  ![CSV format](https://dl-web.dropbox.com/get/versioneye_video/veye_cli/search_format_csv.png?w=778a61cf)
 
- **json** - for manipulating results with [jq](http://stedolan.github.com/jq/)
+ **json** - for manipulating results with [jq](http://stedolan.github.com/jq/) . 
+ Check out our jq recipes in [wiki](https://github.com/versioneye/veye/wiki/jq-recipes) .
+ 
+ 
  ```bash
   $> veye search json --format=json
  ```
