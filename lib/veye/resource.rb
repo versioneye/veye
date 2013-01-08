@@ -1,8 +1,7 @@
+require 'rest_client'
+
 module Veye
 	module API
-  	  require 'rest_client'
-
-  	  #CONFIGS = {:url => "https://www.versioneye.com/api/v1"}
       class  BaseResource
         attr_reader :resource
         

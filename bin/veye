@@ -109,4 +109,21 @@ command :info do |c|
     end
 end
 
+desc 'analyzes given project file and returns version info'
+arg_name 'product_file'
+
+command :check do |c|
+    c.desc "change output format"
+    c.flag [:format, 'format-name'], :default_value => 'pretty'
+    
+    #TODO: add multiple file support
+    c.action do |global_options, options, args|
+        help_now!("Name of project file is unspecified.") if args.empty?
+        file_name = args.shift
+        response = Veye::Project::Check.upload(file_name)
+        puts response
+    end
+end
+
+
 exit run(ARGV)
