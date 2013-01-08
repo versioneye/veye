@@ -1,22 +1,22 @@
-require_relative 'info_format/csv.rb'
-require_relative 'info_format/json.rb'
-require_relative 'info_format/pretty.rb'
-require_relative 'info_format/table.rb'
+require_relative 'format/info_csv.rb'
+require_relative 'format/info_json.rb'
+require_relative 'format/info_pretty.rb'
+require_relative 'format/info_table.rb'
 
 module Veye
   module Package
     class Info
       @@output_formats = {
-        'csv'       => Veye::InfoFormat::CSV.new,
-        'json'      => Veye::InfoFormat::JSON.new,
-        'pretty'    => Veye::InfoFormat::Pretty.new,
-        'table'     => Veye::InfoFormat::Table.new
+        'csv'       => Veye::Format::InfoCSV.new,
+        'json'      => Veye::Format::InfoJSON.new,
+        'pretty'    => Veye::Format::InfoPretty.new,
+        'table'     => Veye::Format::InfoTable.new
       }
 
       def self.search(package_key)
         request_response = {
-          params: {:q => package_key},
-          results: []
+          :params => {:q => package_key},
+          :results => []
         }
         product_api = Veye::API::Resource.new("/products")
 
