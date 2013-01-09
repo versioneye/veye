@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'gli'
+require 'rest_client'
 require 'json'
 require 'rainbow'
 
@@ -33,18 +34,7 @@ switch 'color', :default_value => true, :negetable => true
 
 pre do |global_options, options, args|
     $global_options = global_options
-   
-    protocol = global_options[:protocol]
-    server = global_options[:server]
-    port = global_options.fetch(:port, "")
-    path = global_options[:path]
-    unless port.empty?
-        resource_url = "#{protocol}://#{server}:#{port}/#{path}"
-    else
-        resource_url = "#{protocol}://#{server}/#{path}"
-    end
-
-    $global_options[:url] = resource_url
+    $global_options[:url] = Veye::API::Resource.build_url($global_options)
 end
 
 desc 'check service status'
@@ -118,9 +108,15 @@ command :check do |c|
     
     #TODO: add multiple file support
     c.action do |global_options, options, args|
-        help_now!("Name of project file is unspecified.") if args.empty?
+        help_now!("File of project is unspecified.".foreground(:red)) if args.empty?
         file_name = args.shift
         response = Veye::Project::Check.upload(file_name)
+        if response[:success] == false
+            exit_now!("File upload failed.".foreground(:red))
+        end
+        
+        project_id = response[:results]["id"]
+        response = Veye::Project::Check::dependencies(project_id)
         puts response
     end
 end
