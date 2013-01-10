@@ -40,7 +40,15 @@ end
 desc 'check service status'
 command :ping do |c|
  c.action do |global_options, options, args|
-    Veye::Service.ping()
+   respond = Veye::Service.ping()
+   if respond.success
+     puts "#{respond.data}".foreground(:green)
+   else
+     printf("VersionEye didnt recognized secret word.Answered %s, %s\n",
+            respond.code.to_s.foreground(:red),
+            "#{respond.message}".foreground(:yellow)
+           )
+   end
  end
 end
 
@@ -66,15 +74,14 @@ command :search do |c|
                                              options[:language], 
                                              options["group-id"], 
                                              options[:page])
-        search_results = response[:results]
-        if search_results.empty?
-            error_msg = sprintf("No results for `%s` with given params: %s",
-                                 response[:params][:q].foreground(:yellow),
-                                 response[:params].to_s.foreground(:default))
+
+        if response.success == false or response.data.empty?
+            error_msg = sprintf("No results for `%s`",
+                                "#{search_term}".foreground(:yellow))
             exit_now!(error_msg)
         end
 
-        Veye::Package::Search.format(search_results, options[:format])
+        Veye::Package::Search.format(response.data, options[:format])
   end
 end
 
@@ -89,13 +96,13 @@ command :info do |c|
       package_key = args.shift
       response = Veye::Package::Info.search(package_key)
       
-      if response[:results].empty?
+      unless response.success
           error_msg = sprintf("Didnt find any package with product_key: `%s`",
-                            "#{response[:params][:q]}".foreground(:yellow))
+                            "#{package_key}".foreground(:yellow))
           exit_now!(error_msg)
       end
 
-      Veye::Package::Info.format(response[:results], options[:format])
+      Veye::Package::Info.format(response.data, options[:format])
     end
 end
 
@@ -111,16 +118,16 @@ command :check do |c|
         help_now!("File of project is unspecified.".foreground(:red)) if args.empty?
         file_name = args.shift
         response = Veye::Project::Check.upload(file_name)
-        if response[:success] == false
+        if response.success == false
             exit_now!("File upload failed.".foreground(:red))
         end
         
-        project_id = response[:results]["id"]
+        project_id = response.data["id"]
         response = Veye::Project::Check::dependencies(project_id)
-        if response[:success]
-            Veye::Project::Check.format(response[:results], options[:format])
+        if response.success
+            Veye::Project::Check.format(response.data, options[:format])
         else
-            exit_now!("Didnt get dependency info from API: #{response[:data]}")
+            exit_now!("Didnt get dependency info from API: #{response.message}")
         end
     end
 end

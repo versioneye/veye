@@ -1,17 +1,13 @@
 module Veye
     class Service
         def self.ping(n = 1)
-            public_api = Veye::API::Resource.new
-            status = "no idea"
+            public_api = API::Resource.new
+            api_respond =  "no idea"
             public_api.resource['/ping.json'].get do |response, request, result, &block|
-                if result.code.to_i == 200
-                    status =  "up".foreground(:green)
-                else
-                      status =  "down".foreground(:red)
-                  $stderr.puts "#{results.code.foreground(:red)} - #{request.url}"
-                end
+                api_respond = API::JSONResponse.new(request, result, response)
             end
-            puts "VersionEye is: #{status}"
+
+            return api_respond
         end
     end
 end  

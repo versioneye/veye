@@ -15,20 +15,13 @@ module Veye
       }
 
       def self.search(package_key)
-        request_response = {
-          :params => {:q => package_key},
-          :results => []
-        }
-        product_api = Veye::API::Resource.new(RESOURCE_PATH)
-
-        #clean package key 
+        product_api = API::Resource.new(RESOURCE_PATH)
         package_key = package_key.gsub(/\//, "--").gsub(/\./, "~")
+        request_response = nil 
         product_api.resource["/#{package_key}.json"].get do |response, request, result, &block|
-            if result.code.to_i == 200
-                request_response[:results] = JSON.parse(response) 
-            end
+           
+            request_response = API::JSONResponse.new(request, result, response)
         end
-
         return request_response
       end
 

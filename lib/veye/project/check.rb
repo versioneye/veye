@@ -31,16 +31,10 @@ module Veye
             exit_now!("Size of file is not acceptable: 0kb < x <= #{MAX_FILE_SIZE/1000}kb")
         end
        
-        project_api = Veye::API::Resource.new(RESOURCE_PATH)
+        project_api = API::Resource.new(RESOURCE_PATH)
         file_obj = File.open(file_path, 'rb')
         project_api.resource.post({:upload => file_obj}) do |response, request, result, &block|
-            response = JSON.parse(response)
-            success = false
-            success = response[:success] if (result.code.to_i == 200)
-            response_data = {
-              :success => success,
-              :results => response["data"]
-            }
+            response_data = API::JSONResponse.new(request, result, response)
         end
         
         return response_data
@@ -48,7 +42,7 @@ module Veye
 
       def self.dependencies(project_id)
         response_data = nil
-        project_api = Veye::API::Resource.new(RESOURCE_PATH)
+        project_api = API::Resource.new(RESOURCE_PATH)
         
         if project_id.nil? or project_id.empty? 
             exit_now!("Didnt get right project_id from service: `#{project_id}`")
@@ -56,11 +50,7 @@ module Veye
         
         project_url = "/#{project_id}/dependencies"
         project_api.resource[project_url].get do |response, request, result|
-            response = JSON.parse(response)
-            response_data = {
-                :success => (result.code.to_i == 200),
-                :results => response["data"]
-            }
+           response_data = API::JSONResponse.new(request, result, response)
         end
 
         return response_data
