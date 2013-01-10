@@ -117,7 +117,11 @@ command :check do |c|
         
         project_id = response[:results]["id"]
         response = Veye::Project::Check::dependencies(project_id)
-        puts response
+        if response[:success]
+            Veye::Project::Check.format(response[:results], options[:format])
+        else
+            exit_now!("Didnt get dependency info from API: #{response[:data]}")
+        end
     end
 end
 

@@ -1,4 +1,8 @@
 require 'json'
+require_relative 'format/check_csv.rb'
+require_relative 'format/check_json.rb'
+require_relative 'format/check_pretty.rb'
+require_relative 'format/check_table.rb'
 
 module Veye
   module Project
@@ -6,7 +10,13 @@ module Veye
     RESOURCE_PATH = "/projects"
     MAX_FILE_SIZE = 500000 #byte ~ 500kb
     class Check
-       
+      @@output_formats = {
+        "csv"       => Veye::Format::CheckCSV.new,
+        "json"      => Veye::Format::CheckJSON.new,
+        "pretty"    => Veye::Format::CheckPretty.new,
+        "table"     => Veye::Format::CheckTable.new
+      }
+
       def self.upload(filename)
         response_data = {:success => false}
         file_path = File.absolute_path(filename)
@@ -29,7 +39,6 @@ module Veye
         project_api.resource.post({:upload => file_obj}) do |response, request, result, &block|
             response = JSON.parse(response)
             success = false
-            puts response
             success = response[:success] if (result.code.to_i == 200)
             response_data = {
               :success => success,
@@ -50,9 +59,10 @@ module Veye
         
         project_url = "/#{project_id}/dependencies"
         project_api.resource[project_url].get do |response, request, result|
+            response = JSON.parse(response)
             response_data = {
                 :success => (result.code.to_i == 200),
-                :results => JSON.parse(response)
+                :results => response["data"]
             }
         end
 
@@ -61,13 +71,16 @@ module Veye
 
       def self.delete(project_id)
         project_api = Veye::API::Resource.new(RESOURCE_PATH)
-        exit_now!("Not implemented.")
-        #project_api.delete {:id => project_id}
+        project_api.resource["/#{project_id}.json"].delete
       end
 
-      def self.format(result, format = 'pretty')
-        puts "To do..."
+      def self.format(results, format = 'pretty')
+        formatter = @@output_formats[format]
+        formatter.before
+        formatter.format results
+        formatter.after
       end
+
     end
   end
 end
