@@ -36,9 +36,7 @@ module Veye
             
             formatter = @@output_formats[format]
             formatter.before
-            search_results.each_with_index do |result, index|
-                formatter.format(result, index)
-            end
+            formatter.format(search_results)
             formatter.after
         end
         

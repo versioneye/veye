@@ -4,7 +4,8 @@ module Veye
   module Format
     class InfoTable
       def before
-        @@table = Terminal::Table.new :heading => %w(name version product_key language description link)
+        @@table = Terminal::Table.new :title => "Package information",
+                                      :headings => %w(name version product_key language description)
         @@table.align_column(0, :right)
       end
 
@@ -16,9 +17,10 @@ module Veye
           row = [result["name"], result["version"], result["prod_key"]]
           row << result["language"]
           row << result["description"]
-          row << result["link"]
 
           @@table << row
+
+          @@table << ["", "", "", "link:", result["link"]]
       end
     end
 

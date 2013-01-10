@@ -31,10 +31,10 @@ module Veye
         return request_response
       end
 
-      def self.format(result, format = 'pretty')
+      def self.format(results, format = 'pretty')
           formatter = @@output_formats[format]
           formatter.before
-          formatter.format(result)
+          formatter.format(results)
           formatter.after
       end
     end
