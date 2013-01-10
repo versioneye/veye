@@ -1,20 +1,17 @@
 require 'json'
-require_relative 'format/check_csv.rb'
-require_relative 'format/check_json.rb'
-require_relative 'format/check_pretty.rb'
-require_relative 'format/check_table.rb'
+require_relative 'check_csv.rb'
+require_relative 'check_json.rb'
+require_relative 'check_pretty.rb'
+require_relative 'check_table.rb'
 
 module Veye
   module Project
-
-    RESOURCE_PATH = "/projects"
-    MAX_FILE_SIZE = 500000 #byte ~ 500kb
     class Check
       @@output_formats = {
-        "csv"       => Veye::Format::CheckCSV.new,
-        "json"      => Veye::Format::CheckJSON.new,
-        "pretty"    => Veye::Format::CheckPretty.new,
-        "table"     => Veye::Format::CheckTable.new
+        "csv"       => CheckCSV.new,
+        "json"      => CheckJSON.new,
+        "pretty"    => CheckPretty.new,
+        "table"     => CheckTable.new
       }
 
       def self.upload(filename)

@@ -1,11 +1,10 @@
 # Add requires for other files you add to your project here, so
 # you just need to require this one file in your bin file
 require 'veye/version.rb'
-require 'veye/resource.rb'
-require 'veye/info.rb'
-require 'veye/search.rb'
 require 'veye/service.rb'
-require 'veye/check.rb'
+require 'veye/api.rb'
+require 'veye/package.rb'
+require 'veye/project.rb'
 
 
 $global_options ||= nil 

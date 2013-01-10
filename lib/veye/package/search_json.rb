@@ -1,5 +1,5 @@
 module Veye
-  module Format
+  module Package
     class SearchJSON 
 
         def before; end

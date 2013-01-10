@@ -1,21 +1,22 @@
-require_relative 'format/search_csv.rb'
-require_relative 'format/search_json.rb'
-require_relative 'format/search_pretty.rb'
-require_relative 'format/search_table.rb'
+require_relative 'search_csv.rb'
+require_relative 'search_json.rb'
+require_relative 'search_pretty.rb'
+require_relative 'search_table.rb'
 
 module Veye
   module Package
+    
     class Search
         @@output_formats = {
-            'csv'       => Veye::Format::SearchCSV.new,
-            'json'      => Veye::Format::SearchJSON.new,
-            'pretty'    => Veye::Format::SearchPretty.new,
-            'table'     => Veye::Format::SearchTable.new
+            'csv'       => SearchCSV.new,
+            'json'      => SearchJSON.new,
+            'pretty'    => SearchPretty.new,
+            'table'     => SearchTable.new
         }
 
         def self.search(search_term, language = nil, group_id = nil, page = nil)
             search_params = {:q => search_term}
-            search_api = Veye::API::Resource.new "/products/search"
+            search_api = Veye::API::Resource.new "#{RESOURCE_PATH}/search"
             
             search_params[:lang] = language unless language.nil?
             search_params[:g] = group_id unless group_id.nil?

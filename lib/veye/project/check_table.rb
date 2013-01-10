@@ -1,7 +1,7 @@
 require 'terminal-table'
 
 module Veye
-  module Format
+  module Project
     class CheckTable
         def before
           @@table = Terminal::Table.new :title => "Version check",

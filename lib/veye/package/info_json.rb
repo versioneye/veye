@@ -1,5 +1,5 @@
 module Veye
-  module Format
+  module Package
     class InfoJSON
       def before; end
       def after; end

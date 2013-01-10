@@ -1,7 +1,7 @@
 require 'terminal-table'
 
 module Veye
-  module Format
+  module Package
     class InfoTable
       def before
         @@table = Terminal::Table.new :title => "Package information",

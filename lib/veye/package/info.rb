@@ -1,16 +1,17 @@
-require_relative 'format/info_csv.rb'
-require_relative 'format/info_json.rb'
-require_relative 'format/info_pretty.rb'
-require_relative 'format/info_table.rb'
+require_relative 'info_csv.rb'
+require_relative 'info_json.rb'
+require_relative 'info_pretty.rb'
+require_relative 'info_table.rb'
 
 module Veye
   module Package
+    
     class Info
       @@output_formats = {
-        'csv'       => Veye::Format::InfoCSV.new,
-        'json'      => Veye::Format::InfoJSON.new,
-        'pretty'    => Veye::Format::InfoPretty.new,
-        'table'     => Veye::Format::InfoTable.new
+        'csv'       => InfoCSV.new,
+        'json'      => InfoJSON.new,
+        'pretty'    => InfoPretty.new,
+        'table'     => InfoTable.new
       }
 
       def self.search(package_key)
@@ -18,7 +19,7 @@ module Veye
           :params => {:q => package_key},
           :results => []
         }
-        product_api = Veye::API::Resource.new("/products")
+        product_api = Veye::API::Resource.new(RESOURCE_PATH)
 
         #clean package key 
         package_key = package_key.gsub(/\//, "--").gsub(/\./, "~")

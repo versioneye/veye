@@ -1,7 +1,7 @@
 require 'rainbow'
 
 module Veye
-  module Format
+  module Package
     class InfoPretty
       def before; end
       def after; end

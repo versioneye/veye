@@ -1,5 +1,5 @@
 module Veye
-  module Format
+  module Project
     class CheckCSV
         def before 
             printf("nr,name,prod_key,outdated,latest,current,updated\n",nil)

@@ -1,5 +1,5 @@
 module Veye
-  module Format
+  module Project
     class CheckJSON
         def before; end
         def after; end

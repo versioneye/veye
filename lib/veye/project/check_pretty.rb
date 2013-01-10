@@ -1,7 +1,7 @@
 require 'rainbow'
 
 module Veye
-  module Format
+  module Project
     class CheckPretty
       def before; end
       def after; end

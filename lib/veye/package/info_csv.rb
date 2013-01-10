@@ -1,5 +1,5 @@
 module Veye
-  module Format
+  module Package
     class InfoCSV
       def before
         printf("name,version,language,prod_key,licence,prod_type,description,link\n")
