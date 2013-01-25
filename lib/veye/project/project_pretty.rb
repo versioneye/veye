@@ -2,7 +2,7 @@ require 'rainbow'
 
 module Veye
   module Project
-    class ProjectListPretty
+    class ProjectPretty
       def before; end
       def after; end
 

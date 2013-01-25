@@ -2,7 +2,7 @@ require 'rainbow'
 
 module Veye
   module Project
-    class CheckPretty
+    class ProjectDependencyPretty
       def before; end
       def after; end
 

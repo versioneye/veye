@@ -1,6 +1,6 @@
 module Veye
   module Project
-    class CheckCSV
+    class ProjectDependencyCSV
       def before 
         printf("nr,name,prod_key,outdated,latest,current\n",nil)
       end

@@ -1,6 +1,6 @@
 module Veye
   module Project
-    class ProjectListCSV
+    class ProjectCSV
       def before
         printf("nr,name,project_key,private,period,source,dep_number,out_number,created_at\n")
       end

@@ -1,6 +1,6 @@
 module Veye
   module Project
-    class ProjectListJSON
+    class ProjectJSON
       def before; end
       def after; end
 

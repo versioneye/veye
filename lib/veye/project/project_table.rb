@@ -2,7 +2,7 @@
 
  module Veye
    module Project
-     class ProjectListTable
+     class ProjectTable
        def before
          @@table = Terminal::Table.new :title => "Projects",
                    :headings => %w(index name project_key private period source dependencies outdated created_at)

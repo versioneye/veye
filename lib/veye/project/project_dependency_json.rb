@@ -1,6 +1,6 @@
 module Veye
   module Project
-    class CheckJSON
+    class ProjectDependencyJSON
       def before; end
       def after; end
 

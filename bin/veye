@@ -75,23 +75,23 @@ command :search do |c|
                                              :negatable => true
 
   c.action do |global_options, options, args|
-      help_now!("search term is mandatory.") if args.empty?
-      search_term = args.shift
-      response = Veye::Package::Search.search(search_term, 
-                                           options[:language], 
-                                           options["group-id"], 
-                                           options[:page])
+    help_now!("search term is mandatory.") if args.empty?
+    search_term = args.shift
+    response = Veye::Package::Search.search(search_term, 
+                                         options[:language], 
+                                         options["group-id"], 
+                                         options[:page])
 
-      if response.success == false or response.data["results"].empty?
-          error_msg = sprintf("No results for `%s`",
-                              "#{search_term}".foreground(:yellow))
-          exit_now!(error_msg)
-      end
+    if response.success == false or response.data["results"].empty?
+        error_msg = sprintf("No results for `%s`",
+                            "#{search_term}".foreground(:yellow))
+        exit_now!(error_msg)
+    end
 
-      paging = (options[:pagination]) ? response.data['paging'] : nil
-      Veye::Package::Search.format(response.data["results"], 
-                                   options[:format],
-                                   paging)
+    paging = (options[:pagination]) ? response.data['paging'] : nil
+    Veye::Package::Search.format(response.data["results"], 
+                                 options[:format],
+                                 paging)
   end
 end
 
@@ -132,7 +132,10 @@ command :check do |c|
     end
  
     if response.success
-      Veye::Project::Check.format(response.data['dependencies'], options[:format])
+      Veye::Project::Check.format_dependencies(
+        response.data['dependencies'], 
+        options[:format]
+      )
     else
       exit_now!("Didnt get dependency info from API: #{response.message}")
     end
@@ -142,15 +145,13 @@ end
 
 desc 'manage your projects'
 arg_name 'subcommand'
-
 command :projects do |c|
-    
+  c.desc "change output format"
+  c.flag [:format, 'format-name'], :default_value => 'pretty'
+   
   c.desc "show all projects"
-  c.command :list do |sub_c|
-    sub_c.desc "change output format"
-    sub_c.flag [:format, 'format-name'], :default_value => 'pretty'
-
-    sub_c.action do |global_options, options, args|
+  c.command :list do |list|
+    list.action do |global_options, options, args|
       api_key = global_options[:api_key]
       response = Veye::Project::Check.get_list(api_key)
       
@@ -159,10 +160,65 @@ command :projects do |c|
         exit_now!(error_msg)
       end
 
-      Veye::Project::Check.format_list(response.data, options[:format])
+      Veye::Project::Check.format(response.data, options[:format])
     end
   end
 
+  c.desc "upload new project file"
+  c.arg_name "filename"
+  c.command :upload do |upload|
+    upload.action do |global_options, options, args|
+      help_now!("File of project is unspecified.".foreground(:red)) if args.empty?
+      filename = args.shift
+      api_key = global_options[:api_key]
+      response = Veye::Project::Check.upload(filename, api_key)
+      unless response.success
+        error_msg = "Uploading failed - #{response.message.foreground(:red)}"
+        exit_now! error_msg
+      end
+      
+      Veye::Project::Check.format(response.data, options[:format])
+    end
+  end
+  
+  c.desc "show project info"
+  c.arg_name "package_key"
+  c.command :show do |show|
+    show.action do |global_options, options, args|
+      help_now!("Project_key is unspecified".foreground(:red)) if args.empty?
+      proj_key = args.shift
+      api_key = global_options[:api_key]
+
+      response = Veye::Project::Check.get_project(proj_key, api_key)
+      unless response.success
+        error_msg = "Cant read information about project: `#{proj_key}`"
+        error_msg +=  "- #{response.message}".foreground(:red)
+        exit_now! error_msg
+      end
+
+      Veye::Project::Check.format(response.data, options[:format])
+      p "# ------------------"
+      Veye::Project::Check.format_dependencies(response.data['dependencies'], options[:format])
+    end
+  end
+
+  c.desc "delete project"
+  c.arg_name "project_key"
+  c.command :delete do |delete|
+    delete.action do |global_options, options, args|
+      help_now!("Project is missing".foreground(:red)) if args.empty?
+      proj_key = args.shift
+      api_key = global_options[:api_key]
+
+      response = Veye::Project::Check.delete_project(proj_key, api_key)
+      unless response.success
+        printf("Cant delete - %s\n%s\n", response.message.foreground(:red),
+                                         response.data['error'])
+      else
+        p "Deleted"
+      end
+    end
+  end
 end
 
 exit run(ARGV)
