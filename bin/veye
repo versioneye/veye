@@ -140,4 +140,29 @@ command :check do |c|
 end
 
 
+desc 'manage your projects'
+arg_name 'subcommand'
+
+command :projects do |c|
+    
+  c.desc "show all projects"
+  c.command :list do |sub_c|
+    sub_c.desc "change output format"
+    sub_c.flag [:format, 'format-name'], :default_value => 'pretty'
+
+    sub_c.action do |global_options, options, args|
+      api_key = global_options[:api_key]
+      response = Veye::Project::Check.get_list(api_key)
+      
+      if response.success == false
+        error_msg = "Didnt get list of projects: \n #{response.message.foreground(:red)}"
+        exit_now!(error_msg)
+      end
+
+      Veye::Project::Check.format_list(response.data, options[:format])
+    end
+  end
+
+end
+
 exit run(ARGV)

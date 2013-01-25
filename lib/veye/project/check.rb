@@ -1,8 +1,14 @@
 require 'json'
+
 require_relative 'check_csv.rb'
 require_relative 'check_json.rb'
 require_relative 'check_pretty.rb'
 require_relative 'check_table.rb'
+
+require_relative 'project_list_csv.rb'
+require_relative 'project_list_json.rb'
+require_relative 'project_list_pretty.rb'
+require_relative 'project_list_table.rb'
 
 module Veye
   module Project
@@ -13,6 +19,23 @@ module Veye
         "pretty"    => CheckPretty.new,
         "table"     => CheckTable.new
       }
+
+      @@list_output_formats = {
+        "csv"       => ProjectListCSV.new,
+        "json"      => ProjectListJSON.new,
+        "pretty"    => ProjectListPretty.new,
+        "table"     => ProjectListTable.new
+      }
+      
+
+      def self.get_list(api_key)
+        project_api = API::Resource.new(RESOURCE_PATH)
+        qparams = {:params => {:api_key => api_key}}
+
+        project_api.resource.get(qparams) do |response, request, result|
+          response_data = API::JSONResponse.new(request, result, response)
+        end
+      end
 
       def self.upload(filename, api_key)
         response_data = {:success => false}
@@ -63,11 +86,18 @@ module Veye
 
       def self.delete(project_key, api_key)
         project_api = Veye::API::Resource.new(RESOURCE_PATH)
-        project_api.resource["/#{project_id}.json"].delete
+        project_api.resource["/#{project_key}.json"].delete(api_key: api_key)
       end
 
       def self.format(results, format = 'pretty')
         formatter = @@output_formats[format]
+        formatter.before
+        formatter.format results
+        formatter.after
+      end
+      
+      def self.format_list(results, format = 'pretty')
+        formatter = @@list_output_formats[format]
         formatter.before
         formatter.format results
         formatter.after
