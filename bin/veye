@@ -221,4 +221,71 @@ command :projects do |c|
   end
 end
 
+desc "package related methods"
+command :products do |c|
+  c.desc "change output format"
+  c.flag [:format, 'format-name'], :default_value => 'pretty'
+
+  c.desc "check your following status"
+  c.arg_name "prod_key"
+  c.command :following do |following|
+    following.action do |global_options, options, args|
+      #todo: refactor to own helper + add empty string exception
+      help_not!("Product's key is missing".foreground(:red)) if args.empty?
+      prod_key = args.shift
+      api_key = global_options[:api_key]
+      
+      response = Veye::Package::Follow.get_follow_status(prod_key, api_key)
+      unless response.success
+        error_msg = sprintf("Checking state of following failed: %s \n %s",
+                           "#{response.message}".foreground(:red),
+                           "#{response.data}")
+        exit_now! error_msg
+      end
+      
+      p response.data
+    end
+  end
+
+  c.desc "start following specific software package"
+  c.arg_name "prod_key"
+  c.command :follow do |follow|
+    follow.action do |global_options, options, args|
+      help_now!("Product's key is missing".foreground(:red)) if args.empty?
+      prod_key = args.shift
+      api_key = global_options[:api_key]
+      
+      response = Veye::Package::Follow.follow(prod_key, api_key)
+      unless response.success
+        error_msg = sprintf("Following failed: %s \n %s",
+                           "#{response.message}".foreground(:red),
+                           "#{response.data}")
+        exit_now! error_msg
+      end
+
+      p response.data
+    end
+  end
+
+  c.desc "stop following given software package"
+  c.arg_name "prod_key"
+  c.command :unfollow do |unfollow|
+    unfollow.action do |global_options, options, args|
+      help_now!("Product's key is missing".foreground(:red)) if args.empty?
+      prod_key = args.shift
+      api_key = global_options[:api_key]
+
+      response =  Veye::Package::Follow.unfollow(prod_key, api_key)
+      unless response.success
+        error_msg =  sprintf("Unfollowing failed: %s \n %s",
+                            "#{response.message}".foreground(:red),
+                            "#{response.data}")
+        exit_now! error_msg
+      end
+
+      p response.data
+    end
+  end
+end
+
 exit run(ARGV)
