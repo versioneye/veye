@@ -14,7 +14,7 @@ module Veye
         "table"     => CheckTable.new
       }
 
-      def self.upload(filename)
+      def self.upload(filename, api_key)
         response_data = {:success => false}
         file_path = File.absolute_path(filename)
          
@@ -33,30 +33,35 @@ module Veye
        
         project_api = API::Resource.new(RESOURCE_PATH)
         file_obj = File.open(file_path, 'rb')
-        project_api.resource.post({:upload => file_obj}) do |response, request, result, &block|
-            response_data = API::JSONResponse.new(request, result, response)
+        
+        upload_data = {
+          :upload   => file_obj,
+          :api_key  => api_key
+        }
+        project_api.resource.post(upload_data) do |response, request, result, &block|
+          response_data = API::JSONResponse.new(request, result, response)
         end
         
         return response_data
       end
 
-      def self.dependencies(project_id)
+      def self.dependencies(project_key, api_key)
         response_data = nil
         project_api = API::Resource.new(RESOURCE_PATH)
         
-        if project_id.nil? or project_id.empty? 
-            exit_now!("Didnt get right project_id from service: `#{project_id}`")
+        if project_key.nil? or project_key.empty? 
+            exit_now!("Didnt get right project_id from service: `#{project_key}`")
         end
         
-        project_url = "/#{project_id}/dependencies"
-        project_api.resource[project_url].get do |response, request, result|
+        project_url = "/#{project_key}.json"
+        project_api.resource[project_url].get(api_key: api_key) do |response, request, result|
            response_data = API::JSONResponse.new(request, result, response)
         end
 
         return response_data
       end
 
-      def self.delete(project_id)
+      def self.delete(project_key, api_key)
         project_api = Veye::API::Resource.new(RESOURCE_PATH)
         project_api.resource["/#{project_id}.json"].delete
       end

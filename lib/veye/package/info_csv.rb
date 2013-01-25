@@ -7,7 +7,7 @@ module Veye
       def after; end
 
       def format(result, index = 0)
-        printf("%s,%s,%s,%s,%s,%s,%s,%s",
+        printf("%s,%s,%s,%s,%s,%s,%s,%s\n",
               result["name"], result["version"], result["language"],
               result["prod_key"], result["license"], result["prod_type"],
               result["link"], result["description"])

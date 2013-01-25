@@ -17,6 +17,9 @@ version Veye::VERSION
 
 config_file '.veye.rc'
 
+desc 'set api key'
+flag :api_key, :default_value => "<add your api key here>"
+
 desc 'set server url'
 flag :server, :default_value => "versioneye.com"
 
@@ -33,8 +36,8 @@ desc "don't use colors"
 switch 'color', :default_value => true, :negetable => true
 
 pre do |global_options, options, args|
-    $global_options = global_options
-    $global_options[:url] = Veye::API::Resource.build_url($global_options)
+  $global_options = global_options
+  $global_options[:url] = Veye::API::Resource.build_url($global_options)
 end
 
 desc 'check service status'
@@ -42,7 +45,7 @@ command :ping do |c|
  c.action do |global_options, options, args|
    respond = Veye::Service.ping()
    if respond.success
-     puts "#{respond.data}".foreground(:green)
+     puts "#{respond.data['message']}".foreground(:green)
    else
      printf("VersionEye didnt recognized secret word.Answered %s, %s\n",
             respond.code.to_s.foreground(:red),
@@ -55,81 +58,85 @@ end
 desc 'Search packages on VersionEye.'
 arg_name 'search_term'
 command :search do |c|
-    c.desc 'filter results by language'
-    c.flag [:l, :language, 'language-name']
+  c.desc 'filter results by language'
+  c.flag [:l, :language, 'language-name']
 
-    c.desc 'filter result by Manven specific GroupId'
-    c.flag "group-id"
+  c.desc 'filter result by Manven specific GroupId'
+  c.flag "group-id"
 
-    c.desc "get next N results, by default it only return 30 results."
-    c.flag [:page, 'page-number']
+  c.desc "get next N results, by default it only return 30 results."
+  c.flag [:page, 'page-number']
 
-    c.desc "change output format"
-    c.flag [:format,'format-name'], :default_value => "pretty"
+  c.desc "change output format"
+  c.flag [:format,'format-name'], :default_value => "pretty"
 
-    c.action do |global_options, options, args|
-        help_now!("search term is mandatory.") if args.empty?
-        search_term = args.shift
-        response = Veye::Package::Search.search(search_term, 
-                                             options[:language], 
-                                             options["group-id"], 
-                                             options[:page])
+  c.desc "show paging information"
+  c.switch [:pagination, 'show-pagination'], :default_value => true,
+                                             :negatable => true
 
-        if response.success == false or response.data.empty?
-            error_msg = sprintf("No results for `%s`",
-                                "#{search_term}".foreground(:yellow))
-            exit_now!(error_msg)
-        end
+  c.action do |global_options, options, args|
+      help_now!("search term is mandatory.") if args.empty?
+      search_term = args.shift
+      response = Veye::Package::Search.search(search_term, 
+                                           options[:language], 
+                                           options["group-id"], 
+                                           options[:page])
 
-        Veye::Package::Search.format(response.data, options[:format])
+      if response.success == false or response.data["results"].empty?
+          error_msg = sprintf("No results for `%s`",
+                              "#{search_term}".foreground(:yellow))
+          exit_now!(error_msg)
+      end
+
+      paging = (options[:pagination]) ? response.data['paging'] : nil
+      Veye::Package::Search.format(response.data["results"], 
+                                   options[:format],
+                                   paging)
   end
 end
 
 desc 'returns package information'
 arg_name 'product_key'
 command :info do |c|
-    c.desc "change output format"
-    c.flag [:format, 'format-name'], :default_value => 'pretty'
+  c.desc "change output format"
+  c.flag [:format, 'format-name'], :default_value => 'pretty'
 
-    c.action do |global_options, options, args|
-      help_now!("package_key is missing") if args.empty?
-      package_key = args.shift
-      response = Veye::Package::Info.search(package_key)
-      
-      unless response.success
-          error_msg = sprintf("Didnt find any package with product_key: `%s`",
-                            "#{package_key}".foreground(:yellow))
-          exit_now!(error_msg)
-      end
-
-      Veye::Package::Info.format(response.data, options[:format])
+  c.action do |global_options, options, args|
+    help_now!("package_key is missing") if args.empty?
+    package_key = args.shift
+    response = Veye::Package::Info.search(package_key)
+    
+    unless response.success
+        error_msg = sprintf("Didnt find any package with product_key: `%s`",
+                          "#{package_key}".foreground(:yellow))
+        exit_now!(error_msg)
     end
+
+    Veye::Package::Info.format(response.data, options[:format])
+  end
 end
 
 desc 'analyzes given project file and returns version info'
 arg_name 'product_file'
 
 command :check do |c|
-    c.desc "change output format"
-    c.flag [:format, 'format-name'], :default_value => 'pretty'
-    
-    #TODO: add multiple file support
-    c.action do |global_options, options, args|
-        help_now!("File of project is unspecified.".foreground(:red)) if args.empty?
-        file_name = args.shift
-        response = Veye::Project::Check.upload(file_name)
-        if response.success == false
-            exit_now!("File upload failed.".foreground(:red))
-        end
-        
-        project_id = response.data["id"]
-        response = Veye::Project::Check::dependencies(project_id)
-        if response.success
-            Veye::Project::Check.format(response.data, options[:format])
-        else
-            exit_now!("Didnt get dependency info from API: #{response.message}")
-        end
+  c.desc "change output format"
+  c.flag [:format, 'format-name'], :default_value => 'pretty'
+  
+  c.action do |global_options, options, args|
+    help_now!("File of project is unspecified.".foreground(:red)) if args.empty?
+    file_name = args.shift
+    response = Veye::Project::Check.upload(file_name, global_options[:api_key])
+    if response.success == false
+      exit_now!("File upload failed.\n #{response.message}\n".foreground(:red))
     end
+ 
+    if response.success
+      Veye::Project::Check.format(response.data['dependencies'], options[:format])
+    else
+      exit_now!("Didnt get dependency info from API: #{response.message}")
+    end
+  end
 end
 
 

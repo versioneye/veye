@@ -11,23 +11,41 @@ module Veye
 
          response_data = JSON.parse(response)
 
-         @success = success?(result, response_data)
-         @message = response_data["msg"]
-         @data = response_data["data"]
+         @success, @message = success?(result, response_data)
+         @data = response_data
       end
 
       def success?(result, response_data)
-         success = false
-         if @code == 200 and response_data.has_key?("success")
-             case response_data["success"]
-             when true, "true", 1, "1"
-               success = true
-             else
-               success = false
-             end
-         end
+        @code = result.code.to_i
+        success = false
 
-         return success
+        case @code 
+        when 200
+          success = true
+          message = "fetched successfully"
+        when 201
+          success = true
+          message = "created successfully"
+        when 400
+          message = "bad request - wrong parameters, data"
+        when 401
+          message = "not authorized - add apikey or update settings file"
+        when 403
+          message = "forbidden - server refused execute query"
+        when 413
+          message = "request entity too big - use smaller data object"
+        when 500
+          message = "internal server error - write to us"
+        when 501
+          message = "not implemented - write to us"
+        when 503
+          message = "service unavailable - temporary overloaded - write to us."
+        else
+          success = false
+          message = ""
+        end
+
+         return success, message
       end
 
 

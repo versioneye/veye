@@ -26,10 +26,10 @@ module Veye
       end
 
       def self.format(results, format = 'pretty')
-          formatter = @@output_formats[format]
-          formatter.before
-          formatter.format(results)
-          formatter.after
+        formatter = @@output_formats[format]
+        formatter.before
+        formatter.format(results)
+        formatter.after
       end
     end
 

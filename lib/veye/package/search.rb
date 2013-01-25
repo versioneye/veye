@@ -31,12 +31,12 @@ module Veye
             return search_response
         end
 
-        def self.format(search_results, format = 'pretty')
+        def self.format(search_results, format = 'pretty', paging = nil)
             
             formatter = @@output_formats[format]
             formatter.before
             formatter.format(search_results)
-            formatter.after
+            formatter.after paging
         end
         
     end
