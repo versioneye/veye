@@ -310,6 +310,9 @@ command :me do |c|
 
   c.desc "get your favorite packages"
   c.command :favorites do |favorites|
+    favorites.desc "pagination number"
+    favorites.flag [:page, 'page-number']
+
     favorites.action do |global_options, options, args|
       api_key = global_options[:api_key]
       response = Veye::User::Me.get_favorites(api_key)
@@ -320,7 +323,7 @@ command :me do |c|
         exit_now! error_msg
       end
 
-      Veye::User::Me.format_favorites response.data
+      Veye::User::Me.format_favorites response.data['favorites'], options[:format]
     end
 
   end

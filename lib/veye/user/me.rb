@@ -3,6 +3,11 @@ require_relative 'profile_json.rb'
 require_relative 'profile_pretty.rb'
 require_relative 'profile_table.rb'
 
+require_relative 'favorite_csv.rb'
+require_relative 'favorite_json.rb'
+require_relative 'favorite_pretty.rb'
+require_relative 'favorite_table.rb'
+
 module Veye
   module User
     class Me
@@ -11,6 +16,13 @@ module Veye
         'json'    => ProfileJSON.new,
         'pretty'  => ProfilePretty.new,
         'table'   => ProfileTable.new
+      }
+
+      @@favorite_formats = {
+        'csv'     => FavoriteCSV.new,
+        'json'    => FavoriteJSON.new,
+        'pretty'  => FavoritePretty.new,
+        'table'   => FavoriteTable.new
       }
 
       def self.get_profile(api_key)
@@ -41,6 +53,14 @@ module Veye
         formatter = @@profile_formats[format]
         formatter.before
         formatter.format(results)
+        formatter.after
+      end
+
+      def self.format_favorites(results, format = 'pretty')
+        formatter = @@favorite_formats[format]
+        
+        formatter.before
+        formatter.format results
         formatter.after
       end
 
