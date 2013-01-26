@@ -313,6 +313,10 @@ command :me do |c|
     favorites.desc "pagination number"
     favorites.flag [:page, 'page-number']
 
+    favorites.desc "show paging information"
+    favorites.switch [:pagination, 'show-pagination'], :default_value => true,
+                                               :negatable => true
+
     favorites.action do |global_options, options, args|
       api_key = global_options[:api_key]
       response = Veye::User::Me.get_favorites(api_key)
@@ -324,6 +328,10 @@ command :me do |c|
       end
 
       Veye::User::Me.format_favorites response.data['favorites'], options[:format]
+      if options[:pagination]
+        printf("#-- pagination data ------------------\n")
+        Veye::Pagination::Show.format response.data['paging'], options[:format]
+      end
     end
 
   end
