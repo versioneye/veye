@@ -5,6 +5,7 @@ require 'veye/service.rb'
 require 'veye/api.rb'
 require 'veye/package.rb'
 require 'veye/project.rb'
+require 'veye/user.rb'
 
 
 $global_options ||= nil 

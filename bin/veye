@@ -288,4 +288,42 @@ command :products do |c|
   end
 end
 
+
+desc "handle your personal data"
+command :me do |c|
+  c.desc "change output format"
+  c.flag [:format, 'format-name'], :default_value => 'pretty'
+
+  c.desc "get profile information"
+  c.action do |global_options, options, args|
+    api_key = global_options[:api_key]
+    response = Veye::User::Me.get_profile(api_key)
+    unless response.success
+      error_msg = sprintf("Failed to read your profile data: %s\n%s\n",
+                         "#{response.message}".foreground(:red),
+                         "#{response.data}")
+      exit_now! error_msg
+    end
+
+    Veye::User::Me.format_profile response.data, options[:format]
+  end
+
+  c.desc "get your favorite packages"
+  c.command :favorites do |favorites|
+    favorites.action do |global_options, options, args|
+      api_key = global_options[:api_key]
+      response = Veye::User::Me.get_favorites(api_key)
+      unless response.success
+        error_msg = sprintf("Failed to read your profile data: %s\n%s\n",
+                           "#{response.message}".foreground(:red),
+                           "#{response.data}")
+        exit_now! error_msg
+      end
+
+      Veye::User::Me.format_favorites response.data
+    end
+
+  end
+end
+
 exit run(ARGV)

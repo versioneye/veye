@@ -14,13 +14,13 @@ module Veye
       end
 
       def format(result)
-          row = [result["name"], result["version"], result["prod_key"]]
-          row << result["language"]
-          row << result["description"]
+        row = [result["name"], result["version"], result["prod_key"]]
+        row << result["language"]
+        row << result["description"]
 
-          @@table << row
+        @@table << row
 
-          @@table << ["", "", "", "link:", result["link"]]
+        @@table << ["", "", "", "link:", result["link"]]
       end
     end
 
