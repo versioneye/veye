@@ -16,11 +16,11 @@ module Veye
 
       def self.search(package_key)
         product_api = API::Resource.new(RESOURCE_PATH)
-        package_key = package_key.gsub(/\//, "--").gsub(/\./, "~")
+        safe_prod_key = Package.encode_prod_key(package_key)
         request_response = nil 
-        product_api.resource["/#{package_key}.json"].get do |response, request, result, &block|
+        product_api.resource["/#{safe_prod_key}.json"].get do |response, request, result, &block|
            
-            request_response = API::JSONResponse.new(request, result, response)
+          request_response = API::JSONResponse.new(request, result, response)
         end
         return request_response
       end

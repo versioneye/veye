@@ -88,10 +88,12 @@ command :search do |c|
         exit_now!(error_msg)
     end
 
-    paging = (options[:pagination]) ? response.data['paging'] : nil
-    Veye::Package::Search.format(response.data["results"], 
-                                 options[:format],
-                                 paging)
+    Veye::Package::Search.format(response.data["results"], options[:format])
+    if options[:pagination]
+      printf("\n#-- pagination data ------------------\n")
+      Veye::Pagination::Show.format response.data['paging'], options[:format]
+    end
+  
   end
 end
 
@@ -329,7 +331,7 @@ command :me do |c|
 
       Veye::User::Me.format_favorites response.data['favorites'], options[:format]
       if options[:pagination]
-        printf("#-- pagination data ------------------\n")
+        printf("\n#-- pagination data ------------------\n")
         Veye::Pagination::Show.format response.data['paging'], options[:format]
       end
     end
