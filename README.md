@@ -9,7 +9,7 @@
 
 **veye** is commandline tool to make all this available on command-line and manipulate results with awesome tools and scripts. 
 
-![Main help](https://www.dropbox.com/s/ffvpzupa3rvc3vq/cli_start_page.png)
+![Main help](http://dl.dropbox.com/u/19578784/versioneye/cli_start_page.png)
 
 
 ### Setup
@@ -38,6 +38,13 @@
 
   ```bash
   $> veye initconfig
+  #it creates configuration file for VersionEye CLI
+  $> cat ~/.veye.rc
+  ---
+  :api_key: <add your key>
+  :server: 127.0.0.1
+  :port: "3000"
+  ....
   ```
 
 # Basic usage
@@ -47,7 +54,7 @@
 
  ```bash
    $> veye ping
-   VersionEye is: up
+   pong
  ```
 
 ### Search packages 
@@ -72,6 +79,9 @@
   ```bash
     $> veye search junit --page 2
     $> veye search junit --page-number=2
+    
+    #you can cancel pagination with --no-pagination argument
+    $> veye search junit --page 3 --no-pagination
   ```
 
 ###### Use different output format
