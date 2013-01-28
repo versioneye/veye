@@ -9,7 +9,7 @@
 
 **veye** is commandline tool to make all this available on command-line and manipulate results with awesome tools and scripts. 
 
-![Main help](https://dl-web.dropbox.com/get/versioneye_video/veye_cli/veye_help_main.png?w=2907c1fc)
+![Main help](https://www.dropbox.com/s/ffvpzupa3rvc3vq/cli_start_page.png)
 
 
 ### Setup
