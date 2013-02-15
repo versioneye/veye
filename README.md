@@ -29,7 +29,7 @@
 ###### Or build Gem file and install it as global command
 
   ```
-  $> bundle build veye-0.0.1.gem
+  $> gem build veye.gemspec
   $> veye help
   $> veye ping
   ```
