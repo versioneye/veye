@@ -19,7 +19,7 @@ module Veye
             search_response = nil
             search_params = {:q => search_term.to_s}
 
-            search_params[:lang] = language unless language.nil?
+            search_params[:lang] = Package.encode_language(language) unless language.nil?
             search_params[:g] = group_id unless group_id.nil?
             search_params[:page] = page unless page.nil?
 
