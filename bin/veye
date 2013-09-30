@@ -21,16 +21,16 @@ desc 'set api key'
 flag :api_key, :default_value => "<add your api key here>"
 
 desc 'set server url'
-flag :server, :default_value => "versioneye.com"
+flag :server, :default_value => "www.versioneye.com"
 
 desc 'set service port'
-flag :port, :default_value => ""
+flag :port, :default_value => "80"
 
 desc 'set service path'
 flag :path, :default_value => "api/v2"
 
 desc 'set connection protocol'
-flag :protocol, :default_value => "https"
+flag :protocol, :default_value => "http"
 
 desc "don't use colors"
 switch 'color', :default_value => true, :negetable => true
@@ -38,6 +38,7 @@ switch 'color', :default_value => true, :negetable => true
 pre do |global_options, options, args|
   $global_options = global_options
   $global_options[:url] = Veye::API::Resource.build_url($global_options)
+  check_configs($global_options)
 end
 
 desc 'check service status'
@@ -199,7 +200,6 @@ command :projects do |c|
       end
 
       Veye::Project::Check.format(response.data, options[:format])
-      p "# ------------------"
       Veye::Project::Check.format_dependencies(response.data['dependencies'], options[:format])
     end
   end
