@@ -16,10 +16,23 @@ module Veye
 
       def self.search(package_key)
         product_api = API::Resource.new(RESOURCE_PATH)
-        safe_prod_key = Package.encode_prod_key(package_key)
+        tokens = package_key.to_s.split('/')
+        lang = Package.encode_language(tokens.first)
+        safe_prod_key = Package.encode_prod_key(tokens.drop(1).join("/"))
+        
+        if lang.nil? or safe_prod_key.nil?
+          msg =  %Q[
+            You missed language or product key. 
+            Example: clojure/ztellman/aleph, which as required structure <prog lang>/<product_code>
+          ]
+          error_msg = sprrintf("%s. \n%s", 
+                               "Error: Malformed key.".foreground(:red),
+                              msg)
+          exit_now!(error_msg)
+        end
+
         request_response = nil 
-        product_api.resource["/#{safe_prod_key}.json"].get do |response, request, result, &block|
-           
+        product_api.resource["/#{lang}/#{safe_prod_key}"].get do |response, request, result, &block|
           request_response = API::JSONResponse.new(request, result, response)
         end
         return request_response

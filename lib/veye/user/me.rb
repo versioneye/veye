@@ -42,7 +42,7 @@ module Veye
         response_data = nil
         qparams = {:params => {:api_key => api_key}}
 
-        user_api.resource['/favorites.json'].get(qparams) do |response, request, result|
+        user_api.resource['/favorites'].get(qparams) do |response, request, result|
           response_data = API::JSONResponse.new(request, result, response)
         end
 

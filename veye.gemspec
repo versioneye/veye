@@ -27,9 +27,9 @@ spec = Gem::Specification.new do |s|
   s.add_development_dependency('rake')
   s.add_development_dependency('rdoc')
   s.add_development_dependency('aruba')
-  s.add_runtime_dependency('gli','2.5.3')
-  s.add_runtime_dependency('rest-client')
-  s.add_runtime_dependency('awesome_print')
+  s.add_runtime_dependency('gli','2.8.0')
+  s.add_runtime_dependency('rest-client', '1.6.7')
+  s.add_runtime_dependency('awesome_print', '1.2.0')
   s.add_runtime_dependency('rainbow')
-  s.add_runtime_dependency('terminal-table')
+  s.add_runtime_dependency('terminal-table', '1.4.5')
 end

@@ -24,7 +24,7 @@ module Veye
             search_params[:page] = page unless page.nil?
 
             request_params = {:params => search_params}
-            search_api.resource["/#{search_term}.json"].get(request_params) do |response, request, result, &block|
+            search_api.resource["/#{search_term}"].get(request_params) do |response, request, result, &block|
                 search_response = API::JSONResponse.new(request, result, response)    
             end
 

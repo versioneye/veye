@@ -4,7 +4,7 @@ module Veye
     def self.ping(n = 1)
       public_api = API::Resource.new RESOURCE_PATH
       api_respond =  "no idea"
-      public_api.resource['/ping.json'].get do |response, request, result, &block|
+      public_api.resource['/ping'].get do |response, request, result, &block|
         api_respond = API::JSONResponse.new(request, result, response)
       end
 

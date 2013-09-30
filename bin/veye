@@ -27,7 +27,7 @@ desc 'set service port'
 flag :port, :default_value => ""
 
 desc 'set service path'
-flag :path, :default_value => "api/v1"
+flag :path, :default_value => "api/v2"
 
 desc 'set connection protocol'
 flag :protocol, :default_value => "https"

@@ -15,10 +15,10 @@ module Veye
           
           color = (result["outdated"] == true) ? :red : :green
           printf("\t%-15s: %s\n", "Outdated",
-                                  "#{result["outdated"]}".foreground(color))
+                                  "#{result['outdated']}".foreground(color))
 
           printf("\t%-15s: %s\n", "Latest version",
-                                  result["version_current"].foreground(color))
+                                  "#{result['version_current']}".foreground(color))
 
           printf("\t%-15s: %s\n", "Current version", result["version_requested"])
         

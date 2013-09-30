@@ -18,7 +18,7 @@ module Veye
       def success?(result, response_data)
         @code = result.code.to_i
         success = false
-
+         
         case @code 
         when 200
           success = true
@@ -29,7 +29,7 @@ module Veye
         when 400
           message = "bad request - wrong parameters, data"
         when 401
-          message = "not authorized - add apikey or update settings file"
+          message = "not authorized - add apikey or update settings file ~/.veye.rc"
         when 403
           message = "forbidden - server refused execute query"
         when 413
@@ -40,6 +40,8 @@ module Veye
           message = "not implemented - write to us"
         when 503
           message = "service unavailable - temporary overloaded - write to us."
+        when 531
+          message = "not authorized - add apikey or update settings file ~/.veye.rc"
         else
           success = false
           message = ""

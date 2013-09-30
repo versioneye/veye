@@ -73,10 +73,13 @@ module Veye
         project_api = API::Resource.new(RESOURCE_PATH)
         
         if project_key.nil? or project_key.empty? 
-            exit_now!("Not valid project_key: `#{project_key}`")
+          error_msg = sprintf("%s: %s",
+                             "Error".foreground(:red),
+                             "Not valid project_key: `#{project_key}`")          
+          exit_now!()
         end
         
-        project_url = "/#{project_key}.json"
+        project_url = "/#{project_key}"
         qparams = {:params => {:api_key => api_key}}
         project_api.resource[project_url].get(qparams) do |response, request, result|
            response_data = API::JSONResponse.new(request, result, response)
@@ -90,7 +93,7 @@ module Veye
         qparams = {:params => {:api_key => api_key}}
         response_data = nil
 
-        project_api.resource["/#{project_key}.json"].delete(qparams) do |response, request, result|
+        project_api.resource["/#{project_key}"].delete(qparams) do |response, request, result|
           response_data = API::JSONResponse.new(request, result, response)
         end
 
