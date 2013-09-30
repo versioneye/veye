@@ -92,7 +92,7 @@
     $> veye search json --format=pretty
   ```
  
-  ![Pretty format](https://dl-web.dropbox.com/get/versioneye_video/veye_cli/search_format_pretty.png?w=0991bcd0)
+  ![Pretty format](https://s3-eu-west-1.amazonaws.com/veye/search_format_pretty.png)
  
  **csv** - to pipeline output to [awk](http://www.gnu.org/software/gawk/manual/gawk.html)
  
@@ -100,7 +100,7 @@
   $> veye search json --format=csv
  ```
 
- ![CSV format](https://dl-web.dropbox.com/get/versioneye_video/veye_cli/search_format_csv.png?w=778a61cf)
+ ![CSV format](https://s3-eu-west-1.amazonaws.com/veye/search_format_csv.png)
 
  **json** - for manipulating results with [jq](http://stedolan.github.com/jq/) . 
  Check out our jq recipes in [wiki](https://github.com/versioneye/veye/wiki/jq-recipes) .
@@ -110,14 +110,14 @@
   $> veye search json --format=json
  ```
  
- ![Json format](https://dl-web.dropbox.com/get/versioneye_video/veye_cli/search_format_json.png?w=9495485e)
+ ![Json format](https://s3-eu-west-1.amazonaws.com/veye/search_format_json.png)
  
  **table**
  
  ```bash
   $> veye search json --format=table
  ```
- ![Table output](https://dl-web.dropbox.com/get/versioneye_video/veye_cli/search_format_table.png?w=302b736f)
+ ![Table output](https://s3-eu-west-1.amazonaws.com/veye/search_format_table.png)
  
 
 ###### Empty response
@@ -138,5 +138,5 @@ It supports also `--format` flag with same values.
     Asking information about: junit/junit
   ```
   
-  ![Pretty print](https://dl-web.dropbox.com/get/versioneye_video/veye_cli/info_format_pretty.png?w=09fdfbf6)
+  ![Pretty print](https://s3-eu-west-1.amazonaws.com/veye/info_format_pretty.png)
   
