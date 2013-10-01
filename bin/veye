@@ -36,9 +36,10 @@ desc "don't use colors"
 switch 'color', :default_value => true, :negetable => true
 
 pre do |global_options, options, args|
-  $global_options = global_options
-  $global_options[:url] = Veye::API::Resource.build_url($global_options)
+  $global_options = init_environment #global_options
+  $global_options.merge!(global_options)
   check_configs($global_options)
+  $global_options[:url] = Veye::API::Resource.build_url($global_options)
 end
 
 desc 'check service status'
@@ -76,7 +77,7 @@ command :search do |c|
                                              :negatable => true
 
   c.action do |global_options, options, args|
-    help_now!("search term is mandatory.") if args.empty?
+    help_now!("the search term is mandatory.".foreground(:red)) if args.empty?
     search_term = args.shift
     response = Veye::Package::Search.search(search_term, 
                                          options[:language], 
@@ -84,8 +85,11 @@ command :search do |c|
                                          options[:page])
 
     if response.success == false or response.data["results"].empty?
-        error_msg = sprintf("No results for `%s`",
-                            "#{search_term}".foreground(:yellow))
+        error_msg = sprintf(
+          "No results for `%s` %s",
+          "#{search_term}".foreground(:yellow),
+          (options[:language].nil?)? "" : " for language: #{options[:language]}"
+        )
         exit_now!(error_msg)
     end
 
@@ -105,13 +109,15 @@ command :info do |c|
   c.flag [:format, 'format-name'], :default_value => 'pretty'
 
   c.action do |global_options, options, args|
-    help_now!("package_key is missing") if args.empty?
+    help_now!("package_key is missing".foreground(:red)) if args.empty?
     package_key = args.shift
     response = Veye::Package::Info.search(package_key)
     
     unless response.success
-        error_msg = sprintf("Didnt find any package with product_key: `%s`",
-                          "#{package_key}".foreground(:yellow))
+        error_msg = sprintf(
+          "Didnt find any package with product_key: `%s`",
+          "#{package_key}".foreground(:yellow)
+        )
         exit_now!(error_msg)
     end
 
@@ -171,7 +177,7 @@ command :projects do |c|
   c.arg_name "filename"
   c.command :upload do |upload|
     upload.action do |global_options, options, args|
-      help_now!("File of project is unspecified.".foreground(:red)) if args.empty?
+      help_now!("The File of project is unspecified.".foreground(:red)) if args.empty?
       filename = args.shift
       api_key = global_options[:api_key]
       response = Veye::Project::Check.upload(filename, api_key)
@@ -232,8 +238,7 @@ command :products do |c|
   c.arg_name "prod_key"
   c.command :following do |following|
     following.action do |global_options, options, args|
-      #todo: refactor to own helper + add empty string exception
-      help_not!("Product's key is missing".foreground(:red)) if args.empty?
+      help_now!("Product's key is missing".foreground(:red)) if args.empty?
       prod_key = args.shift
       api_key = global_options[:api_key]
       

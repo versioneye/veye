@@ -9,6 +9,9 @@
 
 **veye** is commandline tool to make all this available on command-line and manipulate results with awesome tools and scripts. 
 
+**PS:** Our _premium customers_ can also use offline search. Please send your email to `contact@versioneye.com` to get more information.
+ 
+
 ![Main help](http://dl.dropbox.com/u/19578784/versioneye/cli_start_page.png)
 
 
@@ -40,7 +43,7 @@
   $> veye initconfig
   #it creates configuration file for VersionEye CLI
   $> cat ~/.veye.rc
-  ---
+  
   :api_key: <add your key>
   :server: 127.0.0.1
   :port: "3000"
@@ -79,6 +82,7 @@
   ```bash
     $> veye search junit --page 2
     $> veye search junit --page-number=2
+    $> veye search json --lang=r,php --page=2
     
     #you can cancel pagination with --no-pagination argument
     $> veye search junit --page 3 --no-pagination
@@ -128,6 +132,15 @@ There will be situation, when [VersionEye](http://versioneye.com) dont have info
   No results for 'json' with given parameters: 
   {:q=>"json", :lang=>"python", :page=>1}
   ```
+  
+### Global options
+
+You can override your default global options by adding proper keyword and value.
+For example to override a number of port, when doing search:
+
+```
+  $> veye --port=4567 search json --lang=php,nodejs
+```
 
 ### Package information
 
@@ -140,3 +153,26 @@ It supports also `--format` flag with same values.
   
   ![Pretty print](https://s3-eu-west-1.amazonaws.com/veye/info_format_pretty.png)
   
+
+### Products 
+
+This command has subcommands to control your personal connections with libraries.
+
+```
+	;;follow some package to add it into your RSS feed
+	$> veye products follow clojure/ztellman/aleph
+	$> veye products unfollow clojure/ztellman/aleph
+	
+	;; show the list of products in your's RSS feed
+	$> veye products
+```
+
+### Projects
+
+;;;todo
+;;;licences
+
+
+### Me
+;;; todo
+

@@ -15,7 +15,7 @@ module Veye
         port = global_options.fetch(:port, "")
         path = global_options[:path]
 
-        unless port.empty?
+        unless port.to_s.empty?
             resource_url = "#{protocol}://#{server}:#{port}/#{path}"
         else
             resource_url = "#{protocol}://#{server}/#{path}"
