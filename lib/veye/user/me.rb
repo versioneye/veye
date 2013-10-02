@@ -37,10 +37,15 @@ module Veye
         return response_data
       end
 
-      def self.get_favorites(api_key)
+      def self.get_favorites(api_key, page = 1)
         user_api = API::Resource.new(RESOURCE_PATH)
         response_data = nil
-        qparams = {:params => {:api_key => api_key}}
+        qparams = {
+          :params => {
+            :api_key => api_key,
+            :page => page || 1
+          }
+        }
 
         user_api.resource['/favorites'].get(qparams) do |response, request, result|
           response_data = API::JSONResponse.new(request, result, response)

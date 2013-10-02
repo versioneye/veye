@@ -368,7 +368,8 @@ command :me do |c|
 
     favorites.action do |global_options, options, args|
       api_key = global_options[:api_key]
-      response = Veye::User::Me.get_favorites(api_key)
+      response = Veye::User::Me.get_favorites(api_key, options[:page])
+
       unless response.success
         error_msg = sprintf("Failed to read your profile data: %s\n%s\n",
                            "#{response.message}".foreground(:red),

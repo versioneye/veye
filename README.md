@@ -12,20 +12,22 @@
 
 **PS:** Our _premium customers_ can also use offline search. Please send your email to `contact@versioneye.com` to get more information.
 
-Most endpoints require the api-key, which you can get it [here](https://www.versioneye.com/settings/api).
+Most endpoints require the api-key, which you can get [here](https://www.versioneye.com/settings/api).
 
 ![Main help](http://dl.dropbox.com/u/19578784/versioneye/cli_start_page.png)
 
 
-### Setup
+### Install
 
-###### Gem
 
 ```
-  $> 	
+  $> gem install veye
 ```
+
+### Using dev-version
 
 ###### Download source
+
  ```bash
   $> git clone https://github.com/versioneye/veye.git
   $> cd veye
@@ -45,13 +47,15 @@ Most endpoints require the api-key, which you can get it [here](https://www.vers
   $> veye ping
   ```
  
-###### Set up default configuration
+### Initial configuration
 
-  ```bash
+The tool will raise exception when a configuration file is missing. The tool needs configuration file to keep user specific settings and  authorization key. 
+
+
+  ```
   $> veye initconfig
   #it creates configuration file for VersionEye CLI
   $> cat ~/.veye.rc
-  
   :api_key: <add your key>
   :server: 127.0.0.1
   :port: "3000"
@@ -61,14 +65,17 @@ Most endpoints require the api-key, which you can get it [here](https://www.vers
 # Basic usage
 
 
-### Check service 
+### Check service
+You can use this service to check does the tool works and tests is our API accessible. This command doesnt need authorization.
 
  ```bash
    $> veye ping
    pong
  ```
 
-### Search packages 
+### Search packages
+
+This command opens window to magnificient world of software packages - VersionEye has ~ 200K software libraries and it's reachable via your commandline.
 
 ###### Get command help
 
@@ -155,14 +162,17 @@ For example to override a number of port, when doing search:
 
 ### Package information
 
+Ok, thats most trickiest part of our tool. You need to prepend a language of package just before product's key. For example, if you have Java package with product key junit/junit, then you have to encode this value as: `java/junit/junit`.
+
+
 It supports also `--format` flag with same values.
 
   ```
-    $> veye info junit/junit
+    $> veye info java/junit/junit
     Asking information about: junit/junit
   ```
   
-  ![Pretty print](https://s3-eu-west-1.amazonaws.com/veye/info_format_pretty.png)
+  ![Pretty print](https://s3-eu-west-1.amazonaws.com/veye/info_format_pretty2.png)
   
 
 ### Products 
@@ -178,9 +188,17 @@ This command has subcommands to control your personal connections with libraries
 	$> veye products
 ```
 
+### Check
+
+Use `check` command to upload your project file and check the state of dependencies. **NB!** it only shows information about dependencies, if you need also project info, then please use `veye project upload` command.
+
+```
+ $> veye check test/files/Gemfile
+```
+
 ### Project
 
-`project` command holds a multiple subcommands for working with our project files.
+The `project` command holds a multiple subcommands for working with our project files.
 
 ###### show existing projects
 
@@ -190,6 +208,7 @@ This command has subcommands to control your personal connections with libraries
 ```
 
 ###### show information of specific project
+
 A `show` command expects a proper project_key, which you can from the list of already existing projects.
 
 ```
@@ -198,6 +217,7 @@ A `show` command expects a proper project_key, which you can from the list of al
 ```
 
 ###### upload project file
+
 Use `upload` command to create new project. This command expects proper filepath to the file and the file is smaller than 500KB. VersionEye supports currently 8 different package managers(*Leiningen, Gem, Maven, NPM, Packagist, Pip, Setup.py, R*), Bower and Obj-C is already on pipeline.
 
 ```
@@ -241,3 +261,11 @@ This command removes the specified project from your project's list.
 	$> veye me
 ``` 
 
+####### Favorite packages
+
+`me` command has a `favorite` command, which returns all packages you're currently following.
+
+```
+ $> veye me favorites
+ $> veye me favorites --page=2
+```
