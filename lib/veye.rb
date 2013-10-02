@@ -79,7 +79,7 @@ def generate_ssl_keys(global_opts)
   ssl_path = File.expand_path(global_opts[:ssl_path])
   unless Dir.exists?(ssl_path)
     p "Creating folder for ssl keys: `#{ssl_path}`"
-    Dir.makedir(ssl_path)
+    Dir.mkdir(ssl_path)
   end
 
   Dir.chdir(ssl_path)
