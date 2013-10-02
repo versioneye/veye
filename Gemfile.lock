@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    veye (0.0.2)
+    veye (0.0.3)
       awesome_print (= 1.2.0)
       gli (= 2.8.0)
       rainbow

@@ -21,15 +21,22 @@ def config_exists?
   File.exists?(filepath)
 end
 
-def self.check_configs(global_opts)
+def check_config_file
   unless config_exists?
     msg = sprintf("%s: %s\n",
                   "config file doesnt exist. ".foreground(:red),
                   "Use `veye initconfig` to initialize settings file.")
     exit_now!(msg)
   end
+end
+
+def self.check_configs(global_opts)
+  check_config_file
   check_api_key(global_opts)
 
+  unless ssl_key_exists?(global_opts)
+    generate_ssl_keys(global_opts)
+  end
   true
 end
 
@@ -54,6 +61,36 @@ def check_api_key(global_opts)
     result = true
   end
 
+  result
+end
+
+def ssl_key_exists?(global_opts)
+  fullpath = File.expand_path(global_opts[:ssl_path])
+  return File.exists?("#{fullpath}/veye_cert.pem")
+end
+
+def generate_ssl_keys(global_opts)
+  result = false
+  key_command = %Q[
+    openssl req -x509 -newkey rsa:2048 -keyout veye_key.pem -out veye_cert.pem -nodes
+  ]
+
+  Dir.chdir(Dir.home)
+  ssl_path = File.expand_path(global_opts[:ssl_path])
+  unless Dir.exists?(ssl_path)
+    p "Creating folder for ssl keys: `#{ssl_path}`"
+    Dir.makedir(ssl_path)
+  end
+
+  Dir.chdir(ssl_path)
+  if system(key_command)
+    print "Key is generated.\n"
+    result = true
+  else
+    print "Cant generate SSL keys. Do you have openssl installed?\n"
+  end
+
+  Dir.chdir(Dir.home)
   result
 end
 

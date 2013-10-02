@@ -9,11 +9,11 @@ spec = Gem::Specification.new do |s|
   s.homepage = 'https://github.com/versioneye/veye'
   s.platform = Gem::Platform::RUBY
   s.summary = 'Commandline tool for VersionEye'
-  s.description = <<-EOF
+  s.description = %Q[
     Veye is commandline tool like Heroku has own ToolBelt, 
     and purpose of this tool is to make developer\'s life even
     more simpler and keep you up-to-date with freshest packages.
-  EOF
+  ]
   s.license = "MIT"
   s.post_install_message = "Thanks for installing! To get more info, use: veye help"
 # Add your other files here if you make them

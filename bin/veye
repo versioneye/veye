@@ -32,11 +32,15 @@ flag :path, :default_value => "api/v2"
 desc 'set connection protocol'
 flag :protocol, :default_value => "http"
 
+desc 'set folder of veye_cert.pem'
+flag :ssl_path, :default_value => "~/keys"
+
 desc "don't use colors"
 switch 'color', :default_value => true, :negetable => true
 
 pre do |global_options, options, args|
-  $global_options = init_environment #global_options
+  check_config_file
+  $global_options = init_environment
   $global_options.merge!(global_options)
   check_configs($global_options)
   $global_options[:url] = Veye::API::Resource.build_url($global_options)
