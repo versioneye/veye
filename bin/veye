@@ -174,10 +174,10 @@ command :projects do |c|
   end
 
   c.desc "upload new project file"
-  c.arg_name "filename"
+  c.arg_name "filepath"
   c.command :upload do |upload|
     upload.action do |global_options, options, args|
-      help_now!("The File of project is unspecified.".foreground(:red)) if args.empty?
+      help_now!("The filepath is missing.".foreground(:red)) if args.empty?
       filename = args.shift
       api_key = global_options[:api_key]
       response = Veye::Project::Check.upload(filename, api_key)
@@ -187,9 +187,31 @@ command :projects do |c|
       end
       
       Veye::Project::Check.format(response.data, options[:format])
+      Veye::Project::Check.format_dependencies(response.data['dependencies'], options[:format])
+   end
+  end
+ 
+  c.desc "update existing project file"
+  c.arg_name "project_key_and_filepath", multiple: true
+  c.command :update do |update|
+    update.action do |global_options, options, args|
+      help_now!("The project key and the filepath are missing".foreground(:red)) if args.empty?
+      help_now!("One argument is missing: a project key or filepath".foreground(:red)) if args.count == 1
+      
+      project_key, filename = args
+      api_key = global_options[:api_key]
+
+      response = Veye::Project::Check.update(project_key, filename, api_key)
+      unless response.success
+        error_msg = "Uploading failed - #{response.message.foreground(:red)}"
+        exit_now! error_msg
+      end
+      
+      Veye::Project::Check.format(response.data, options[:format])
+      Veye::Project::Check.format_dependencies(response.data['dependencies'], options[:format])
     end
   end
-  
+
   c.desc "show project info"
   c.arg_name "package_key"
   c.command :show do |show|

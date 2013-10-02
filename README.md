@@ -1,8 +1,9 @@
 # Veye
 
-[VersionEye](http://www.versioneye.com/) is a cross-platform search engine and crowdsourcing app for open source software libraries. 
+[VersionEye](http://www.versioneye.com/) is a cross-platform search engine and crowdsourcing app for opensource software libraries. 
+
  * Take advantage of the extended search to find any library you look for. 
- * Follow and track your favorite software packages
+ * Follow and track your favorite software packages via RSS feed.
  * Leave comments and add additional meta information to the libraries to improve the quality of the data. 
  * Contribute to this crowdsourcing project to make the world a better place for software developers.
 
@@ -10,12 +11,19 @@
 **veye** is commandline tool to make all this available on command-line and manipulate results with awesome tools and scripts. 
 
 **PS:** Our _premium customers_ can also use offline search. Please send your email to `contact@versioneye.com` to get more information.
- 
+
+Most endpoints require the api-key, which you can get it [here](https://www.versioneye.com/settings/api).
 
 ![Main help](http://dl.dropbox.com/u/19578784/versioneye/cli_start_page.png)
 
 
 ### Setup
+
+###### Gem
+
+```
+  $> 
+```
 
 ###### Download source
  ```bash
@@ -36,7 +44,7 @@
   $> veye help
   $> veye ping
   ```
-
+ 
 ###### Set up default configuration
 
   ```bash
@@ -75,11 +83,14 @@
    $> veye search -l java
    $> veye search --language java
    $> veye search --language-name=java
+   
+   #search packages for multiple languages
+   $> veye search --lang=nodejs,php
  ```
 
 ###### Use result paging
 
-  ```bash
+  ```
     $> veye search junit --page 2
     $> veye search junit --page-number=2
     $> veye search json --lang=r,php --page=2
@@ -90,11 +101,11 @@
 
 ###### Use different output format
 
-  **pretty print** - human readable output
+**pretty print** - human readable output
  
-  ```bash
-    $> veye search json --format=pretty
-  ```
+```bash
+  $> veye search json --format=pretty
+```
  
   ![Pretty format](https://s3-eu-west-1.amazonaws.com/veye/search_format_pretty.png)
  
@@ -116,7 +127,7 @@
  
  ![Json format](https://s3-eu-west-1.amazonaws.com/veye/search_format_json.png)
  
- **table**
+ **table view**
  
  ```bash
   $> veye search json --format=table
@@ -167,8 +178,45 @@ This command has subcommands to control your personal connections with libraries
 	$> veye products
 ```
 
-### Projects
+### Project
 
+`project` command holds a multiple subcommands for working with our project files.
+
+###### show existing projects
+
+```
+  $> veye project list
+  $> veye project --format=table
+```
+
+###### show information of specific project
+A `show` command expects a proper project_key, which you can from the list of already existing projects.
+
+```
+	$> veye project show rubygem_gemfile_1
+	$> veye project show rubygem_gemfile_1 --format=table
+```
+
+###### upload project file
+Use `upload` command to create new project. This command expects proper filepath to the file and the file is smaller than 500KB. VersionEye supports currently 8 different package managers(*Leiningen, Gem, Maven, NPM, Packagist, Pip, Setup.py, R*), Bower and Obj-C is already on pipeline.
+
+```
+  $> veye project upload test/files/Gemfile
+  $> veye project upload test/files/maven.pom
+```
+
+###### re-upload project file for existing project
+
+You can use `update` command to update the information of already existing project.
+This command expects correct project_key and a path to file.
+
+```
+  $> veye project update rubygem_gemfile_1 test/files/Gemfile
+  $> veye project update rubygem_gemfile_1 test/files/Gemfile --format=table
+```
+
+
+#####
 ;;;todo
 ;;;licences
 
