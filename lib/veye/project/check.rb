@@ -103,13 +103,13 @@ module Veye
           error_msg = sprintf("%s: %s",
                              "Error".foreground(:red),
                              "Not valid project_key: `#{project_key}`")          
-          exit_now!()
+          exit_now! error_msg
         end
         
         project_url = "/#{project_key}"
         qparams = {:params => {:api_key => api_key}}
         project_api.resource[project_url].get(qparams) do |response, request, result|
-           response_data = API::JSONResponse.new(request, result, response)
+          response_data = API::JSONResponse.new(request, result, response)
         end
 
         return response_data

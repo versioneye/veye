@@ -14,7 +14,7 @@ spec = Gem::Specification.new do |s|
     and purpose of this tool is to make developer\'s life even
     more simpler and keep you up-to-date with freshest packages.
   EOF
-  s.licence "MIT"
+  s.license = "MIT"
   s.post_install_message = "Thanks for installing! To get more info, use: veye help"
 # Add your other files here if you make them
   s.files = %w(lib/veye.rb)

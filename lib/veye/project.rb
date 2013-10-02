@@ -1,4 +1,5 @@
 require_relative 'project/check.rb'
+require_relative 'project/licence.rb'
 
 module Veye
   module Project

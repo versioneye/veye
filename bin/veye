@@ -49,10 +49,11 @@ command :ping do |c|
    if respond.success
      puts "#{respond.data['message']}".foreground(:green)
    else
-     printf("VersionEye didnt recognized secret word.Answered %s, %s\n",
-            respond.code.to_s.foreground(:red),
-            "#{respond.message}".foreground(:yellow)
-           )
+     printf(
+       "VersionEye didnt recognized secret word.Answered %s, %s\n",
+       respond.code.to_s.foreground(:red),
+       "#{respond.message}".foreground(:yellow)
+     )
    end
  end
 end
@@ -213,7 +214,7 @@ command :projects do |c|
   end
 
   c.desc "show project info"
-  c.arg_name "package_key"
+  c.arg_name "project_key"
   c.command :show do |show|
     show.action do |global_options, options, args|
       help_now!("Project_key is unspecified".foreground(:red)) if args.empty?
@@ -232,6 +233,26 @@ command :projects do |c|
     end
   end
 
+  c.desc "show licences of subdependencies"
+  c.arg_name "project_key"
+  c.command :licences do |licences|
+    licences.action do |global_options, options, args|
+      help_now!("Project's key is unspecified".foreground(:red)) if args.empty?
+      proj_key = args.shift
+      api_key = global_options[:api_key]
+
+      response = Veye::Project::Licence.get_project(proj_key, api_key)
+      unless response.success
+        error_msg = sprintf("%s \n %s",
+                            "Cant access a information for project `#{proj_key}`".foreground(:red),
+                            "#{response.message}")
+        exit_now! error_msg
+      end
+      
+      Veye::Project::Licence.format(response.data, options[:format])
+    end
+  end
+
   c.desc "delete project"
   c.arg_name "project_key"
   c.command :delete do |delete|
@@ -245,7 +266,7 @@ command :projects do |c|
         printf("Cant delete - %s\n%s\n", response.message.foreground(:red),
                                          response.data['error'])
       else
-        p "Deleted"
+        printf "Deleted\n".foreground(:green)
       end
     end
   end
@@ -272,7 +293,7 @@ command :products do |c|
         exit_now! error_msg
       end
       
-      p response.data
+      printf "#{response.data}\n".foreground(:green)
     end
   end
 
@@ -291,8 +312,7 @@ command :products do |c|
                            "#{response.data}")
         exit_now! error_msg
       end
-
-      p response.data
+      printf "#{response.data}\n".foreground(:green)
     end
   end
 
@@ -312,7 +332,7 @@ command :products do |c|
         exit_now! error_msg
       end
 
-      p response.data
+      printf "#{response.data}\n".foreground(:green)
     end
   end
 end

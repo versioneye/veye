@@ -22,7 +22,7 @@ Most endpoints require the api-key, which you can get it [here](https://www.vers
 ###### Gem
 
 ```
-  $> 
+  $> 	
 ```
 
 ###### Download source
@@ -185,24 +185,24 @@ This command has subcommands to control your personal connections with libraries
 ###### show existing projects
 
 ```
-  $> veye project list
-  $> veye project --format=table
+  $> veye projects list
+  $> veye projects --format=table
 ```
 
 ###### show information of specific project
 A `show` command expects a proper project_key, which you can from the list of already existing projects.
 
 ```
-	$> veye project show rubygem_gemfile_1
-	$> veye project show rubygem_gemfile_1 --format=table
+	$> veye projects show rubygem_gemfile_1
+	$> veye projects show rubygem_gemfile_1 --format=table
 ```
 
 ###### upload project file
 Use `upload` command to create new project. This command expects proper filepath to the file and the file is smaller than 500KB. VersionEye supports currently 8 different package managers(*Leiningen, Gem, Maven, NPM, Packagist, Pip, Setup.py, R*), Bower and Obj-C is already on pipeline.
 
 ```
-  $> veye project upload test/files/Gemfile
-  $> veye project upload test/files/maven.pom
+  $> veye projects upload test/files/Gemfile
+  $> veye projects upload test/files/maven.pom
 ```
 
 ###### re-upload project file for existing project
@@ -211,16 +211,33 @@ You can use `update` command to update the information of already existing proje
 This command expects correct project_key and a path to file.
 
 ```
-  $> veye project update rubygem_gemfile_1 test/files/Gemfile
-  $> veye project update rubygem_gemfile_1 test/files/Gemfile --format=table
+  $> veye projects update rubygem_gemfile_1 test/files/Gemfile
+  $> veye projects update rubygem_gemfile_1 test/files/Gemfile --format=table
+```
+
+###### Delete project
+
+This command removes the specified project from your project's list.
+
+```
+	$> veye projects delete rubygem_gemfile_1
+	Deleted
+```
+
+###### Licences
+
+`licence` command returns all licenses used in your project.
+
+```
+	$> veye projects licences rubygem_gemfile_1 --format=table
 ```
 
 
-#####
-;;;todo
-;;;licences
-
-
 ### Me
-;;; todo
+
+`me` command returns short overview of your profile and your current payment plan.
+
+```
+	$> veye me
+``` 
 
