@@ -62,6 +62,17 @@ command :ping do |c|
  end
 end
 
+desc 'change the api key'
+arg_name 'api_key'
+command :change_key do |c|
+  c.action do |global_options, options, args|
+    help_now!("the api key is mandatory") if args.empty?
+    api_key = args.shift
+    $global_options[:api_key] = api_key
+    save_configs
+  end
+end
+
 desc 'Search packages on VersionEye.'
 arg_name 'search_term'
 command :search do |c|

@@ -51,6 +51,7 @@ Most endpoints require the api-key, which you can get [here](https://www.version
 
 The tool will raise exception when a configuration file is missing. The tool needs configuration file to keep user specific settings and  authorization key. 
 
+###### create config file
 
   ```
   $> veye initconfig
@@ -61,6 +62,15 @@ The tool will raise exception when a configuration file is missing. The tool nee
   :port: "3000"
   ....
   ```
+  
+###### add key
+
+Please visit your settings page on VersionEye for api-key and then use command `veye change_key` to save your api key.
+
+```
+ $> veye change_key abj23j2bj33k14
+ Success: your's key is now saved.
+``` 
 
 # Basic usage
 

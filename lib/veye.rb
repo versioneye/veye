@@ -94,19 +94,6 @@ def generate_ssl_keys(global_opts)
   result
 end
 
-def update_api_key
-  user_key = gets.chomp.to_s.strip
-  if user_key =~ /No/i
-    msg = sprintf("%s: %s",
-                  "Warning:".foreground(:yellow),
-                  " missing, you cant access private data.")
-    print msg
-  else
-    $global_options[:api_key] = user_key
-    save_configs
-  end
-end
-
 def save_configs
   filepath = get_config_fullpath
   File.open(filepath, 'w') do |f|
@@ -114,6 +101,6 @@ def save_configs
   end
   msg = sprintf("%s: %s",
          "Success".foreground(:green),
-         "new settings are saved into file: `#{filepath}`")
+         "new settings are saved into file: `#{filepath}`\n")
   print msg
 end
