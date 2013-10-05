@@ -85,7 +85,7 @@ You can use this service to check does the tool works and tests is our API acces
 
 ### Search packages
 
-This command opens window to magnificient world of software packages - VersionEye has ~ 200K software libraries and it's reachable via your commandline.
+This command opens window to magnificient world of software packages - VersionEye has ~ 250K software libraries and it's reachable via your commandline.
 
 ###### Get command help
 
