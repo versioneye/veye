@@ -7,17 +7,23 @@ module Veye
       def before; end
 
       def format(results)
-        markdown = "# Dependencies\n\n"
-        markdown << @@columns.join(' | ') << "\n"
-        markdown << @@columns.map{'---'}.join(' | ') << "\n"
+        begin
+          markdown = "# Dependencies\n\n"
+          markdown << @@columns.join(' | ') << "\n"
+          markdown << @@columns.map{'---'}.join(' | ') << "\n"
 
-        results = [results] if results.is_a?(Hash)
+          results = [results] if results.is_a?(Hash)
 
-        results.each_with_index do |result, index|
-          row = [index + 1, result["name"], result["prod_key"],
-                  result["version_current"], result["version_requested"],
-                  result['outdated'] ? 'outdated':'', result['stable'] ? 'stable': 'unstable']
-          markdown << row.join(' | ') << "\n"
+          results.each_with_index do |result, index|
+            row = [index + 1, result["name"], result["prod_key"],
+                    result["version_current"], result["version_requested"],
+                    result['outdated'] ? 'outdated':'', result['stable'] ? 'stable': 'unstable']
+            markdown << row.join(' | ') << "\n"
+          end
+
+          puts markdown
+        rescue => e
+          puts e.backtrace
         end
       end
 
