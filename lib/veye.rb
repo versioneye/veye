@@ -30,9 +30,9 @@ def check_config_file
   end
 end
 
-def self.check_configs(global_opts)
+def self.check_configs(global_opts, needs_api_key)
   check_config_file
-  check_api_key(global_opts)
+  check_api_key(global_opts) if needs_api_key
 
   unless ssl_key_exists?(global_opts)
     generate_ssl_keys(global_opts)
