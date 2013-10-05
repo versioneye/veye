@@ -2,7 +2,7 @@ module Veye
   module Project
     class ProjectDependencyMarkdown
 
-      @@columns =  %w{index name project_key private period source dependencies outdated stable}
+      @@columns =  %w{index name prod_key version_current version_latest outdated stable}
 
       def before; end
 

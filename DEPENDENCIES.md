@@ -1,7 +1,7 @@
 # Dependencies
 
-index | name | project_key | private | period | source | dependencies | outdated | stable
---- | --- | --- | --- | --- | --- | --- | --- | ---
+index | name | prod_key | version_current | version_latest | outdated | stable
+--- | --- | --- | --- | --- | --- | ---
 1 | veye | veye | 0.0.5 | 0.0.5 |  | stable
 2 | awesome_print | awesome_print | 1.2.0 | 1.2.0 |  | stable
 3 | gli | gli | 2.8.0 | 2.8.0 |  | stable
