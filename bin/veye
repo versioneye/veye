@@ -15,6 +15,8 @@ program_long_desc Veye::BIGEYE.foreground(:green)
 wrap_help_text :verbatim
 version Veye::VERSION
 
+COMMANDS_WITHOUT_API_KEY = [:help, :ping, :search]
+
 config_file '.veye.rc'
 
 desc 'set api key'
@@ -38,11 +40,12 @@ flag :ssl_path, :default_value => "~/.veye"
 desc "don't use colors"
 switch 'color', :default_value => true, :negetable => true
 
-pre do |global_options, options, args|
+pre do |global_options, command, args|
   check_config_file
   $global_options = init_environment
   $global_options.merge!(global_options)
-  check_configs($global_options)
+  needs_api_key = ! COMMANDS_WITHOUT_API_KEY.member?(command.name) 
+  check_configs($global_options, needs_api_key)
   $global_options[:url] = Veye::API::Resource.build_url($global_options)
 end
 
