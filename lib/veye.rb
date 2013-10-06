@@ -1,5 +1,7 @@
 # Add requires for other files you add to your project here, so
 # you just need to require this one file in your bin file
+require 'openssl'
+
 require 'veye/version.rb'
 require 'veye/service.rb'
 require 'veye/api.rb'
@@ -30,9 +32,9 @@ def check_config_file
   end
 end
 
-def self.check_configs(global_opts)
+def self.check_configs(global_opts, needs_api_key)
   check_config_file
-  check_api_key(global_opts)
+  check_api_key(global_opts) if needs_api_key
 
   unless ssl_key_exists?(global_opts)
     generate_ssl_keys(global_opts)
@@ -71,23 +73,25 @@ end
 
 def generate_ssl_keys(global_opts)
   result = false
-  key_command = %Q[
-    openssl req -x509 -newkey rsa:2048 -keyout veye_key.pem -out veye_cert.pem -nodes
-  ]
 
   Dir.chdir(Dir.home)
   ssl_path = File.expand_path(global_opts[:ssl_path])
   unless Dir.exists?(ssl_path)
-    p "Creating folder for ssl keys: `#{ssl_path}`"
+    print "Info: Creating folder for ssl keys: `#{ssl_path}`\n"
     Dir.mkdir(ssl_path)
   end
 
   Dir.chdir(ssl_path)
-  if system(key_command)
-    print "Key is generated.\n"
+
+  key = OpenSSL::PKey::RSA.new 2048
+  open 'veye_key.pem', 'w' do |io| io.write(key.to_pem) end
+  open 'veye_cert.pem', 'w' do |io| io.write(key.public_key.to_pem) end
+
+  if ssl_key_exists?(global_opts)
+    print "Success: SSL keys are generated.\n"
     result = true
   else
-    print "Cant generate SSL keys. Do you have openssl installed?\n"
+    print "Error: Cant generate SSL keys. Do you have openssl installed?\n"
   end
 
   Dir.chdir(Dir.home)
