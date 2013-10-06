@@ -35,7 +35,7 @@ desc 'set connection protocol'
 flag :protocol, :default_value => "http"
 
 desc 'set folder of veye_cert.pem'
-flag :ssl_path, :default_value => "~/.veye"
+flag :ssl_path, :default_value => "~/.ssh"
 
 desc "don't use colors"
 switch 'color', :default_value => true, :negetable => true
