@@ -4,7 +4,7 @@ module Veye
   module Project
     class ProjectDependencyMarkdown
 
-      @@columns =  %w{index name prod_key version_current version_latest outdated stable}
+      @@columns =  %w{index name prod_key version_current version_latest outdated stable license}
 
       def before; end
 
@@ -25,7 +25,8 @@ module Veye
               result["version_current"],
               result["version_requested"],
               result['outdated'] ? 'outdated':'',
-              result['stable'] ? 'stable': 'unstable'
+              result['stable'] ? 'stable': 'unstable',
+              result['license']
               ]
           end
 
