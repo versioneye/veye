@@ -116,9 +116,13 @@ This command opens window to magnificient world of software packages - VersionEy
     $> veye search junit --page 3 --no-pagination
   ```
 
-###### Use different output format
+### Output formats
 
-**pretty print** - human readable output
+All commands support format-flag, that allows you change output format.
+
+###### pretty print
+
+Prettyprint is human readable output with colors. It's designed after other ruby command-line tools.
  
 ```bash
   $> veye search json --format=pretty
@@ -126,7 +130,8 @@ This command opens window to magnificient world of software packages - VersionEy
  
   ![Pretty format](https://s3-eu-west-1.amazonaws.com/veye/search_format_pretty.png)
  
- **csv** - to pipeline output to [awk](http://www.gnu.org/software/gawk/manual/gawk.html)
+###### CSV
+ CSV is good format for unix command line tools as [awk](http://www.gnu.org/software/gawk/manual/gawk.html)
  
  ```bash
   $> veye search json --format=csv
@@ -134,7 +139,9 @@ This command opens window to magnificient world of software packages - VersionEy
 
  ![CSV format](https://s3-eu-west-1.amazonaws.com/veye/search_format_csv.png)
 
- **json** - for manipulating results with [jq](http://stedolan.github.com/jq/) . 
+###### JSON
+ 
+ It also supports JSON to manipulate results with [jq](http://stedolan.github.com/jq/) . 
  Check out our jq recipes in [wiki](https://github.com/versioneye/veye/wiki/jq-recipes) .
  
  
@@ -144,7 +151,9 @@ This command opens window to magnificient world of software packages - VersionEy
  
  ![Json format](https://s3-eu-west-1.amazonaws.com/veye/search_format_json.png)
  
- **table view**
+###### Table view
+
+Nice complelling view on bigger screens. And it's formatted as markdown table, that means you can use this tool to import project dependencies as markdown table, and include it into your github project.
  
  ```bash
   $> veye search json --format=table
