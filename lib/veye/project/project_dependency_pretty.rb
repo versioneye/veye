@@ -17,11 +17,12 @@ module Veye
           printf("\t%-15s: %s\n", "Outdated",
                                   "#{result['outdated']}".foreground(color))
 
-          printf("\t%-15s: %s\n", "Latest version",
+          printf("\t%-15s: %s\n", "Current version",
                                   "#{result['version_current']}".foreground(color))
 
-          printf("\t%-15s: %s\n", "Current version", result["version_requested"])
-        
+          printf("\t%-15s: %s\n", "Requested version", result["version_requested"])
+          printf("\t%-15s: %s\n", "License", result["license"])
+       
         end
       end
     end
