@@ -253,7 +253,7 @@ command :projects do |c|
 
   c.desc "show licences of subdependencies"
   c.arg_name "project_key"
-  c.command :licences do |licences|
+  c.command :licenses do |licences|
     licences.action do |global_options, options, args|
       help_now!("Project's key is unspecified".foreground(:red)) if args.empty?
       proj_key = args.shift
