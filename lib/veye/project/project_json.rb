@@ -4,9 +4,7 @@ module Veye
       def before; end
       def after; end
 
-      def format(results)
-        printf("%s\n", {"projects" => results}.to_json)
-      end
+      def format(results);end
     end
   end
 end

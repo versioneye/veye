@@ -4,7 +4,9 @@ module Veye
       def before
         printf("nr,name,project_key,private,period,source,dep_number,out_number,created_at\n")
       end
-      def after; end
+      def after
+        puts "\n"
+      end
 
       def format(results)
         results = [results] if results.is_a? Hash

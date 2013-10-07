@@ -5,7 +5,7 @@ module Veye
       def after; end
 
       def format(results)
-        printf("%s\n", {"dependencies" => results}.to_json)
+        printf("%s\n", {"project" => results}.to_json)
       end
     end
   end
