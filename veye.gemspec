@@ -1,6 +1,6 @@
 # Ensure we require the local version and not one we might have installed already
 require File.join([File.dirname(__FILE__),'lib','veye','version.rb'])
-spec = Gem::Specification.new do |s| 
+spec = Gem::Specification.new do |s|
   s.name = 'veye'
   s.version = Veye::VERSION
   s.author = 'VersionEye GMBH'
@@ -10,7 +10,7 @@ spec = Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.summary = 'Commandline tool for VersionEye'
   s.description = %Q[
-    Veye is commandline tool like Heroku has own ToolBelt, 
+    Veye is commandline tool like Heroku has own ToolBelt,
     and purpose of this tool is to make developer\'s life even
     more simpler and keep you up-to-date with freshest packages.
   ]
@@ -34,4 +34,5 @@ spec = Gem::Specification.new do |s|
   s.add_runtime_dependency('awesome_print', '1.2.0')
   s.add_runtime_dependency('rainbow')
   s.add_runtime_dependency('terminal-table', '1.4.5')
+  s.add_runtime_dependency('render-as-markdown', '~>0.0.1')
 end

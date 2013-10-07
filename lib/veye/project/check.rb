@@ -9,6 +9,7 @@ require_relative 'project_dependency_csv.rb'
 require_relative 'project_dependency_json.rb'
 require_relative 'project_dependency_pretty.rb'
 require_relative 'project_dependency_table.rb'
+require_relative 'project_dependency_markdown.rb'
 
 module Veye
   module Project
@@ -24,7 +25,8 @@ module Veye
         "csv"       => ProjectDependencyCSV.new,
         "json"      => ProjectDependencyJSON.new,
         "pretty"    => ProjectDependencyPretty.new,
-        "table"     => ProjectDependencyTable.new
+        "table"     => ProjectDependencyTable.new,
+        "md"        => ProjectDependencyMarkdown.new
       }
       
 
