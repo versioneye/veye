@@ -22,7 +22,7 @@ module Veye
               (index + 1).to_s,
               result["name"],
               result["prod_key"],
-              result["outdated"] ? "outdated":"",
+              result["outdated"] ? "outdated" : "ok",
               result["version_current"],
               result["version_requested"],
               result["stable"] ? "stable": "unstable",

@@ -4,6 +4,7 @@ require_relative 'project_csv.rb'
 require_relative 'project_json.rb'
 require_relative 'project_pretty.rb'
 require_relative 'project_table.rb'
+require_relative 'project_markdown.rb'
 
 require_relative 'project_dependency_csv.rb'
 require_relative 'project_dependency_json.rb'
@@ -18,7 +19,8 @@ module Veye
         "csv"       => ProjectCSV.new,
         "json"      => ProjectJSON.new,
         "pretty"    => ProjectPretty.new,
-        "table"     => ProjectTable.new
+        "table"     => ProjectTable.new,
+        "md"        => ProjectMarkdown.new
       }
 
       @@dependency_output_formats = {
