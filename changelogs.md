@@ -1,14 +1,18 @@
 # Changelogs
 
 
-
 ## 0.0.6
+
 first usable gem
 
 * no key checking for `ping` and `search` command (contributed by Richard Metzler)
 * seemless SSL key generation - no cmd-line hack anymore
 * command `project list` shows now licence information
-* table view is now formatted as markdown table. (contributed by Richard Metzler)
+* `project` command supports now markdown format. (contributed by Richard Metzler)
+* added helper method `format_supported?` to check output format is supported.
+* renamed licence command to `license`
+* `ping`, `search` can now execut without identification
+* 
 
 #### Bug fixes
 
