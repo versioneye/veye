@@ -6,6 +6,8 @@ require_relative 'pagination_table.rb'
 module Veye
   module Pagination
     class Show
+      extend FormatHelpers
+
       @@pagination_formats = {
         'csv'     => PaginationCSV.new,
         'json'    => PaginationJSON.new,
@@ -14,8 +16,9 @@ module Veye
       }
 
       def self.format(paging, format = 'pretty')
-        formatter = @@pagination_formats[format]
-        
+        self.supported_format?(@@pagination_formats, format)
+
+        formatter = @@pagination_formats[format] 
         formatter.before
         formatter.format paging
         formatter.after

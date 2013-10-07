@@ -8,6 +8,8 @@ require_relative 'project_licence_table.rb'
 module Veye
   module Project
     class Licence
+      extend FormatHelpers
+
       @@output_formats = {
         "csv"     => ProjectLicenceCSV.new,
         "json"    => ProjectLicenceJSON.new,
@@ -36,6 +38,8 @@ module Veye
       end
 
       def self.format(results, format = 'pretty')
+        self.supported_format?(@@output_formats, format)
+
         formatter = @@output_formats[format]
         formatter.before
         formatter.format results

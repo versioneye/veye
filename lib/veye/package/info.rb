@@ -4,9 +4,10 @@ require_relative 'info_pretty.rb'
 require_relative 'info_table.rb'
 
 module Veye
-  module Package
-    
+  module Package    
     class Info
+      extend FormatHelpers
+
       @@output_formats = {
         'csv'       => InfoCSV.new,
         'json'      => InfoJSON.new,
@@ -39,6 +40,8 @@ module Veye
       end
 
       def self.format(results, format = 'pretty')
+        self.supported_format?(@@output_formats, format)
+
         formatter = @@output_formats[format]
         formatter.before
         formatter.format(results)

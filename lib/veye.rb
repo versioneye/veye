@@ -2,6 +2,8 @@
 # you just need to require this one file in your bin file
 require 'openssl'
 
+require 'veye/helpers/format_helpers.rb'
+
 require 'veye/version.rb'
 require 'veye/service.rb'
 require 'veye/api.rb'

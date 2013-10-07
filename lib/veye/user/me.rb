@@ -11,6 +11,8 @@ require_relative 'favorite_table.rb'
 module Veye
   module User
     class Me
+      extend FormatHelpers
+
       @@profile_formats = {
         'csv'     => ProfileCSV.new,
         'json'    => ProfileJSON.new,
@@ -55,6 +57,7 @@ module Veye
       end
 
       def self.format_profile(results, format = 'pretty')
+        self.supported_format?(@@profile_formats, format)
         formatter = @@profile_formats[format]
         formatter.before
         formatter.format(results)
@@ -62,6 +65,7 @@ module Veye
       end
 
       def self.format_favorites(results, format = 'pretty')
+        self.supported_format?(@@favorite_formats, format)
         formatter = @@favorite_formats[format]
         
         formatter.before

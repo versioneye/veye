@@ -7,6 +7,8 @@ module Veye
   module Package
     
     class Search
+      extend FormatHelpers
+
         @@output_formats = {
             'csv'       => SearchCSV.new,
             'json'      => SearchJSON.new,
@@ -33,7 +35,8 @@ module Veye
         end
 
         def self.format(search_results, format = 'pretty', paging = nil)
-            
+            self.supported_format?(@@output_formats, format)  
+
             formatter = @@output_formats[format]
             formatter.before
             formatter.format(search_results)

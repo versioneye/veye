@@ -15,6 +15,8 @@ require_relative 'project_dependency_markdown.rb'
 module Veye
   module Project
     class Check
+      extend FormatHelpers
+
       @@output_formats = {
         "csv"       => ProjectCSV.new,
         "json"      => ProjectJSON.new,
@@ -36,6 +38,7 @@ module Veye
         project_api = API::Resource.new(RESOURCE_PATH)
         qparams = {:params => {:api_key => api_key}}
 
+        
         project_api.resource.get(qparams) do |response, request, result|
           response_data = API::JSONResponse.new(request, result, response)
         end
@@ -109,7 +112,7 @@ module Veye
                              "Not valid project_key: `#{project_key}`")          
           exit_now! error_msg
         end
-        
+       
         project_url = "/#{project_key}"
         qparams = {:params => {:api_key => api_key}}
         project_api.resource[project_url].get(qparams) do |response, request, result|
@@ -132,6 +135,8 @@ module Veye
       end
 
       def self.format(results, format = 'pretty')
+        self.supported_format?(@@output_formats, format)
+        
         formatter = @@output_formats[format]
         formatter.before
         formatter.format results
@@ -139,12 +144,13 @@ module Veye
       end
       
       def self.format_dependencies(results, format = 'pretty')
+        self.supported_format?(@@dependency_output_formats, format)
+
         formatter = @@dependency_output_formats[format]
         formatter.before
         formatter.format results
         formatter.after
       end
-
     end
   end
 end

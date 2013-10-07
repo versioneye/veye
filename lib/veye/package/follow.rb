@@ -1,7 +1,7 @@
 module Veye
   module Package
     class Follow
-   
+
       def self.get_follow_status(prod_key, api_key)
         product_api = API::Resource.new(RESOURCE_PATH)
         response_data = nil
