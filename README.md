@@ -1,5 +1,7 @@
 # Veye
 
+[![Dependency Status](https://www.versioneye.com/ruby/veye/0.0.5/badge.png)](https://www.versioneye.com/ruby/veye/0.0.5)
+
 [VersionEye](http://www.versioneye.com/) is a cross-platform search engine and crowdsourcing app for opensource software libraries. 
 
  * Take advantage of the extended search to find any library you look for. 
@@ -153,13 +155,26 @@ Prettyprint is human readable output with colors. It's designed after other ruby
  
 ###### Table view
 
-Nice complelling view on bigger screens. And it's formatted as markdown table, that means you can use this tool to import project dependencies as markdown table, and include it into your github project.
- 
+A Tabular view for bigger screens. It's shows results as one Excel sheet - title and content.
+  
  ```bash
   $> veye search json --format=table
  ```
  ![Table output](https://s3-eu-west-1.amazonaws.com/veye/search_format_table.png)
  
+
+###### Markdown
+
+This flag formats your results in markdown.
+ 
+Here's dependencies of demo project formatted as [markdown table](https://gist.github.com/timgluz/6857422).
+
+```
+
+	$> veye projects show rubygem_gemfile_lock_1 --format=md
+	$> veye projects show rubygem_gemfile_lock_1 --format=md > dependencies.md
+```
+
 
 ###### Empty response
 
@@ -286,5 +301,5 @@ This command removes the specified project from your project's list.
 
 ```
  $> veye me favorites
- $> veye me favorites --page=2
+ $> veye me favorites --page=2 --format=table
 ```
