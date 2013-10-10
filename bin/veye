@@ -431,7 +431,7 @@ command :github do |c|
 
     list.desc "show paging information"
     list.switch [:pagination, 'show-pagination'], :default_value => true,
-                                               :negatable => true
+                                                  :negatable => true
 
     list.action do |global_options, options, args|
       api_key = global_options[:api_key]
@@ -450,6 +450,25 @@ command :github do |c|
       end
     end
   end #end-of-list
-end #end of github
+
+  c.command :sync do |sync|
+    sync.desc "if true, then reloads all collections"
+    sync.flag [:force], :default_falue => false
+
+    sync.action do |global_options, options, args|
+      api_key = global_options[:api_key]
+      response = Veye::Github::Sync.import_all(api_key, options)
+      unless response.success
+        error_msg = sprintf("Can not read your repositories.\n %s \n %s \n",
+                           "#{response.message}".foreground(:red),
+                           "#{response.data}")
+        exit_now! error_msg
+      end
+
+      Veye::Github::Sync.format response.data, options[:format]
+    end
+  end #end of sync
+
+end #end of github comamnd
 
 exit run(ARGV)
