@@ -383,7 +383,6 @@ command :me do |c|
     favorites.desc "show paging information"
     favorites.switch [:pagination, 'show-pagination'], :default_value => true,
                                                :negatable => true
-
     favorites.action do |global_options, options, args|
       api_key = global_options[:api_key]
       response = Veye::User::Me.get_favorites(api_key, options[:page])
@@ -401,8 +400,56 @@ command :me do |c|
         Veye::Pagination::Show.format response.data['paging'], options[:format]
       end
     end
-
-  end
+  end  
 end
+
+desc "github commands"
+command :github do |c|
+  c.desc "change output format"
+  c.flag [:format, 'format-name'], :default_value => 'pretty'
+
+  c.action do |global_options, options, args|
+    help_now!
+  end
+    
+  c.desc "list all your repositories"
+  c.command :list do |list|
+    list.desc "page nr"
+    list.flag [:page, 'page-number']
+    
+    list.desc "filter by language"
+    list.flag [:lang, :language]
+
+    list.desc "filter by visibility, (accepts: true/false)"
+    list.flag [:private]
+
+    list.desc "filter by name of organisation"
+    list.flag [:org, 'org-name']
+
+    list.desc "filter by type of organisation"
+    list.flag ['org-type']
+
+    list.desc "show paging information"
+    list.switch [:pagination, 'show-pagination'], :default_value => true,
+                                               :negatable => true
+
+    list.action do |global_options, options, args|
+      api_key = global_options[:api_key]
+      response = Veye::Github::List.get_list(api_key, options)
+      unless response.success
+        error_msg = sprintf("Can not read your Github repositories.\n %s\n %s\n",
+                            "#{response.message}".foreground(:red),
+                            "#{response.data}")
+        exit_now! error_msg
+      end
+
+      Veye::Github::List.format response.data, options[:format]
+      if options[:pagination]
+        printf("\n#-- pagination data ------------------\n")
+        Veye::Pagination::Show.format response.data['paging'], options[:format]
+      end
+    end
+  end #end-of-list
+end #end of github
 
 exit run(ARGV)
