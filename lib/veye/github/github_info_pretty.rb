@@ -8,9 +8,9 @@ module Veye
 
       def format(result)
         repo = result['repo']
-        projects = repo['imported_projects']
+        projects = result['imported_projects']
         if projects
-          project_names = projects.map {|x| x[:project_key]}
+          project_names = projects.map {|x| x['project_key']}
         else
           project_names = []
         end

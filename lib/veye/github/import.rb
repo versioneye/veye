@@ -5,7 +5,7 @@ require_relative 'github_info_table.rb'
 
 module Veye
   module Github
-    class Info
+    class Import
       extend FormatHelpers
 
       @@output_formats = {
@@ -19,18 +19,17 @@ module Veye
         repo_key.to_s.gsub(/\//, ":").gsub(/\./, "~")
       end
 
-
-      def self.get_repo(api_key, repo_name, options)
+      def self.import_repo(api_key, repo_name, options)
         github_api = API::Resource.new(RESOURCE_PATH)
         response_data = nil
-        qparams = {params: {api_key: api_key}}
+        params = {api_key: api_key, branch: options[:branch]}
         repo_name = encode_repo_key(repo_name)
-        github_api.resource["/#{repo_name}"].get(qparams) do |response, request, result|
+        github_api.resource["/#{repo_name}"].post(params) do |response, request, result|
           response_data = API::JSONResponse.new(request, result, response)
         end
         response_data
       end
-
+  
       def self.format(search_results, format = 'pretty', paging = nil)
           self.supported_format?(@@output_formats, format)  
 
@@ -39,6 +38,7 @@ module Veye
           formatter.format(search_results)
           formatter.after paging
       end
+
 
     end
   end

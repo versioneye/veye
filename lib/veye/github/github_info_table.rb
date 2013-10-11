@@ -32,7 +32,7 @@ module Veye
         row << repo['private']
         row << repo['fork']
         row << repo['branches'].to_a.join(', ')
-        row << project_names.join(',')
+        row << project_names.join(', ')
         row << repo['description']
 
         @table << row

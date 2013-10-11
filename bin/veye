@@ -420,6 +420,9 @@ command :github do |c|
   c.desc "filter by user"
   c.flag [:user]
 
+  c.desc "specify branch"
+  c.flag [:branch], :default_value => "master"
+
   c.action do |global_options, options, args|
     help_now!
   end
@@ -506,7 +509,7 @@ command :github do |c|
 
       response = Veye::Github::Info.get_repo(api_key, repo_name, options)
       unless response.success
-        error_msg = sprintf("Can find repository `%s`.\n %s \n %s \n",
+        error_msg = sprintf("Can not find repository `%s`.\n %s \n %s \n",
                             repo_name,
                            "#{response.message}".foreground(:red),
                            "#{response.data}")
@@ -514,6 +517,43 @@ command :github do |c|
       end
     
       Veye::Github::Info.format response.data, options[:format]
+    end
+  end # end of info
+
+  c.desc "import project from github repository"
+  c.arg_name "repo_name"
+  c.command :import do |imp|
+    imp.action do |global_options, options, args|
+      help_now!("the name of repository is mandatory".foreground(:red)) if args.empty?
+      repo_name = args.shift
+      api_key = global_options[:api_key]
+      response = Veye::Github::Import.import_repo(api_key, repo_name, options)
+      unless response.success
+         error_msg = sprintf("Can not find repository `%s`.\n %s \n %s \n",
+                            repo_name,
+                           "#{response.message}".foreground(:red),
+                           "#{response.data}")
+        exit_now! error_msg    
+      end
+
+      Veye::Github::Import.format response.data, options[:format]
+    end
+  end # end of import
+
+  c.desc "remove imported project"
+  c.arg_name "repo_name"
+  c.command :delete do |del|
+    del.action do |global_options, options, args|
+       help_now!("the name of repository is mandatory".foreground(:red)) if args.empty?
+      repo_name = args.shift
+      api_key = global_options[:api_key]
+      response = Veye::Github::Delete.delete_repo(api_key, repo_name, options)
+      unless response.success
+        printf("Cant delete - %s\n%s\n", response.message.foreground(:red),
+                                         response.data['error'])
+      else
+        printf "Deleted\n".foreground(:green)
+      end
     end
   end
 end #end of github comamnd
