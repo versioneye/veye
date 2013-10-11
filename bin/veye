@@ -495,6 +495,27 @@ command :github do |c|
       end
     end 
   end # end of search
+
+  c.desc "show more specific information for the repository"
+  c.arg_name "repo_name"
+  c.command :info do |info|
+    info.action do |global_options, options, args|
+      help_now!("the name of repository is mandatory".foreground(:red)) if args.empty?
+      repo_name = args.shift
+      api_key = global_options[:api_key]
+
+      response = Veye::Github::Info.get_repo(api_key, repo_name, options)
+      unless response.success
+        error_msg = sprintf("Can find repository `%s`.\n %s \n %s \n",
+                            repo_name,
+                           "#{response.message}".foreground(:red),
+                           "#{response.data}")
+        exit_now! error_msg
+      end
+    
+      Veye::Github::Info.format response.data, options[:format]
+    end
+  end
 end #end of github comamnd
 
 exit run(ARGV)
