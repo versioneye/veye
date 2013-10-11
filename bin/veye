@@ -82,7 +82,7 @@ command :search do |c|
   c.desc 'filter results by language'
   c.flag [:l, :language, 'language-name']
 
-  c.desc 'filter result by Manven specific GroupId'
+  c.desc 'filter result by Maven specific GroupId'
   c.flag "group-id"
 
   c.desc "get next N results, by default it only return 30 results."
@@ -407,19 +407,25 @@ desc "github commands"
 command :github do |c|
   c.desc "change output format"
   c.flag [:format, 'format-name'], :default_value => 'pretty'
+  c.desc "page number for pagination"
+  c.flag [:page, 'page-number'], :default_value => 1
+    
+  c.desc "show paging information"
+  c.switch [:pagination, 'show-pagination'], :default_value => true,
+                                             :negatable => true
+
+  c.desc "filter by language"
+  c.flag [:lang, :language]
+
+  c.desc "filter by user"
+  c.flag [:user]
 
   c.action do |global_options, options, args|
     help_now!
   end
     
   c.desc "list all your repositories"
-  c.command :list do |list|
-    list.desc "page nr"
-    list.flag [:page, 'page-number']
-    
-    list.desc "filter by language"
-    list.flag [:lang, :language]
-
+  c.command :list do |list|   
     list.desc "filter by visibility, (accepts: true/false)"
     list.flag [:private]
 
@@ -428,10 +434,6 @@ command :github do |c|
 
     list.desc "filter by type of organisation"
     list.flag ['org-type']
-
-    list.desc "show paging information"
-    list.switch [:pagination, 'show-pagination'], :default_value => true,
-                                                  :negatable => true
 
     list.action do |global_options, options, args|
       api_key = global_options[:api_key]
@@ -451,9 +453,10 @@ command :github do |c|
     end
   end #end-of-list
 
+  c.desc "update list of repositories"
   c.command :sync do |sync|
     sync.desc "if true, then reloads all collections"
-    sync.flag [:force], :default_falue => false
+    sync.flag [:force], :default_value => false
 
     sync.action do |global_options, options, args|
       api_key = global_options[:api_key]
@@ -469,6 +472,29 @@ command :github do |c|
     end
   end #end of sync
 
+  c.desc "search repositories on github"
+  c.arg_name "search_term"
+  c.command :search do |gsearch|
+    gsearch.action do |global_options, options, args|
+      help_now!("the search term is mandatory.".foreground(:red)) if args.empty?
+      search_term = args.shift
+      api_key = global_options[:api_key]
+      
+      response = Veye::Github::Search.search(api_key, search_term, options)
+      unless response.success
+        error_msg = sprintf("Can not read your repositories.\n %s \n %s \n",
+                           "#{response.message}".foreground(:red),
+                           "#{response.data}")
+        exit_now! error_msg
+      end
+
+      Veye::Github::Search.format response.data, options[:format]
+      if options[:pagination]
+        printf("\n#-- pagination data ------------------\n")
+        Veye::Pagination::Show.format response.data['paging'], options[:format]
+      end
+    end 
+  end # end of search
 end #end of github comamnd
 
 exit run(ARGV)
