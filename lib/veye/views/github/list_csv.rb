@@ -1,20 +1,11 @@
+require_relative '../base_csv.rb'
+
 module Veye
   module Github
-    class GithubListCSV
-      def before
-        printf("nr,fullname,language,owner_login,owner_type,private,fork,branches,description")
-      end
-
-      def after(paging = nil)
-        return if paging.nil?
-
-        printf("# ------------------------------------------\n")
-        printf("current_page,per_page,total_pages,total_entries\n")
-        printf("%s,%s,%s,%s\n",
-              paging['current_page'],
-              paging['per_page'],
-              paging['total_pages'],
-              paging['total_entries'])
+    class ListCSV < BaseCSV
+      def initialize
+        headers = "nr,fullname,language,owner_login,owner_type,private,fork,branches,description"
+        super(headers)
       end
 
       def format(results)

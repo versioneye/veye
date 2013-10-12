@@ -1,20 +1,8 @@
-require_relative 'github_sync_csv.rb'
-require_relative 'github_sync_json.rb'
-require_relative 'github_sync_pretty.rb'
-require_relative 'github_sync_table.rb'
+require_relative '../base_executor.rb'
 
 module Veye
   module Github
-    class Sync
-      extend FormatHelpers
-
-      @@output_formats = {
-        'csv'     => GithubSyncCSV.new,
-        'json'    => GithubSyncJSON.new,
-        'pretty'  => GithubSyncPretty.new,
-        'table'   => GithubSyncTable.new
-      }
-
+    class Sync < BaseExecutor
       def self.import_all(api_key, options)
         github_api = API::Resource.new(RESOURCE_PATH)
         response_data = nil
@@ -26,16 +14,19 @@ module Veye
           response_data = API::JSONResponse.new(request, result, response)
         end
 
+        catch_request_error(response_data, "Can not import repositories from Github")
+        show_result(response_data)
         return response_data
       end
 
-      def self.format(results, format = 'pretty', paging = nil)
-        self.supported_format?(@@output_formats, format)
-        
-        formatter = @@output_formats[format]
-        formatter.before
-        formatter.format results
-        formatter.after paging
+      def self.show_result(response)
+        unless response.data["changed"]
+          printf("%s - %s\n",
+                 "No changes.".foreground(:red),
+                 "Use `force` flag if you want to reload everything.")
+        else
+          printf "Imported. #{response.data['msg']}\n".foreground(:green)
+        end
       end
     end
   end

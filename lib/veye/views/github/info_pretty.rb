@@ -1,10 +1,8 @@
-require 'rainbow'
+require_relative '../base_pretty.rb'
 
 module Veye
   module Github
-    class GithubInfoPretty
-      def before; end
-      def after(paging); end
+    class InfoPretty < BasePretty
 
       def format(result)
         repo = result['repo']

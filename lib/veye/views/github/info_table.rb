@@ -1,19 +1,11 @@
-require 'terminal-table'
+require_relative '../base_table.rb'
 
 module Veye
   module Github
-    class GithubInfoTable
-      @@columns = %w(name language owner_login owner_type private fork branches imported_projects description)
-
-      def before
-        @table = Terminal::Table.new :title => "Repository information",
-                                     :headings => @@columns
-
-        @table.align_column(0, :right)
-      end
-
-      def after(paging = nil)
-        puts @table.to_s
+    class InfoTable < BaseTable
+      def initialize
+        headings = %w(name language owner_login owner_type private fork branches imported_projects description)
+        super("Repository information", headings)
       end
 
       def format(result)
@@ -40,4 +32,3 @@ module Veye
     end
   end
 end
-

@@ -3,6 +3,7 @@
 require 'openssl'
 
 require 'veye/helpers/format_helpers.rb'
+require 'veye/helpers/repo_helpers.rb'
 
 require 'veye/version.rb'
 require 'veye/service.rb'
@@ -13,7 +14,7 @@ require 'veye/user.rb'
 require 'veye/github.rb'
 require 'veye/pagination.rb'
 
-$global_options ||= nil 
+$global_options ||= nil
 DEFAULT_CONFIG_FILE = ".veye.rc"
 DEFAULT_CONFIG_PATH = "~"
 

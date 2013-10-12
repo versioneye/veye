@@ -1,19 +1,8 @@
-require 'rainbow'
+require_relative '../base_pretty.rb'
 
 module Veye
   module Github
-    class GithubListPretty
-      def before; end
-      def after(paging = nil)
-        return if paging.nil?
-
-        printf("\n#-- %s\n", "Pagination information".bright)
-        printf("\t%-15s: %s\n", "Current page", paging['current_page'])
-        printf("\t%-15s: %s\n", "Per page", paging['per_page'])
-        printf("\t%-15s: %s\n", "Total pages", paging['total_pages'])
-        printf("\t%-15s: %s\n", "Total entries", paging['total_entries'])
-      end
-
+    class ListPretty < BasePretty
       def format(results)
         results['repos'].each_with_index {|result, index| print_row(result, index)}
       end

@@ -1,23 +1,16 @@
+require_relative '../base_csv.rb'
+
 module Veye
   module Github
-    class GithubSearchCSV
-      @@columns = %q[nr,name,language,owner_name,owner_type,private,fork,watchers,forks,git_url]
-      def before
-        printf("%s\n", @@columns)
-      end
-      def after(paging = nil)
-        return if paging.nil?
-
-        printf("# ------------------------------------------\n")
-        printf("current_page,per_page,total_pages,total_entries\n")
-        printf("%s,%s,%s,%s\n",
-              paging['current_page'],
-              paging['per_page'],
-              paging['total_pages'],
-              paging['total_entries'])
+    class SearchCSV < BaseCSV
+      def initialize
+        columns = %w[nr,name,language,owner_name,owner_type,private,fork,watchers,forks,git_url]
+        super(columns)
       end
 
       def format(results)
+        return if results.nil?
+
         results['results'].each_with_index do |result, index|
           print_row(result, index)
         end
