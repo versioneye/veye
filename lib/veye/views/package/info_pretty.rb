@@ -1,20 +1,18 @@
-require 'rainbow'
+require_relative '../base_pretty.rb'
 
 module Veye
   module Package
-    class InfoPretty
-      def before; end
-      def after; end
+    class InfoPretty < BasePretty
+      def format(results)
+        result = results
+        return if result.nil?
 
-      def format(result, index = 0)
         printf("\t%15s - %s\n", "#{result['name']}".foreground(:green).bright,
                                 "#{result['version'].bright}")
-        puts "\t-------------------------"
         printf("\t%-15s: %s\n", "Language", result["language"])
-        printf("\t%-15s: %s\n", "Licence", result["licence"])
-        
+        printf("\t%-15s: %s\n", "License", result["license_info"])
         printf("\t%-15s: %s\n", "Product type", result["prod_type"])
-        printf("\t%-15s: %s\n", "Product key", 
+        printf("\t%-15s: %s\n", "Product key",
                                 "#{result["prod_key"]}".bright)
         printf("\t%-15s:\n\t %s\n", "Description", result["description"])
         printf("\t%-15s: %s\n", "Group id", result["group_id"])
@@ -22,6 +20,6 @@ module Veye
 
       end
     end
-  
+
   end
 end

@@ -1,27 +1,24 @@
-module Veye
-  module Github
-    class BaseExecutor
-      extend FormatHelpers
-      extend RepoHelpers
 
-      def self.show_results(output_formats, results, options = {}, paging = nil)
-        format = options[:format]
-        self.supported_format?(output_formats, format)
-        formatter = output_formats[format]
+class BaseExecutor
+  extend FormatHelpers
+  extend RepoHelpers
 
-        formatter.before
-        formatter.format(results)
-        formatter.after(paging, options[:pagination])
-      end
+  def self.show_results(output_formats, results, options = {}, paging = nil)
+    format = options[:format]
+    self.supported_format?(output_formats, format)
+    formatter = output_formats[format]
 
-      def self.catch_request_error(response, msg)
-        if response.nil? or not response.success
-          error_msg = sprintf("%s\n%s\n",
-                              "#{msg}".foreground(:red),
-                              "#{response.data}")
-          exit_now! error_msg
-        end
-      end
+    formatter.before
+    formatter.format(results)
+    formatter.after(paging, options[:pagination])
+  end
+
+  def self.catch_request_error(response, msg)
+    if response.nil? or not response.success
+      error_msg = sprintf("%s\n%s\n",
+                          "#{msg}".foreground(:red),
+                          "#{response.data}")
+      exit_now! error_msg
     end
   end
 end

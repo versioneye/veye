@@ -1,12 +1,13 @@
+require_relative '../base_csv.rb'
+
 module Veye
   module Package
-    class InfoCSV
-      def before
-        printf("name,version,language,prod_key,licence,prod_type,description,link\n")
+    class InfoCSV < BaseCSV
+      def initialize
+        headers = "name,version,language,prod_key,licence,prod_type,description,link"
+        super(headers)
       end
-      def after; end
-
-      def format(result, index = 0)
+      def format(result)
         printf("%s,%s,%s,%s,%s,%s,%s,%s\n",
               result["name"], result["version"], result["language"],
               result["prod_key"], result["license"], result["prod_type"],

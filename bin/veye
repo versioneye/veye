@@ -51,18 +51,9 @@ end
 
 desc 'check service status'
 command :ping do |c|
- c.action do |global_options, options, args|
-   respond = Veye::Service.ping()
-   if respond.success
-     puts "#{respond.data['message']}".foreground(:green)
-   else
-     printf(
-       "VersionEye didnt recognized secret word.Answered %s, %s\n",
-       respond.code.to_s.foreground(:red),
-       "#{respond.message}".foreground(:yellow)
-     )
-   end
- end
+  c.action do |global_options, options, args|
+    Veye::Service.ping
+  end
 end
 
 desc 'change the api key'
@@ -98,26 +89,7 @@ command :search do |c|
   c.action do |global_options, options, args|
     help_now!("the search term is mandatory.".foreground(:red)) if args.empty?
     search_term = args.shift
-    response = Veye::Package::Search.search(search_term, 
-                                         options[:language], 
-                                         options["group-id"], 
-                                         options[:page])
-
-    if response.success == false or response.data["results"].empty?
-        error_msg = sprintf(
-          "No results for `%s` %s",
-          "#{search_term}".foreground(:yellow),
-          (options[:language].nil?)? "" : " for language: #{options[:language]}"
-        )
-        exit_now!(error_msg)
-    end
-
-    Veye::Package::Search.format(response.data["results"], options[:format])
-    if options[:pagination]
-      printf("\n#-- pagination data ------------------\n")
-      Veye::Pagination::Show.format response.data['paging'], options[:format]
-    end
-  
+    Veye::Package::Search.search(search_term, options)
   end
 end
 
@@ -130,17 +102,7 @@ command :info do |c|
   c.action do |global_options, options, args|
     help_now!("package_key is missing".foreground(:red)) if args.empty?
     package_key = args.shift
-    response = Veye::Package::Info.search(package_key)
-    
-    unless response.success
-        error_msg = sprintf(
-          "Didnt find any package with product_key: `%s`",
-          "#{package_key}".foreground(:yellow)
-        )
-        exit_now!(error_msg)
-    end
-
-    Veye::Package::Info.format(response.data, options[:format])
+    response = Veye::Package::Info.get_package(package_key, options)
   end
 end
 
@@ -302,16 +264,7 @@ command :products do |c|
       help_now!("Product's key is missing".foreground(:red)) if args.empty?
       prod_key = args.shift
       api_key = global_options[:api_key]
-      
-      response = Veye::Package::Follow.get_follow_status(prod_key, api_key)
-      unless response.success
-        error_msg = sprintf("Checking state of following failed: %s \n %s",
-                           "#{response.message}".foreground(:red),
-                           "#{response.data}")
-        exit_now! error_msg
-      end
-      
-      printf "#{response.data}\n".foreground(:green)
+      Veye::Package::Follow.get_follow_status(prod_key, api_key)
     end
   end
 
@@ -322,15 +275,7 @@ command :products do |c|
       help_now!("Product's key is missing".foreground(:red)) if args.empty?
       prod_key = args.shift
       api_key = global_options[:api_key]
-      
-      response = Veye::Package::Follow.follow(prod_key, api_key)
-      unless response.success
-        error_msg = sprintf("Following failed: %s \n %s",
-                           "#{response.message}".foreground(:red),
-                           "#{response.data}")
-        exit_now! error_msg
-      end
-      printf "#{response.data}\n".foreground(:green)
+      Veye::Package::Follow.follow(prod_key, api_key)
     end
   end
 
@@ -341,16 +286,7 @@ command :products do |c|
       help_now!("Product's key is missing".foreground(:red)) if args.empty?
       prod_key = args.shift
       api_key = global_options[:api_key]
-
-      response =  Veye::Package::Follow.unfollow(prod_key, api_key)
-      unless response.success
-        error_msg =  sprintf("Unfollowing failed: %s \n %s",
-                            "#{response.message}".foreground(:red),
-                            "#{response.data}")
-        exit_now! error_msg
-      end
-
-      printf "#{response.data}\n".foreground(:green)
+      Veye::Package::Follow.unfollow(prod_key, api_key)
     end
   end
 end

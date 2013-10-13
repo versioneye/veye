@@ -1,51 +1,41 @@
-require_relative 'info_csv.rb'
-require_relative 'info_json.rb'
-require_relative 'info_pretty.rb'
-require_relative 'info_table.rb'
+require_relative '../views/package.rb'
+require_relative '../base_executor.rb'
 
 module Veye
-  module Package    
-    class Info
-      extend FormatHelpers
-
+  module Package
+    class Info < BaseExecutor
       @@output_formats = {
-        'csv'       => InfoCSV.new,
-        'json'      => InfoJSON.new,
-        'pretty'    => InfoPretty.new,
-        'table'     => InfoTable.new
+        'csv'       => Package::InfoCSV.new,
+        'json'      => Package::InfoJSON.new,
+        'pretty'    => Package::InfoPretty.new,
+        'table'     => Package::InfoTable.new
       }
 
-      def self.search(package_key)
+      def self.get_package(package_key, options = {})
         product_api = API::Resource.new(RESOURCE_PATH)
         tokens = package_key.to_s.split('/')
         lang = Package.encode_language(tokens.first)
         safe_prod_key = Package.encode_prod_key(tokens.drop(1).join("/"))
-        
+        results = nil
+
         if lang.nil? or safe_prod_key.nil?
           msg =  %Q[
-            You missed language or product key. 
+            You missed language or product key.
             Example: clojure/ztellman/aleph, which as required structure <prog lang>/<product_code>
           ]
-          error_msg = sprrintf("%s. \n%s", 
+          error_msg = sprrintf("%s. \n%s",
                                "Error: Malformed key.".foreground(:red),
                               msg)
           exit_now!(error_msg)
         end
 
-        request_response = nil 
         product_api.resource["/#{lang}/#{safe_prod_key}"].get do |response, request, result, &block|
-          request_response = API::JSONResponse.new(request, result, response)
+          results = API::JSONResponse.new(request, result, response)
         end
-        return request_response
-      end
 
-      def self.format(results, format = 'pretty')
-        self.supported_format?(@@output_formats, format)
-
-        formatter = @@output_formats[format]
-        formatter.before
-        formatter.format(results)
-        formatter.after
+        catch_request_error(results, "Didnt find any package with product_key: `#{package_key}`")
+        show_results(@@output_formats, results.data, options, results.data['paging'])
+        return results
       end
     end
 
