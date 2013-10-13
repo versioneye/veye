@@ -1,78 +1,58 @@
-require_relative 'profile_csv.rb'
-require_relative 'profile_json.rb'
-require_relative 'profile_pretty.rb'
-require_relative 'profile_table.rb'
+require_relative '../views/user.rb'
+require_relative '../base_executor.rb'
 
-require_relative 'favorite_csv.rb'
-require_relative 'favorite_json.rb'
-require_relative 'favorite_pretty.rb'
-require_relative 'favorite_table.rb'
 
 module Veye
   module User
-    class Me
-      extend FormatHelpers
+    class Me < BaseExecutor
 
       @@profile_formats = {
-        'csv'     => ProfileCSV.new,
-        'json'    => ProfileJSON.new,
-        'pretty'  => ProfilePretty.new,
-        'table'   => ProfileTable.new
+        'csv'     => User::ProfileCSV.new,
+        'json'    => User::ProfileJSON.new,
+        'pretty'  => User::ProfilePretty.new,
+        'table'   => User::ProfileTable.new
       }
 
       @@favorite_formats = {
-        'csv'     => FavoriteCSV.new,
-        'json'    => FavoriteJSON.new,
-        'pretty'  => FavoritePretty.new,
-        'table'   => FavoriteTable.new
+        'csv'     => User::FavoriteCSV.new,
+        'json'    => User::FavoriteJSON.new,
+        'pretty'  => User::FavoritePretty.new,
+        'table'   => User::FavoriteTable.new
       }
 
-      def self.get_profile(api_key)
+      def self.get_profile(api_key, options)
         user_api = API::Resource.new(RESOURCE_PATH)
-        response_data = nil
+        results = nil
         qparams = {:params => {:api_key => api_key}}
 
         user_api.resource.get(qparams) do |response, request, result|
-          response_data = API::JSONResponse.new(request, result, response)
+          results = API::JSONResponse.new(request, result, response)
         end
 
-        return response_data
+        catch_request_error(results, "Failed to read profile.")
+        show_results(@@profile_formats, results.data, options)
+        results
       end
 
-      def self.get_favorites(api_key, page = 1)
+      def self.get_favorites(api_key, options)
         user_api = API::Resource.new(RESOURCE_PATH)
-        response_data = nil
+        results = nil
+        page = options[:page] || 1
         qparams = {
           :params => {
             :api_key => api_key,
-            :page => page || 1
+            :page => page
           }
         }
 
         user_api.resource['/favorites'].get(qparams) do |response, request, result|
-          response_data = API::JSONResponse.new(request, result, response)
+          results = API::JSONResponse.new(request, result, response)
         end
 
-        return response_data
+        catch_request_error(results, "Failed to read favorites.")
+        show_results(@@favorite_formats, results.data, options, results.data['paging'])
+        results
       end
-
-      def self.format_profile(results, format = 'pretty')
-        self.supported_format?(@@profile_formats, format)
-        formatter = @@profile_formats[format]
-        formatter.before
-        formatter.format(results)
-        formatter.after
-      end
-
-      def self.format_favorites(results, format = 'pretty')
-        self.supported_format?(@@favorite_formats, format)
-        formatter = @@favorite_formats[format]
-        
-        formatter.before
-        formatter.format results
-        formatter.after
-      end
-
     end
   end
 end

@@ -250,44 +250,25 @@ command :me do |c|
   c.desc "change output format"
   c.flag [:format, 'format-name'], :default_value => 'pretty'
 
+  c.desc "pagination number"
+  c.flag [:page, 'page-number']
+
+  c.desc "show paging information"
+  c.switch [:pagination, 'show-pagination'],
+            :default_value => true,
+            :negatable => true
+
   c.desc "get profile information"
   c.action do |global_options, options, args|
     api_key = global_options[:api_key]
-    response = Veye::User::Me.get_profile(api_key)
-    unless response.success
-      error_msg = sprintf("Failed to read your profile data: %s\n%s\n",
-                         "#{response.message}".foreground(:red),
-                         "#{response.data}")
-      exit_now! error_msg
-    end
-
-    Veye::User::Me.format_profile response.data, options[:format]
+    Veye::User::Me.get_profile(api_key, options)
   end
 
   c.desc "get your favorite packages"
   c.command :favorites do |favorites|
-    favorites.desc "pagination number"
-    favorites.flag [:page, 'page-number']
-
-    favorites.desc "show paging information"
-    favorites.switch [:pagination, 'show-pagination'], :default_value => true,
-                                               :negatable => true
     favorites.action do |global_options, options, args|
       api_key = global_options[:api_key]
-      response = Veye::User::Me.get_favorites(api_key, options[:page])
-
-      unless response.success
-        error_msg = sprintf("Failed to read your profile data: %s\n%s\n",
-                           "#{response.message}".foreground(:red),
-                           "#{response.data}")
-        exit_now! error_msg
-      end
-
-      Veye::User::Me.format_favorites response.data['favorites'], options[:format]
-      if options[:pagination]
-        printf("\n#-- pagination data ------------------\n")
-        Veye::Pagination::Show.format response.data['paging'], options[:format]
-      end
+      Veye::User::Me.get_favorites(api_key, options)
     end
   end
 end
