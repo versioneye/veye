@@ -77,7 +77,7 @@ command :search do |c|
   c.flag "group-id"
 
   c.desc "get next N results, by default it only return 30 results."
-  c.flag [:page, 'page-number']
+  c.flag [:page, 'page-number'], :default_value => 1
 
   c.desc "change output format"
   c.flag [:format,'format-name'], :default_value => "pretty"
@@ -112,23 +112,12 @@ arg_name 'product_file'
 command :check do |c|
   c.desc "change output format"
   c.flag [:format, 'format-name'], :default_value => 'pretty'
-  
+
   c.action do |global_options, options, args|
-    help_now!("File of project is unspecified.".foreground(:red)) if args.empty?
+    help_now!("Project file is missing.".foreground(:red)) if args.empty?
     file_name = args.shift
-    response = Veye::Project::Check.upload(file_name, global_options[:api_key])
-    if response.success == false
-      exit_now!("File upload failed.\n #{response.message}\n".foreground(:red))
-    end
- 
-    if response.success
-      Veye::Project::Check.format_dependencies(
-        response.data['dependencies'], 
-        options[:format]
-      )
-    else
-      exit_now!("Didnt get dependency info from API: #{response.message}")
-    end
+    api_key = global_options[:api_key]
+    response = Veye::Project::Check.upload(file_name, api_key, options)
   end
 end
 
@@ -251,7 +240,7 @@ command :me do |c|
   c.flag [:format, 'format-name'], :default_value => 'pretty'
 
   c.desc "pagination number"
-  c.flag [:page, 'page-number']
+  c.flag [:page, 'page-number'], :default_value => 1
 
   c.desc "show paging information"
   c.switch [:pagination, 'show-pagination'],
