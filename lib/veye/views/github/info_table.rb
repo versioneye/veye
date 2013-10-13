@@ -9,6 +9,8 @@ module Veye
       end
 
       def format(result)
+        return if result.nil?
+
         repo = result['repo']
         projects = result['imported_projects']
         if projects

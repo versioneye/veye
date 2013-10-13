@@ -1,51 +1,37 @@
-require 'json'
-
-require_relative 'project_licence_csv.rb'
-require_relative 'project_licence_json.rb'
-require_relative 'project_licence_pretty.rb'
-require_relative 'project_licence_table.rb'
+require_relative '../views/project.rb'
+require_relative '../base_executor.rb'
 
 module Veye
   module Project
-    class Licence
-      extend FormatHelpers
-
+    class Licence < BaseExecutor
       @@output_formats = {
-        "csv"     => ProjectLicenceCSV.new,
-        "json"    => ProjectLicenceJSON.new,
-        "pretty"  => ProjectLicencePretty.new,
-        "table"   => ProjectLicenceTable.new
+        "csv"     => Project::LicenceCSV.new,
+        "json"    => Project::LicenceJSON.new,
+        "pretty"  => Project::LicencePretty.new,
+        "table"   => Project::LicenceTable.new
       }
 
-      def self.get_project(project_key, api_key)
-        response_data = nil
+      def self.get_project(project_key, api_key, options)
+        results = nil
         project_api = API::Resource.new(RESOURCE_PATH)
-        
-        if project_key.nil? or project_key.empty? 
+
+        if project_key.nil? or project_key.empty?
           error_msg = sprintf("%s: %s",
                              "Error".foreground(:red),
-                             "Not valid project_key: `#{project_key}`")          
+                             "Not valid project_key: `#{project_key}`")
           exit_now! error_msg
         end
-        
+
         project_url = "/#{project_key}/licenses"
         qparams = {:params => {:api_key => api_key}}
         project_api.resource[project_url].get(qparams) do |response, request, result|
-          response_data = API::JSONResponse.new(request, result, response)
+          results = API::JSONResponse.new(request, result, response)
         end
 
-        return response_data
+        catch_request_error(results, "Cant access a information for project `#{project_key}.")
+        show_results(@@output_formats, results.data, options)
+        results
       end
-
-      def self.format(results, format = 'pretty')
-        self.supported_format?(@@output_formats, format)
-
-        formatter = @@output_formats[format]
-        formatter.before
-        formatter.format results
-        formatter.after
-      end
- 
     end
   end
 end

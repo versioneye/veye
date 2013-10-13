@@ -6,7 +6,7 @@ class BaseJSON
 
   def before; end
 
-  def after(paging, allow_pagination = false)
+  def after(paging = nil, allow_pagination = false)
     if allow_pagination && !paging.nil?
       @results[:paging] = paging
     end

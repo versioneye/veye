@@ -7,7 +7,7 @@ class BaseCSV
   def before
     puts @columns
   end
-  def after(paging, allow_pagination = false)
+  def after(paging = nil, allow_pagination = false)
     if allow_pagination && !paging.nil?
       printf("# ------------------------------------------\n")
       printf("current_page,per_page,total_pages,total_entries\n")

@@ -1,86 +1,80 @@
-require 'json'
-
-require_relative 'project_csv.rb'
-require_relative 'project_json.rb'
-require_relative 'project_pretty.rb'
-require_relative 'project_table.rb'
-require_relative 'project_markdown.rb'
-
-require_relative 'project_dependency_csv.rb'
-require_relative 'project_dependency_json.rb'
-require_relative 'project_dependency_pretty.rb'
-require_relative 'project_dependency_table.rb'
-require_relative 'project_dependency_markdown.rb'
+require_relative '../views/project.rb'
+require_relative '../base_executor.rb'
 
 module Veye
   module Project
-    class Check
+    class Check < BaseExecutor
       extend FormatHelpers
 
       @@output_formats = {
-        "csv"       => ProjectCSV.new,
-        "json"      => ProjectJSON.new,
-        "pretty"    => ProjectPretty.new,
-        "table"     => ProjectTable.new,
-        "md"        => ProjectMarkdown.new
+        "csv"       => Project::InfoCSV.new,
+        "json"      => Project::InfoJSON.new,
+        "pretty"    => Project::InfoPretty.new,
+        "table"     => Project::InfoTable.new,
+        "md"        => Project::InfoMarkdown.new
       }
 
       @@dependency_output_formats = {
-        "csv"       => ProjectDependencyCSV.new,
-        "json"      => ProjectDependencyJSON.new,
-        "pretty"    => ProjectDependencyPretty.new,
-        "table"     => ProjectDependencyTable.new,
-        "md"        => ProjectDependencyMarkdown.new
+        "csv"       => Project::DependencyCSV.new,
+        "json"      => Project::DependencyJSON.new,
+        "pretty"    => Project::DependencyPretty.new,
+        "table"     => Project::DependencyTable.new,
+        "md"        => Project::DependencyMarkdown.new
       }
-      
 
-      def self.get_list(api_key)
+      def self.get_list(api_key, options)
         project_api = API::Resource.new(RESOURCE_PATH)
         qparams = {:params => {:api_key => api_key}}
-
-        
+        results = nil
         project_api.resource.get(qparams) do |response, request, result|
-          response_data = API::JSONResponse.new(request, result, response)
+          results = API::JSONResponse.new(request, result, response)
         end
+
+        catch_request_error(results, "Can not read list of projects.")
+        show_results(@@output_formats, results.data, options)
+        results
       end
 
-      def self.upload(filename, api_key)
-        response_data = {:success => false}
+      def self.upload(filename, api_key, options)
+        results = {:success => false}
         file_path = File.absolute_path(filename)
-         
+
         unless File.exists?(file_path)
-            error_msg = sprintf("%s: Cant read file `%s`", 
-                                "Error".foreground(:red),
-                                "#{filename}".foreground(:yellow)
-                               )
-            exit_now!(error_msg)
+          error_msg = sprintf("%s: Cant read file `%s`",
+                              "Error".foreground(:red),
+                              "#{filename}".foreground(:yellow)
+                             )
+          exit_now!(error_msg)
         end
 
         file_size = File.size(file_path)
         unless file_size != 0 and file_size < MAX_FILE_SIZE
-            exit_now!("Size of file is not acceptable: 0kb < x <= #{MAX_FILE_SIZE/1000}kb")
+          exit_now!("Size of file is not acceptable: 0kb < x <= #{MAX_FILE_SIZE/1000}kb")
         end
-       
+
         project_api = API::Resource.new(RESOURCE_PATH)
         file_obj = File.open(file_path, 'rb')
-        
+
         upload_data = {
           :upload   => file_obj,
           :api_key  => api_key
         }
         project_api.resource.post(upload_data) do |response, request, result, &block|
-          response_data = API::JSONResponse.new(request, result, response)
+          results = API::JSONResponse.new(request, result, response)
         end
-        
-        return response_data
+
+        catch_request_error(results, "Upload failed.")
+        show_results(@@output_formats, results.data, options)
+        show_dependencies(results.data, options)
+        results
       end
 
-      def self.update(project_key, filename, api_key)
-        response_data = {:success => false}
+      def self.update(project_key, filename, api_key, options)
+        results = {:success => false}
         file_path = File.absolute_path(filename)
-         
+
         unless File.exists?(file_path)
-          error_msg = sprintf("%s: Cant read file `%s`", 
+          error_msg = sprintf("%s: Cant read file `%s`",
                               "Error".foreground(:red),
                               "#{filename}".foreground(:yellow)
                              )
@@ -91,65 +85,77 @@ module Veye
         unless file_size != 0 and file_size < MAX_FILE_SIZE
           exit_now!(" The size of file is not acceptable: 0kb < x <= #{MAX_FILE_SIZE/1000}kb")
         end
-       
+
         project_api = API::Resource.new("#{RESOURCE_PATH}/#{project_key}")
-        file_obj = File.open(file_path, 'rb') 
+        file_obj = File.open(file_path, 'rb')
         upload_data = {
           :project_file   => file_obj,
           :api_key        => api_key
         }
         project_api.resource.post(upload_data) do |response, request, result, &block|
-          response_data = API::JSONResponse.new(request, result, response)
+          results = API::JSONResponse.new(request, result, response)
         end
-      end 
-      def self.get_project(project_key, api_key)
-        response_data = nil
+        catch_request_error(results, "Re-upload failed.")
+        show_results(@@output_formats, results.data, options)
+        show_dependencies(results.data, options)
+        results
+      end
+      def self.get_project(project_key, api_key, options)
+        results = nil
         project_api = API::Resource.new(RESOURCE_PATH)
-        
-        if project_key.nil? or project_key.empty? 
+
+        if project_key.nil? or project_key.empty?
           error_msg = sprintf("%s: %s",
                              "Error".foreground(:red),
-                             "Not valid project_key: `#{project_key}`")          
+                             "Not valid project_key: `#{project_key}`")
           exit_now! error_msg
         end
-       
+
         project_url = "/#{project_key}"
         qparams = {:params => {:api_key => api_key}}
         project_api.resource[project_url].get(qparams) do |response, request, result|
-          response_data = API::JSONResponse.new(request, result, response)
+          results = API::JSONResponse.new(request, result, response)
         end
 
-        return response_data
+        catch_request_error(results, "Cant read information about project: `#{project_key}`")
+        show_results(@@output_formats, results.data, options)
+        show_dependencies(results.data, options)
+        results
       end
 
       def self.delete_project(project_key, api_key)
         project_api = Veye::API::Resource.new(RESOURCE_PATH)
         qparams = {:params => {:api_key => api_key}}
-        response_data = nil
+        results = nil
 
         project_api.resource["/#{project_key}"].delete(qparams) do |response, request, result|
-          response_data = API::JSONResponse.new(request, result, response)
+          results = API::JSONResponse.new(request, result, response)
         end
-
-        return response_data
+        catch_request_error(results, "Cant delete project: `#{project_key}`")
+        show_message(results, "Deleted", "Cant delete.")
+        results
       end
 
-      def self.format(results, format = 'pretty')
-        self.supported_format?(@@output_formats, format)
-        
-        formatter = @@output_formats[format]
-        formatter.before
-        formatter.format results
-        formatter.after
-      end
-      
-      def self.format_dependencies(results, format = 'pretty')
+      def self.show_dependencies(results, options)
+        format = options[:format]
+        return if format == 'json'
         self.supported_format?(@@dependency_output_formats, format)
 
         formatter = @@dependency_output_formats[format]
+
         formatter.before
-        formatter.format results
+        formatter.format results['dependencies']
         formatter.after
+      end
+
+      def self.show_message(results, success_msg, fail_msg)
+        unless results.success
+          printf("Error: %s\n%s\n",
+                 fail_message.foreground(:red),
+                 response.data['error'])
+        else
+          printf "#{success_msg}\n".foreground(:green)
+        end
       end
     end
   end

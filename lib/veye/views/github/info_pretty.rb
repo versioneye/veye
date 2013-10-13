@@ -5,6 +5,7 @@ module Veye
     class InfoPretty < BasePretty
 
       def format(result)
+        return if result.nil?
         repo = result['repo']
         projects = result['imported_projects']
         if projects

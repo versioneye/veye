@@ -1,25 +1,19 @@
-require 'render-as-markdown'
+require_relative '../base_markdown.rb'
 
 module Veye
   module Project
-    class ProjectMarkdown
-      @@columns  = %w(index name project_key project_type private period source dependencies outdated created)
-
-      def before
-        @@markdown = "# Project's information\n\n"
-        @@table = RenderAsMarkdown::Table.new @@columns
+    class InfoMarkdown < BaseMarkdown
+      def initialize
+        headings  = %w(index name project_key project_type private period source dependencies outdated created)
+        super("Project's information", headings)
       end
 
-      def after
-        @@markdown << @@table.render
-        @@markdown << "\n\n"
-        puts @@markdown
-      end
       def format(results)
+        return if results.nil?
+
         results = [results] if results.is_a?(Hash) #required for  `project show`
-        
         results.each_with_index do |result, index|
-          @@table << [
+          @table << [
             (index + 1).to_s,
             result["name"],
             result["project_key"],

@@ -2,7 +2,7 @@ require 'rainbow'
 
 class BasePretty
   def before; end
-  def after(paging, allow_pagination = false)
+  def after(paging = nil, allow_pagination = false)
     if allow_pagination and paging
       printf("\n#-- %s\n", "Pagination information".bright)
       printf("\t%-15s: %s\n", "Current page", paging['current_page'])

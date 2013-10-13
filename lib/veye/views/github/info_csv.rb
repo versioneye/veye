@@ -4,10 +4,10 @@ module Veye
   module Github
     class InfoCSV < BaseCSV
       def initialize
-        headers = ("name,language,owner_login,owner_type,private,fork,branches,imported_projects, description\n")
+        headers = "name,language,owner_login,owner_type,private,fork,branches,imported_projects, description"
         super(headers)
       end
-      def format(results, index = 0)
+      def format(results)
         return nil if results.nil?
         repo = results['repo']
         imported_projects = results['imported_projects']

@@ -1,12 +1,14 @@
+require_relative '../base_csv.rb'
+
 module Veye
   module Project
-    class ProjectLicenceCSV
-      def before
-        printf("nr,licence,product keys\n")
+    class LicenceCSV < BaseCSV
+      def initialize
+        headers = "nr,licence,product_keys"
+        super(headers)
       end
-      def after; end
-
       def format(results)
+        return nil if results.nil?
         n = 1
         results["licenses"].each_pair do |licence, prods|
           prod_keys = prods.map {|p| p["prod_key"]}

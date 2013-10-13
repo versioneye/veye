@@ -138,19 +138,23 @@ arg_name 'subcommand'
 command :projects do |c|
   c.desc "change output format"
   c.flag [:format, 'format-name'], :default_value => 'pretty'
-   
+
   c.desc "show all projects"
   c.command :list do |list|
     list.action do |global_options, options, args|
       api_key = global_options[:api_key]
-      response = Veye::Project::Check.get_list(api_key)
-      
-      if response.success == false
-        error_msg = "Didnt get list of projects: \n #{response.message.foreground(:red)}"
-        exit_now!(error_msg)
-      end
+      Veye::Project::Check.get_list(api_key, options)
+    end
+  end
 
-      Veye::Project::Check.format(response.data, options[:format])
+  c.desc "show project info"
+  c.arg_name "project_key"
+  c.command :info do |info|
+    info.action do |global_options, options, args|
+      help_now!("Project_key is unspecified".foreground(:red)) if args.empty?
+      proj_key = args.shift
+      api_key = global_options[:api_key]
+      Veye::Project::Check.get_project(proj_key, api_key, options)
     end
   end
 
@@ -161,55 +165,20 @@ command :projects do |c|
       help_now!("The filepath is missing.".foreground(:red)) if args.empty?
       filename = args.shift
       api_key = global_options[:api_key]
-      response = Veye::Project::Check.upload(filename, api_key)
-      unless response.success
-        error_msg = "Uploading failed - #{response.message.foreground(:red)}"
-        exit_now! error_msg
-      end
-      
-      Veye::Project::Check.format(response.data, options[:format])
-      Veye::Project::Check.format_dependencies(response.data['dependencies'], options[:format])
+      Veye::Project::Check.upload(filename, api_key, options)
    end
   end
- 
+
   c.desc "update existing project file"
   c.arg_name "project_key_and_filepath", multiple: true
   c.command :update do |update|
     update.action do |global_options, options, args|
       help_now!("The project key and the filepath are missing".foreground(:red)) if args.empty?
       help_now!("One argument is missing: a project key or filepath".foreground(:red)) if args.count == 1
-      
+
       project_key, filename = args
       api_key = global_options[:api_key]
-
-      response = Veye::Project::Check.update(project_key, filename, api_key)
-      unless response.success
-        error_msg = "Uploading failed - #{response.message.foreground(:red)}"
-        exit_now! error_msg
-      end
-      
-      Veye::Project::Check.format(response.data, options[:format])
-      Veye::Project::Check.format_dependencies(response.data['dependencies'], options[:format])
-    end
-  end
-
-  c.desc "show project info"
-  c.arg_name "project_key"
-  c.command :show do |show|
-    show.action do |global_options, options, args|
-      help_now!("Project_key is unspecified".foreground(:red)) if args.empty?
-      proj_key = args.shift
-      api_key = global_options[:api_key]
-
-      response = Veye::Project::Check.get_project(proj_key, api_key)
-      unless response.success
-        error_msg = "Cant read information about project: `#{proj_key}`"
-        error_msg +=  "- #{response.message}".foreground(:red)
-        exit_now! error_msg
-      end
-
-      Veye::Project::Check.format(response.data, options[:format])
-      Veye::Project::Check.format_dependencies(response.data['dependencies'], options[:format])
+      Veye::Project::Check.update(project_key, filename, api_key, options)
     end
   end
 
@@ -220,16 +189,7 @@ command :projects do |c|
       help_now!("Project's key is unspecified".foreground(:red)) if args.empty?
       proj_key = args.shift
       api_key = global_options[:api_key]
-
-      response = Veye::Project::Licence.get_project(proj_key, api_key)
-      unless response.success
-        error_msg = sprintf("%s \n %s",
-                            "Cant access a information for project `#{proj_key}`".foreground(:red),
-                            "#{response.message}")
-        exit_now! error_msg
-      end
-      
-      Veye::Project::Licence.format(response.data, options[:format])
+      Veye::Project::Licence.get_project(proj_key, api_key, options)
     end
   end
 
@@ -240,14 +200,7 @@ command :projects do |c|
       help_now!("Project is missing".foreground(:red)) if args.empty?
       proj_key = args.shift
       api_key = global_options[:api_key]
-
-      response = Veye::Project::Check.delete_project(proj_key, api_key)
-      unless response.success
-        printf("Cant delete - %s\n%s\n", response.message.foreground(:red),
-                                         response.data['error'])
-      else
-        printf "Deleted\n".foreground(:green)
-      end
+      Veye::Project::Check.delete_project(proj_key, api_key)
     end
   end
 end

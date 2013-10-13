@@ -1,14 +1,14 @@
+require_relative '../base_csv.rb'
+
 module Veye
   module Project
-    class ProjectCSV
-      def before
-        printf("nr,name,project_key,private,period,source,dep_number,out_number,created_at\n")
+    class InfoCSV < BaseCSV
+      def initialize
+        headers = "nr,name,project_key,private,period,source,dep_number,out_number,created_at"
+        super(headers)
       end
-      def after
-        puts "\n"
-      end
-
       def format(results)
+        return nil if results.nil?
         results = [results] if results.is_a? Hash
 
         results.each_with_index do |result, index|

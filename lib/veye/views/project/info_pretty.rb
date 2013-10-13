@@ -1,12 +1,11 @@
-require 'rainbow'
+require_relative '../base_pretty.rb'
 
 module Veye
   module Project
-    class ProjectPretty
-      def before; end
-      def after; end
+    class InfoPretty < BasePretty
 
       def format(results)
+        return if results.nil?
         results = [results] if results.is_a? Hash
 
         results.each_with_index do |result, index|

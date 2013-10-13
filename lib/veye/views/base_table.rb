@@ -13,7 +13,7 @@ class BaseTable
     @table.align_column(0, :right)
   end
 
-  def after(paging, allow_pagination = false)
+  def after(paging = nil, allow_pagination = false)
     if allow_pagination && !paging.nil?
       paging_header = ['p', 'current_page', 'per_page', 'total_pages', 'total_entries']
       paging_data = ["p"]
