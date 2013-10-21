@@ -1,5 +1,5 @@
 module Veye
-  VERSION = '0.0.6'
+  VERSION = '0.0.7'
   BIGEYE = %q{
 
       _    __                   _                ______           

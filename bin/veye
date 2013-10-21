@@ -44,7 +44,7 @@ pre do |global_options, command, args|
   check_config_file
   $global_options = init_environment
   $global_options.merge!(global_options)
-  needs_api_key = ! COMMANDS_WITHOUT_API_KEY.member?(command.name) 
+  needs_api_key = !COMMANDS_WITHOUT_API_KEY.member?(command.name)
   check_configs($global_options, needs_api_key)
   $global_options[:url] = Veye::API::Resource.build_url($global_options)
 end
@@ -262,7 +262,7 @@ command :me do |c|
   end
 end
 
-desc "github commands"
+desc "work with github repositories"
 command :github do |c|
   c.desc "change output format"
   c.flag [:format, 'format-name'], :default_value => 'pretty'

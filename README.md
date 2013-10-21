@@ -303,3 +303,68 @@ This command removes the specified project from your project's list.
  $> veye me favorites
  $> veye me favorites --page=2 --format=table
 ```
+
+### Github
+
+These command has many subcommands to work with your Github repositories.
+All subcommands expect that you had already connected your Github with your VersionEye account. Otherwise you'll get plain exception message.
+
+##### Sync
+
+Updates your Github data - this api tries to be lazy: it pulls updates only if there's no repositories or Github shows there's any changes. But you can use `--force` switch to re-import all date regardless there's any changes on your repositories. Beware this command can takes time.
+
+```
+ $> veye github sync
+ $> veye github sync --force
+```
+
+###### List
+
+`list` commands shows paginated view of your repositories. Due the limitations of presentations, we show imported projects only for `pretty` view.
+
+```
+ $> veye github list --format=table
+```
+
+###### Info
+
+This command shows more detailed information.
+
+```
+ $> veye github info versioneye/veye
+ $> veye github info versioneye/veye --format=table
+```
+
+###### Import
+
+`import` command takes fullname of repository and tries to import project file from that repository.  Fullname have to include the owner and the name of repository.
+
+By default, it tries to read project file on master branch; you can use a `--branch` flag to specify the name of branch. 
+
+This command gives exception when you are trying to import already imported repository.
+
+
+```
+ $> veye github import versioneye/veye
+ $> veye github import versioneye/veye --branch=dev
+```
+
+
+###### Delete
+
+It removes imported project.
+
+```
+ $> veye github delete versioneye/veye
+ $> veye github delete versioneye/veye --branch=dev
+```
+
+###### Search 
+
+This command makes authorized request to the Github search api for  repositories. As authorized user, you can make up to *5000* request per hour. 
+
+```
+ $> veye github search versioneye 
+ $> veye github search json --language=php --page=2 ;; filter results by language
+ $> veye github search veye --user versioneye       ;; filter results by users
+```

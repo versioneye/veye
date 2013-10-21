@@ -1,6 +1,12 @@
 # Changelogs
 
 
+## 0.0.7
+
+* added commands to work with Github repositories. 
+* big view refactoring
+
+
 ## 0.0.6
 
 first usable gem

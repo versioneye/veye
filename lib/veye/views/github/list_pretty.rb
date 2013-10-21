@@ -20,6 +20,7 @@ module Veye
         printf("\t%-15s: %s\n", "Fork",       result['fork'])
         printf("\t%-15s: %s\n", "Branches",   result['branches'].join(','))
         printf("\t%-15s: %s\n", "Description", result['description'])
+        printf("\t%-15s: %s\n", "Imported", result['imported_projects'].join(','))
       end
     end
   end
