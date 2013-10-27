@@ -16,7 +16,8 @@ spec = Gem::Specification.new do |s|
   ]
   s.license = "MIT"
   s.post_install_message = "Thanks for installing! To get more info, use: veye help"
-# Add your other files here if you make them
+
+  # Add your other files here if you make them
   s.files = %w(lib/veye.rb)
   s.files += Dir['lib/**/*.rb'] + Dir['bin/*']
   s.files += Dir['[A-Z]*'] + Dir['test/**/*']
@@ -26,13 +27,15 @@ spec = Gem::Specification.new do |s|
   s.rdoc_options << '--title' << 'veye' << '--main' << 'README.rdoc' << '-ri'
   s.bindir = 'bin'
   s.executables << 'veye'
-  s.add_development_dependency('rake')
-  s.add_development_dependency('rdoc')
-  s.add_development_dependency('aruba')
-  s.add_runtime_dependency('gli','2.8.1')
-  s.add_runtime_dependency('rest-client', '1.6.7')
-  s.add_runtime_dependency('awesome_print', '1.2.0')
-  s.add_runtime_dependency('rainbow')
-  s.add_runtime_dependency('terminal-table', '1.4.5')
-  s.add_runtime_dependency('render-as-markdown', '0.0.5')
+
+  s.add_development_dependency('rake',  '~> 10.1.0')
+  s.add_development_dependency('rdoc',  '~> 4.0')
+  s.add_development_dependency('aruba', '~> 0.5.3')
+
+  s.add_runtime_dependency('gli',               '~> 2.8.1')
+  s.add_runtime_dependency('rest-client',       '~> 1.6.7')
+  s.add_runtime_dependency('awesome_print',     '~> 1.2.0')
+  s.add_runtime_dependency('rainbow',           '~> 1.1.4')
+  s.add_runtime_dependency('terminal-table',    '~> 1.4.5')
+  s.add_runtime_dependency('render-as-markdown','~> 0.0.5')
 end
