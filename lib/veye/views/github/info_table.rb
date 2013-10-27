@@ -16,7 +16,7 @@ module Veye
         if projects
           project_names = projects.map {|x| x['project_key']}
         else
-          project_name = []
+          project_names = []
         end
 
         row = [repo['fullname']]
@@ -25,8 +25,8 @@ module Veye
         row << repo['owner_type']
         row << repo['private']
         row << repo['fork']
-        row << repo['branches'].to_a.join(', ')
-        row << project_names.join(', ')
+        row << repo['branches'].to_a.join("\n")
+        row << project_names.join("\n")
         row << repo['description']
 
         @table << row

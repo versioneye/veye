@@ -4,7 +4,7 @@ module Veye
   module Github
     class ListTable < BaseTable
       def initialize
-        headings = %w(index fullname language owner_login owner_type private fork)
+        headings = %w(index fullname language owner_login owner_type private fork branches imported)
         super("Github repositories", headings)
       end
 
@@ -17,7 +17,8 @@ module Veye
           row << result['owner_type']
           row << result['private']
           row << result['fork']
-          #row << result['branches'].join(',')
+          row << result['branches'].join("\n")
+          row << result['imported_projects'].to_a.join("\n")
           #row << result['description']
           @table << row
         end

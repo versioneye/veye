@@ -306,12 +306,13 @@ This command removes the specified project from your project's list.
 
 ### Github
 
-These command has many subcommands to work with your Github repositories.
+`Github` command includes subcommands to manage your Github repositories on VersionEye.
+
 All subcommands expect that you had already connected your Github with your VersionEye account. Otherwise you'll get plain exception message.
 
 ##### Sync
 
-Updates your Github data - this api tries to be lazy: it pulls updates only if there's no repositories or Github shows there's any changes. But you can use `--force` switch to re-import all date regardless there's any changes on your repositories. Beware this command can takes time.
+Updates your Github data - this api's resource tries to be lazy: it pulls updates only if there's no cached repositories or Github shows there's any changes on your repositories. But you can use `--force` switch to re-import all data regardless there's any changes on your repositories. Beware this command can takes time.
 
 ```
  $> veye github sync
@@ -320,7 +321,7 @@ Updates your Github data - this api tries to be lazy: it pulls updates only if t
 
 ###### List
 
-`list` commands shows paginated view of your repositories. Due the limitations of presentations, we show imported projects only for `pretty` view.
+`list` commands shows paginated view of your repositories.
 
 ```
  $> veye github list --format=table
