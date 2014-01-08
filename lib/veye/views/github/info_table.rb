@@ -12,6 +12,11 @@ module Veye
         return if result.nil?
 
         repo = result['repo']
+        if repo.nil?
+          puts "Error: Cant import."
+          return false
+        end
+
         projects = result['imported_projects']
         if projects
           project_names = projects.map {|x| x['project_key']}
