@@ -28,14 +28,14 @@ spec = Gem::Specification.new do |s|
   s.bindir = 'bin'
   s.executables << 'veye'
 
-  s.add_development_dependency('rake',  '~> 10.3.2')
-  s.add_development_dependency('rdoc',  '~> 4.1.1')
-  s.add_development_dependency('aruba', '~> 0.6.0')
+  s.add_development_dependency('rake',  '~> 10.3')
+  s.add_development_dependency('rdoc',  '~> 4.1')
+  s.add_development_dependency('aruba', '~> 0.6')
 
-  s.add_runtime_dependency('gli',               '~> 2.11.0')
-  s.add_runtime_dependency('rest-client',       '~> 1.6.7')
-  s.add_runtime_dependency('awesome_print',     '~> 1.2.0')
-  s.add_runtime_dependency('rainbow',           '~> 2.0.0')
-  s.add_runtime_dependency('terminal-table',    '~> 1.4.5')
-  s.add_runtime_dependency('render-as-markdown','~> 0.0.6')
+  s.add_runtime_dependency('gli',               '~> 2.11')
+  s.add_runtime_dependency('rest-client',       '~> 1.6')
+  s.add_runtime_dependency('awesome_print',     '~> 1.2')
+  s.add_runtime_dependency('rainbow',           '~> 2.0')
+  s.add_runtime_dependency('terminal-table',    '~> 1.4')
+  s.add_runtime_dependency('render-as-markdown','~> 0.0')
 end
