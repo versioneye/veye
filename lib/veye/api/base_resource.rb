@@ -1,7 +1,7 @@
 module Veye
   module API
     class  BaseResource
-      attr_reader :resource, :full_path 
+      attr_reader :resource, :full_path
 
       def initialize(path = nil)
         @full_path = $global_options[:url]

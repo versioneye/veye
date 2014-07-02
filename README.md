@@ -194,6 +194,22 @@ For example to override a number of port, when doing search:
   $> veye --port=4567 search json --lang=php,nodejs
 ```
 
+###### Timeouts
+
+The best place to manage timeouts for a single run is to use commandline flags.  
+
+```
+ $> veye --timeout=100 --open_timeout=10 ping
+```
+
+**NB!** unit of timeout is a second and it's doesnt accepts milliseconds. Therefore smallest timeout is 1second and you can use -1 as infinite timeout.
+
+If you want to change timeout settings permanently, then you shall change timeout values in your `.veye.rc` file. 
+
+###### Updating options file
+
+There may be a situation when you need to update/re-write saved config file. Then you you can use `veye initconfig --force` command to re-write already existing configuration file.
+
 ### Package information
 
 Ok, thats most trickiest part of our tool. You need to prepend a language of package just before product's key. For example, if you have Java package with product key junit/junit, then you have to encode this value as: `java/junit/junit`.

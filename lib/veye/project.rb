@@ -7,5 +7,3 @@ module Veye
     MAX_FILE_SIZE = 500000 # ~ 500kB
   end
 end
-           
-

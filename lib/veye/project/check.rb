@@ -42,8 +42,7 @@ module Veye
         unless File.exists?(file_path)
           error_msg = sprintf("%s: Cant read file `%s`",
                               "Error".foreground(:red),
-                              "#{filename}".foreground(:yellow)
-                             )
+                              "#{filename}".foreground(:yellow))
           exit_now!(error_msg)
         end
 
@@ -53,6 +52,8 @@ module Veye
         end
 
         project_api = API::Resource.new(RESOURCE_PATH)
+        puts "built new project_api successfully"
+
         file_obj = File.open(file_path, 'rb')
 
         upload_data = {

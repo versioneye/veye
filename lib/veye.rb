@@ -48,11 +48,10 @@ end
 
 def init_environment
     #sets up required variables and modules to work on IRB or unittest
-    config_file = get_config_fullpath   
+    config_file = get_config_fullpath
     $global_options = YAML.load_file(config_file)
-    $global_options[:config_file] = config_file 
+    $global_options[:config_file] = config_file
     $global_options[:url] = Veye::API::Resource.build_url($global_options)
-    
     $global_options
 end
 
@@ -60,7 +59,7 @@ def check_api_key(global_opts)
   result = false
   if global_opts[:api_key].nil? or global_opts[:api_key].match("add your api key")
     msg = sprintf("%s: %s\n",
-                "Warning: API key is missing.".foreground(:yellow), 
+                "Warning: API key is missing.".foreground(:yellow),
                 "You cant access private data.")
      print msg
   else

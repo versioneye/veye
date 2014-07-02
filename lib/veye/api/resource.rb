@@ -10,7 +10,12 @@ module Veye
       def initialize(path = nil)
         super(path)
         ssl_path = File.expand_path($global_options[:ssl_path])
-        @resource = RestClient::Resource.new(@full_path)
+        timeout = $global_options[:timeout].to_i || 90
+        open_timeout = $global_options[:open_timeout].to_i || 10
+
+        @resource = RestClient::Resource.new(@full_path,
+                                             timeout: timeout,
+                                             open_timeout: open_timeout)
       end
     end
   end
