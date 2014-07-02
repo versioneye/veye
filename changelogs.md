@@ -1,6 +1,11 @@
 # Changelogs
 
 
+## 0.0.8
+
+* added timeout opts
+* cleanups
+
 ## 0.0.7
 
 * added commands to work with Github repositories. 
