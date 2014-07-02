@@ -1,7 +1,6 @@
 require 'rest_client'
 require_relative 'base_resource.rb'
 
-
 #for ssl keys:
 #openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -nodes
 module Veye
