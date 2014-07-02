@@ -4,13 +4,14 @@ require 'gli'
 require 'rest_client'
 require 'json'
 require 'rainbow'
+require 'rainbow/ext/string'
 
 require 'veye'
 
 include GLI::App
 
 program_desc 'VersionEye commandline tool'
-program_long_desc Veye::BIGEYE.foreground(:green)
+program_long_desc Rainbow(Veye::BIGEYE).green
 
 wrap_help_text :verbatim
 version Veye::VERSION
@@ -93,7 +94,8 @@ command :search do |c|
                                              :negatable => true
 
   c.action do |global_options, options, args|
-    help_now!("the search term is mandatory.".foreground(:red)) if args.empty?
+    error_msg = "the search term is mandatory.".color(:red)
+    help_now!(error_msg) if args.empty?
     search_term = args.shift
     Veye::Package::Search.search(search_term, options)
   end
@@ -106,7 +108,8 @@ command :info do |c|
   c.flag [:format, 'format-name'], :default_value => 'pretty'
 
   c.action do |global_options, options, args|
-    help_now!("package_key is missing".foreground(:red)) if args.empty?
+    error_msg = Rainbow("package_key is missing").red
+    help_now!(error_msg) if args.empty?
     package_key = args.shift
     response = Veye::Package::Info.get_package(package_key, options)
   end
@@ -120,7 +123,7 @@ command :check do |c|
   c.flag [:format, 'format-name'], :default_value => 'pretty'
 
   c.action do |global_options, options, args|
-    help_now!("Project file is missing.".foreground(:red)) if args.empty?
+    help_now!("Project file is missing.".color(:red)) if args.empty?
     file_name = args.shift
     api_key = global_options[:api_key]
     response = Veye::Project::Check.upload(file_name, api_key, options)
@@ -146,7 +149,7 @@ command :projects do |c|
   c.arg_name "project_key"
   c.command :info do |info|
     info.action do |global_options, options, args|
-      help_now!("Project_key is unspecified".foreground(:red)) if args.empty?
+      help_now!("Project_key is unspecified".color(:red)) if args.empty?
       proj_key = args.shift
       api_key = global_options[:api_key]
       Veye::Project::Check.get_project(proj_key, api_key, options)
@@ -157,7 +160,7 @@ command :projects do |c|
   c.arg_name "filepath"
   c.command :upload do |upload|
     upload.action do |global_options, options, args|
-      help_now!("The filepath is missing.".foreground(:red)) if args.empty?
+      help_now!("The filepath is missing.".color(:red)) if args.empty?
       filename = args.shift
       api_key = global_options[:api_key]
       Veye::Project::Check.upload(filename, api_key, options)
@@ -168,8 +171,8 @@ command :projects do |c|
   c.arg_name "project_key_and_filepath", multiple: true
   c.command :update do |update|
     update.action do |global_options, options, args|
-      help_now!("The project key and the filepath are missing".foreground(:red)) if args.empty?
-      help_now!("One argument is missing: a project key or filepath".foreground(:red)) if args.count == 1
+      help_now!("The project key and the filepath are missing".color(:red)) if args.empty?
+      help_now!("One argument is missing: a project key or filepath".color(:red)) if args.count == 1
 
       project_key, filename = args
       api_key = global_options[:api_key]
@@ -181,7 +184,7 @@ command :projects do |c|
   c.arg_name "project_key"
   c.command :licenses do |licences|
     licences.action do |global_options, options, args|
-      help_now!("Project's key is unspecified".foreground(:red)) if args.empty?
+      help_now!("Project's key is unspecified".color(:red)) if args.empty?
       proj_key = args.shift
       api_key = global_options[:api_key]
       Veye::Project::Licence.get_project(proj_key, api_key, options)
@@ -192,7 +195,7 @@ command :projects do |c|
   c.arg_name "project_key"
   c.command :delete do |delete|
     delete.action do |global_options, options, args|
-      help_now!("Project is missing".foreground(:red)) if args.empty?
+      help_now!("Project is missing".color(:red)) if args.empty?
       proj_key = args.shift
       api_key = global_options[:api_key]
       Veye::Project::Check.delete_project(proj_key, api_key)
@@ -209,7 +212,7 @@ command :products do |c|
   c.arg_name "prod_key"
   c.command :following do |following|
     following.action do |global_options, options, args|
-      help_now!("Product's key is missing".foreground(:red)) if args.empty?
+      help_now!("Product's key is missing".color(:red)) if args.empty?
       prod_key = args.shift
       api_key = global_options[:api_key]
       Veye::Package::Follow.get_follow_status(prod_key, api_key)
@@ -220,7 +223,7 @@ command :products do |c|
   c.arg_name "prod_key"
   c.command :follow do |follow|
     follow.action do |global_options, options, args|
-      help_now!("Product's key is missing".foreground(:red)) if args.empty?
+      help_now!("Product's key is missing".color(:red)) if args.empty?
       prod_key = args.shift
       api_key = global_options[:api_key]
       Veye::Package::Follow.follow(prod_key, api_key)
@@ -231,7 +234,7 @@ command :products do |c|
   c.arg_name "prod_key"
   c.command :unfollow do |unfollow|
     unfollow.action do |global_options, options, args|
-      help_now!("Product's key is missing".foreground(:red)) if args.empty?
+      help_now!("Product's key is missing".color(:red)) if args.empty?
       prod_key = args.shift
       api_key = global_options[:api_key]
       Veye::Package::Follow.unfollow(prod_key, api_key)
@@ -324,7 +327,7 @@ command :github do |c|
   c.arg_name "search_term"
   c.command :search do |gsearch|
     gsearch.action do |global_options, options, args|
-      help_now!("the search term is mandatory.".foreground(:red)) if args.empty?
+      help_now!("the search term is mandatory.".color(:red)) if args.empty?
       search_term = args.shift
       api_key = global_options[:api_key]
       Veye::Github::Search.search(api_key, search_term, options)
@@ -335,7 +338,7 @@ command :github do |c|
   c.arg_name "repo_name"
   c.command :info do |info|
     info.action do |global_options, options, args|
-      help_now!("the name of repository is mandatory".foreground(:red)) if args.empty?
+      help_now!("the name of repository is mandatory".color(:red)) if args.empty?
       repo_name = args.shift
       api_key = global_options[:api_key]
       Veye::Github::Info.get_repo(api_key, repo_name, options)
@@ -346,7 +349,7 @@ command :github do |c|
   c.arg_name "repo_name"
   c.command :import do |imp|
     imp.action do |global_options, options, args|
-      help_now!("the name of repository is mandatory".foreground(:red)) if args.empty?
+      help_now!("the name of repository is mandatory".color(:red)) if args.empty?
       repo_name = args.shift
       api_key = global_options[:api_key]
       Veye::Github::Import.import_repo(api_key, repo_name, options)
@@ -357,7 +360,7 @@ command :github do |c|
   c.arg_name "repo_name"
   c.command :delete do |del|
     del.action do |global_options, options, args|
-      help_now!("the name of repository is mandatory".foreground(:red)) if args.empty?
+      help_now!("the name of repository is mandatory".color(:red)) if args.empty?
       repo_name = args.shift
       api_key = global_options[:api_key]
       Veye::Github::Delete.delete_repo(api_key, repo_name, options)

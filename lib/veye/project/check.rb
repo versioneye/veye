@@ -41,8 +41,8 @@ module Veye
 
         unless File.exists?(file_path)
           error_msg = sprintf("%s: Cant read file `%s`",
-                              "Error".foreground(:red),
-                              "#{filename}".foreground(:yellow))
+                              "Error".color(:red),
+                              "#{filename}".color(:yellow))
           exit_now!(error_msg)
         end
 
@@ -76,8 +76,8 @@ module Veye
 
         unless File.exists?(file_path)
           error_msg = sprintf("%s: Cant read file `%s`",
-                              "Error".foreground(:red),
-                              "#{filename}".foreground(:yellow)
+                              "Error".color(:red),
+                              "#{filename}".color(:yellow)
                              )
           exit_now!(error_msg)
         end
@@ -107,7 +107,7 @@ module Veye
 
         if project_key.nil? or project_key.empty?
           error_msg = sprintf("%s: %s",
-                             "Error".foreground(:red),
+                             "Error".color(:red),
                              "Not valid project_key: `#{project_key}`")
           exit_now! error_msg
         end
@@ -152,10 +152,10 @@ module Veye
       def self.show_message(results, success_msg, fail_msg)
         unless results.success
           printf("Error: %s\n%s\n",
-                 fail_message.foreground(:red),
+                 fail_message.color(:red),
                  response.data['error'])
         else
-          printf "#{success_msg}\n".foreground(:green)
+          printf "#{success_msg}\n".color(:green)
         end
       end
     end

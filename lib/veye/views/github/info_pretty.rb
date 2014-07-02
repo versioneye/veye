@@ -16,7 +16,7 @@ module Veye
 
         printf(
           "\t%15s - %s\n",
-          "#{repo['fullname']}".foreground(:green),
+          "#{repo['fullname']}".color(:green),
           "#{repo['language']}".bright
         )
         printf("\t%-15s: %s\n", "Description", repo['description'])

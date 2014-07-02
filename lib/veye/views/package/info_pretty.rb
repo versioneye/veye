@@ -7,7 +7,7 @@ module Veye
         result = results
         return if result.nil?
 
-        printf("\t%15s - %s\n", "#{result['name']}".foreground(:green).bright,
+        printf("\t%15s - %s\n", "#{result['name']}".color(:green).bright,
                                 "#{result['version'].bright}")
         printf("\t%-15s: %s\n", "Language", result["language"])
         printf("\t%-15s: %s\n", "License", result["license_info"])

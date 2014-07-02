@@ -11,7 +11,7 @@ module Veye
       def print_row(fav, index)
         printf(
           "\t%15s - %s\n",
-          "#{fav['name']}".foreground(:green).bright,
+          "#{fav['name']}".color(:green).bright,
           "#{fav['prod_key'].bright}"
         )
         printf("\t%-15s: %s\n", "Product type", fav['prod_type'])

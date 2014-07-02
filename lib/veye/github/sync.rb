@@ -22,10 +22,10 @@ module Veye
       def self.show_result(response)
         unless response.data["changed"]
           printf("%s - %s\n",
-                 "No changes.".foreground(:red),
+                 "No changes.".color(:red),
                  "Use `force` flag if you want to reload everything.")
         else
-          printf "Imported. #{response.data['msg']}\n".foreground(:green)
+          printf "Imported. #{response.data['msg']}\n".color(:green)
         end
       end
     end

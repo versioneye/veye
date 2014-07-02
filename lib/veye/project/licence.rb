@@ -17,7 +17,7 @@ module Veye
 
         if project_key.nil? or project_key.empty?
           error_msg = sprintf("%s: %s",
-                             "Error".foreground(:red),
+                             "Error".color(:red),
                              "Not valid project_key: `#{project_key}`")
           exit_now! error_msg
         end

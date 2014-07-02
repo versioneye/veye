@@ -30,7 +30,7 @@ end
 def check_config_file
   unless config_exists?
     msg = sprintf("%s: %s\n",
-                  "config file doesnt exist. ".foreground(:red),
+                  "config file doesnt exist. ".color(:red),
                   "Use `veye initconfig` to initialize settings file.")
     exit_now!(msg)
   end
@@ -59,7 +59,7 @@ def check_api_key(global_opts)
   result = false
   if global_opts[:api_key].nil? or global_opts[:api_key].match("add your api key")
     msg = sprintf("%s: %s\n",
-                "Warning: API key is missing.".foreground(:yellow),
+                "Warning: API key is missing.".color(:yellow),
                 "You cant access private data.")
      print msg
   else
@@ -107,7 +107,7 @@ def save_configs
     f.puts $global_options.to_yaml
   end
   msg = sprintf("%s: %s",
-         "Success".foreground(:green),
+         "Success".color(:green),
          "new settings are saved into file: `#{filepath}`\n")
   print msg
 end

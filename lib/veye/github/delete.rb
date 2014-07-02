@@ -23,10 +23,10 @@ module Veye
 
       def self.show_result(response)
         unless response.success
-          printf("Cant delete - %s\n%s\n", response.message.foreground(:red),
+          printf("Cant delete - %s\n%s\n", response.message.color(:red),
                                            response.data['error'])
         else
-          printf "Deleted\n".foreground(:green)
+          printf "Deleted\n".color(:green)
         end
       end
     end

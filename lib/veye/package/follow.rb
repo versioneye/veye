@@ -58,7 +58,7 @@ module Veye
       def self.show_result(response)
         result = response.data
         return if result.nil?
-        printf "Following `#{result['prod_key']}`: #{result['follows']}\n".foreground(:green)
+        printf "Following `#{result['prod_key']}`: #{result['follows']}\n".color(:green)
       end
     end
   end

@@ -1,4 +1,5 @@
 require 'rainbow'
+require 'rainbow/ext/string'
 
 module Veye
   module Pagination
@@ -8,7 +9,7 @@ module Veye
 
       def format(paging)
         printf("\t%15s - %s\n",
-               "Current page".foreground(:green).bright,
+               "Current page".color(:green).bright,
                "#{paging['current_page']}".bright)
         puts "\t-------------------------"
         printf("\t%-15s: %s\n", "Per page", paging['per_page'])

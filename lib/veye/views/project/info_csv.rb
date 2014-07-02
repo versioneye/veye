@@ -4,7 +4,7 @@ module Veye
   module Project
     class InfoCSV < BaseCSV
       def initialize
-        headers = "nr,name,project_key,private,period,source,dep_number,out_number,created_at"
+        headers = "nr,name,project_key,public,period,source,dep_number,out_number,created_at"
         super(headers)
       end
       def format(results)
@@ -16,7 +16,7 @@ module Veye
                 index + 1,
                 result['name'],
                 result['project_key'],
-                result['private'],
+                result['public'],
                 result['period'],
                 result['source'],
                 result['dep_number'],

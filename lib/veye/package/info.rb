@@ -24,7 +24,7 @@ module Veye
             Example: clojure/ztellman/aleph, which as required structure <prog lang>/<product_code>
           ]
           error_msg = sprrintf("%s. \n%s",
-                               "Error: Malformed key.".foreground(:red),
+                               "Error: Malformed key.".color(:red),
                               msg)
           exit_now!(error_msg)
         end

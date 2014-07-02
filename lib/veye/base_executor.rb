@@ -16,7 +16,7 @@ class BaseExecutor
   def self.catch_request_error(response, msg)
     if response.nil? or not response.success
       error_msg = sprintf("%s\n%s\n",
-                          "#{msg}".foreground(:red),
+                          "#{msg}".color(:red),
                           "#{response.data}")
       exit_now! error_msg
     end

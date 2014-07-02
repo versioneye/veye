@@ -4,7 +4,7 @@ module Veye
   module Project
     class DependencyTable < BaseTable
       def initialize
-        headings = %w{index name prod_key outdated version_current version_requested stable license}
+        headings = %w{index name prod_key version_current version_requested outdated stable license}
         super("Project dependencies", headings)
       end
       def format(results)
@@ -16,7 +16,7 @@ module Veye
             result["prod_key"],
             result["version_current"],
             result["version_requested"],
-            result["outdated"] ? "outdated":"",
+            result["outdated"] ? "outdated":"no",
             result["stable"] ? "stable": "unstable",
             result["license"]]
           @table << row

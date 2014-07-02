@@ -7,16 +7,16 @@ module Veye
         return if results.nil?
         results = [results] if results.is_a?(Hash)
         results.each_with_index do |result, index|
-          project_name = "#{result['name']}".foreground(:green).bright
+          project_name = "#{result['name']}".color(:green).bright
           printf("%3d - %s\n", index + 1, project_name)
           printf("\t%-15s: %s\n", "Product key", result["prod_key"])
 
-          color = (result["outdated"] == true) ? :red : :green
+          color_code = (result["outdated"] == true) ? :red : :green
           printf("\t%-15s: %s\n", "Outdated",
-                                  "#{result['outdated']}".foreground(color))
+                                  "#{result['outdated']}".color(color_code))
 
           printf("\t%-15s: %s\n", "Current version",
-                                  "#{result['version_current']}".foreground(color))
+                                  "#{result['version_current']}".color(color_code))
 
           printf("\t%-15s: %s\n", "Requested version", result["version_requested"])
           printf("\t%-15s: %s\n", "License", result["license"])

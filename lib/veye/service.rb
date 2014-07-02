@@ -13,12 +13,12 @@ module Veye
 
     def self.show_result(result)
       if result.success
-        puts "#{result.data['message']}".foreground(:green)
+        puts "#{result.data['message']}".color(:green)
      else
        printf(
          "VersionEye didnt recognized secret word.Answered %s, %s\n",
-         result.code.to_s.foreground(:red),
-         "#{result.message}".foreground(:yellow)
+         result.code.to_s.color(:red),
+         "#{result.message}".color(:yellow)
        )
      end
     end

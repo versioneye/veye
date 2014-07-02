@@ -311,9 +311,9 @@ This command removes the specified project from your project's list.
 	$> veye me
 ``` 
 
-####### Favorite packages
+###### Favorite packages
 
-`me` command has a `favorite` command, which returns all packages you're currently following.
+`me` command has a `favorite` subcommand, which returns all packages you're currently following.
 
 ```
  $> veye me favorites

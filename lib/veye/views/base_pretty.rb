@@ -1,4 +1,5 @@
 require 'rainbow'
+require 'rainbow/ext/string'
 
 class BasePretty
   def before; end

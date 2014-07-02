@@ -5,7 +5,7 @@ module Veye
     class ProfilePretty < BasePretty
       def print_row(profile, index = 1)
         printf("\t%15s - %s\n",
-               "#{profile['username']}".foreground(:green).bright,
+               "#{profile['username']}".color(:green).bright,
                "#{profile['fullname'].bright}")
         printf("\t%-15s: %s\n", "Email", profile['email'])
         printf("\t%-15s: %s\n", "Plan name", profile['plan_name_id'])
