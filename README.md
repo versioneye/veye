@@ -413,3 +413,15 @@ $> veye github search json --language=php --page=2
 ;; filter results by users
 $> veye github search veye --user versioneye
 ```
+
+# Contibuting
+
+All contributions are welcome - comments, new ideas, help with documentation & help with features;
+
+# License
+The MIT License (MIT)
+
+Copyright (c)2014 **VersionEye GMHB**
+
+
+[MIT licence](http://choosealicense.com/licenses/mit/) 

@@ -1,6 +1,0 @@
-= veye
-
-Describe your project here
-
-:include:veye.rdoc
-

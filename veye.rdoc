@@ -1,5 +1,0 @@
-= veye
-
-Generate this with
-    veye rdoc
-After you have described your command line interface
