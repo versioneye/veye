@@ -2,12 +2,12 @@ PATH
   remote: .
   specs:
     veye (0.0.8.1)
-      awesome_print (~> 1.2.0)
-      gli (~> 2.11.0)
-      rainbow (~> 2.0.0)
-      render-as-markdown (~> 0.0.6)
-      rest-client (~> 1.6.7)
-      terminal-table (~> 1.4.5)
+      awesome_print (~> 1.2)
+      gli (~> 2.11)
+      rainbow (~> 2.0)
+      render-as-markdown (~> 0.0)
+      rest-client (~> 1.6)
+      terminal-table (~> 1.4)
 
 GEM
   remote: https://rubygems.org/
@@ -52,7 +52,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aruba (~> 0.6.0)
-  rake (~> 10.3.2)
-  rdoc (~> 4.1.1)
+  aruba (~> 0.6)
+  rake (~> 10.3)
+  rdoc (~> 4.1)
   veye!

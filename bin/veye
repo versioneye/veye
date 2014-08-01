@@ -115,6 +115,29 @@ command :info do |c|
   end
 end
 
+desc 'check a references of package'
+arg_name 'product_key'
+command :references do |c|
+  c.desc "change output format"
+  c.flag [:format, 'format-name'], :default_value => 'pretty'
+
+  c.desc "page number for pagination"
+  c.flag [:page, 'page-number'], :default_value => 1
+
+  c.desc "show paging information"
+  c.switch [:pagination, 'show-pagination'], :default_value => true,
+                                             :negatable => true
+
+
+  c.action do |global_options, options, args|
+    error_msg = Rainbow("package_key is missing").red
+    help_now!(error_msg) if args.empty?
+    package_key = args.shift
+    response = Veye::Package::References.get_references(package_key, options)
+  end
+end
+
+
 desc 'analyzes given project file and returns version info'
 arg_name 'product_file'
 
