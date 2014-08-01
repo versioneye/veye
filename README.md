@@ -1,6 +1,7 @@
 # Veye
 
-[![Dependency Status](https://www.versioneye.com/ruby/veye/0.0.5/badge.png)](https://www.versioneye.com/ruby/veye/0.0.5)
+[![Dependency Status](https://www.versioneye.com/ruby/veye/0.0.8.1/badge.svg)](https://www.versioneye.com/ruby/veye/0.0.8.1)
+
 
 [VersionEye](http://www.versioneye.com/) is a cross-platform search engine and crowdsourcing app for opensource software libraries. 
 
