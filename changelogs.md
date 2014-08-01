@@ -1,5 +1,11 @@
 # Changelogs
 
+## 0.0.x
+
+* added references endpoint
+* updated docs
+* added OSS license
+
 
 ## 0.0.8
 
