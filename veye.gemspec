@@ -22,9 +22,7 @@ spec = Gem::Specification.new do |s|
   s.files += Dir['lib/**/*.rb'] + Dir['bin/*']
   s.files += Dir['[A-Z]*'] + Dir['test/**/*']
   s.require_paths << 'lib'
-  s.has_rdoc = true
-  s.extra_rdoc_files = ['README.rdoc','veye.rdoc']
-  s.rdoc_options << '--title' << 'veye' << '--main' << 'README.rdoc' << '-ri'
+  s.has_rdoc = false
   s.bindir = 'bin'
   s.executables << 'veye'
 
