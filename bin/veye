@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'gli'
-require 'rest_client'
+require 'rest-client'
 require 'json'
 require 'rainbow'
 require 'rainbow/ext/string'

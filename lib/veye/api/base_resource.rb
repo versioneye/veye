@@ -4,8 +4,7 @@ module Veye
       attr_reader :resource, :full_path
 
       def initialize(path = nil)
-        @full_path = $global_options[:url]
-        @full_path = "#{@full_path}#{path}" unless path.nil?
+        @full_path = "#{$global_options[:url].to_s}#{path.to_s}"
       end
 
       def self.build_url(global_options)

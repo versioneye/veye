@@ -416,7 +416,7 @@ $> veye github search json --language=php --page=2
 $> veye github search veye --user versioneye
 ```
 
-# Contibuting
+# Contributing
 
 All contributions are welcome - comments, new ideas, help with documentation & help with features;
 

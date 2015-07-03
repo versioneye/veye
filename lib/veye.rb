@@ -1,6 +1,8 @@
 # Add requires for other files you add to your project here, so
 # you just need to require this one file in your bin file
 require 'openssl'
+require 'rest-client'
+require 'yaml'
 
 require 'veye/helpers/format_helpers.rb'
 require 'veye/helpers/repo_helpers.rb'
@@ -14,7 +16,7 @@ require 'veye/user.rb'
 require 'veye/github.rb'
 require 'veye/pagination.rb'
 
-$global_options ||= nil
+$global_options ||= {}
 DEFAULT_CONFIG_FILE = ".veye.rc"
 DEFAULT_CONFIG_PATH = "~"
 
