@@ -11,6 +11,7 @@ capybara-*.html
 /public/system/*
 /coverage/
 /spec/tmp/*
+/test/fixtures/*
 /wiki
 **.orig
 rerun.txt
