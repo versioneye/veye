@@ -4,7 +4,7 @@ module Veye
   module Project
     class InfoMarkdown < BaseMarkdown
       def initialize
-        headings  = %w(index name project_key project_type private period source dependencies outdated created)
+        headings  = %w(index name project_key project_type public period source dependencies outdated created)
         super("Project's information", headings)
       end
 
@@ -18,7 +18,7 @@ module Veye
             result["name"],
             result["project_key"],
             result["project_type"],
-            result["private"].to_s,
+            result["public"].to_s,
             result["period"],
             result["source"],
             result["dep_number"].to_s,
