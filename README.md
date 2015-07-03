@@ -2,16 +2,18 @@
 
 [![Dependency Status](https://www.versioneye.com/ruby/veye/0.0.8.1/badge.svg)](https://www.versioneye.com/ruby/veye/0.0.8.1)
 
+[![Join the chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/versioneye?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
 
-[VersionEye](http://www.versioneye.com/) is a cross-platform search engine and crowdsourcing app for opensource software libraries. 
 
- * Take advantage of the extended search to find any library you look for. 
+[VersionEye](http://www.versioneye.com/) is a cross-platform search engine and crowdsourcing app for opensource software libraries.
+
+ * Take advantage of the extended search to find any library you look for.
  * Follow and track your favorite software packages via RSS feed.
- * Leave comments and add additional meta information to the libraries to improve the quality of the data. 
+ * Leave comments and add additional meta information to the libraries to improve the quality of the data.
  * Contribute to this crowdsourcing project to make the world a better place for software developers.
 
 
-**veye** is opensouce commandline tool to make all this available on your console and allows you write scripts for continous updating and due diligence. 
+**veye** is opensouce commandline tool to make all this available on your console and allows you write scripts for continous updating and due diligence.
 
 Most endpoints require the api-key, which you can get [here](https://www.versioneye.com/settings/api).
 
@@ -39,7 +41,7 @@ Most endpoints require the api-key, which you can get [here](https://www.version
   $> bundle
   $> bundle exec bin/veye ping
  ```
- 
+
 ###### Or build Gem file and install it as global command
 
   ```
@@ -47,10 +49,10 @@ Most endpoints require the api-key, which you can get [here](https://www.version
   $> veye help
   $> veye ping
   ```
- 
+
 ## Initial configuration
 
-The tool will raise exception when a configuration file is missing. The tool needs configuration file to keep user specific settings and  authorization key. 
+The tool will raise exception when a configuration file is missing. The tool needs configuration file to keep user specific settings and  authorization key.
 
 #### create config file
 
@@ -63,7 +65,7 @@ The tool will raise exception when a configuration file is missing. The tool nee
   :port: "3000"
   ....
   ```
-  
+
 #### initialize api key
 
 Please visit [your settings page](https://www.versioneye.com/settings/api) on VersionEye for the api-key and then use command `veye change_key` to save your api key.
@@ -71,17 +73,17 @@ Please visit [your settings page](https://www.versioneye.com/settings/api) on Ve
 ```
  $> veye change_key abj23j2bj33k14
  Success: your's key is now saved.
-``` 
+```
 
 # Basic usage
 
 
 ```bash
 $> veye ping
-   pong 
+   pong
 
 $> veye search json --lang=r,php --page=2
- 
+
 #you can cancel pagination with --no-pagination argument
 $> veye search junit --page 3 --no-pagination
 ```
@@ -93,51 +95,51 @@ All commands support format-flag, that allows you change output format.
 
 #### pretty print
 
-Prettyprint is human readable output with colors to highlight an most important piece of information on a screen. 
+Prettyprint is human readable output with colors to highlight an most important piece of information on a screen.
 It's designed after other ruby command-line tools.
- 
+
 ```bash
   $> veye search json --format=pretty
 ```
- 
-  ![Pretty format](https://s3-eu-west-1.amazonaws.com/veye/search_format_pretty.png)
- 
+
+  ![Pretty format](http://dl.dropbox.com/u/19578784/versioneye/search_pretty.png)
+
 #### CSV
  CSV is good format for unix command line tools such as [awk](http://www.gnu.org/software/gawk/manual/gawk.html)
- 
+
  ```bash
   $> veye search json --format=csv
  ```
 
- ![CSV format](https://s3-eu-west-1.amazonaws.com/veye/search_format_csv.png)
+ ![CSV format](http://dl.dropbox.com/u/19578784/versioneye/search_csv.png)
 
 #### JSON
- 
- JSON output is great, if you're going to manipulate output results with [jq](http://stedolan.github.com/jq/). 
+
+ JSON output is great, if you're going to manipulate output results with [jq](http://stedolan.github.com/jq/).
  Check out our jq recipes in [wiki](https://github.com/versioneye/veye/wiki/jq-recipes) .
- 
- 
+
+
  ```bash
   $> veye search json --format=json
  ```
- 
- ![Json format](https://s3-eu-west-1.amazonaws.com/veye/search_format_json.png)
- 
+
+ ![Json format](http://dl.dropbox.com/u/19578784/versioneye/search_json.png)
+
 #### Table view
 It's shows results as one Excel sheet - title and content.
-A Tabular view is best suited for bigger screens.   
+A Tabular view is best suited for bigger screens.
 
  ```bash
   $> veye search json --format=table
  ```
 
- ![Table output](https://s3-eu-west-1.amazonaws.com/veye/search_format_table.png)
- 
+ ![Table output](http://dl.dropbox.com/u/19578784/versioneye/search_table.png)
+
 
 #### Markdown
 
 This flag formats your results in markdown.
- 
+
 Here's dependencies of demo project formatted as [markdown table](https://gist.github.com/timgluz/6857422).
 
 ```
@@ -152,15 +154,15 @@ $> veye projects show rubygem_gemfile_lock_1 --format=md > dependencies.md
 There will be situation, when [VersionEye](http://versioneye.com) dont have information about your search, then you will see similar response on commandline:
 
   ```
-  No results for 'json' with given parameters: 
+  No results for 'json' with given parameters:
   {:q=>"json", :lang=>"python", :page=>1}
   ```
 #### Extra information
- 
+
 Commands that show list of items, always show pagination information by default. You can always cancel this information by using `no-pagination` flag and feed data into unix tools.
 
 ```
-$> veye search junit --page 3 --no-pagination 
+$> veye search junit --page 3 --no-pagination
 ```
 
 ## Global options
@@ -172,7 +174,7 @@ For example to overriding a port number:
 $> veye --port=4567 search json --lang=php,nodejs
 ```
 
-###### Timeouts
+##### Timeouts
 
 The best place to manage timeouts for a single run is to use commandline flags.  
 
@@ -182,7 +184,7 @@ $> veye --timeout=100 --open_timeout=10 ping
 
 **NB!** unit of timeout is a second and it's doesnt accepts milliseconds. Therefore smallest timeout is 1second and you can use -1 as infinite timeout.
 
-If you want to change timeout settings permanently, then you shall change timeout values in your `.veye.rc` file. 
+If you want to change timeout settings permanently, then you shall change timeout values in your `.veye.rc` file.
 
 #### Updating options file
 
@@ -201,7 +203,7 @@ This command opens window to magnificient world of software packages - VersionEy
  ```bash
    $> veye search help
  ```
- 
+
 ###### Basic package search with language filtering
 
  ```bash
@@ -209,7 +211,7 @@ $> veye search junit
 $> veye search -l java
 $> veye search --language java
 $> veye search --language-name=java
-   
+
 #search packages for multiple languages
 $> veye search --lang=nodejs,php
  ```
@@ -220,7 +222,7 @@ $> veye search --lang=nodejs,php
 $> veye search junit --page 2
 $> veye search junit --page-number=2
 $> veye search json --lang=r,php --page=2
-    
+
 #you can cancel pagination with --no-pagination argument
 $> veye search junit --page 3 --no-pagination
 ```
@@ -236,9 +238,9 @@ It supports also `--format` flag with same values.
 $> veye info java/junit/junit
 Asking information about: junit/junit
 ```
-  
-![Pretty print](https://s3-eu-west-1.amazonaws.com/veye/info_format_pretty2.png)
-  
+
+![Pretty print](http://dl.dropbox.com/u/19578784/versioneye/info_pretty.png)
+
 #### package references
 
 You can use a `references` commands to fetch data about packages, which are using the package.
@@ -257,7 +259,7 @@ $> veye references java/log4j/log4j --no-pagination
 ;;follow some package to add it into your RSS feed
 $> veye products follow clojure/ztellman/aleph
 $> veye products unfollow clojure/ztellman/aleph
-	
+
 ;; show the list of products in your's RSS feed
 $> veye products
 ```
@@ -333,7 +335,7 @@ $> veye projects licences rubygem_gemfile_1 --format=table
 
 ```
 $> veye me
-``` 
+```
 
 #### Favorite packages
 
@@ -380,7 +382,7 @@ $> veye github info versioneye/veye --format=table
 
 `import` command takes fullname of repository and tries to import project file from that repository.  Fullname have to include the owner and the name of repository.
 
-By default, it tries to read project file on master branch; you can use a `--branch` flag to specify the name of branch. 
+By default, it tries to read project file on master branch; you can use a `--branch` flag to specify the name of branch.
 
 This command gives exception when you are trying to import already imported repository.
 
@@ -400,13 +402,13 @@ $> veye github delete versioneye/veye
 $> veye github delete versioneye/veye --branch=dev
 ```
 
-#### Search 
+#### Search
 
-This command makes authorized request to the Github search api for  repositories. As authorized user, you can make up to *5000* request per hour. 
+This command makes authorized request to the Github search api for  repositories. As authorized user, you can make up to *5000* request per hour.
 
 ```
 $> veye github search versioneye
- 
+
 ;; filter results by language
 $> veye github search json --language=php --page=2
 
@@ -421,7 +423,7 @@ All contributions are welcome - comments, new ideas, help with documentation & h
 # License
 The MIT License (MIT)
 
-Copyright (c)2014 **VersionEye GMHB**
+Copyright (c)2015 **VersionEye GMHB**
 
 
-[MIT licence](http://choosealicense.com/licenses/mit/) 
+[MIT licence](http://choosealicense.com/licenses/mit/)
