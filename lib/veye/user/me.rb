@@ -1,9 +1,34 @@
 require_relative '../views/user.rb'
 require_relative '../base_executor.rb'
 
-
 module Veye
   module User
+    module API
+      def self.get_profile(api_key, options)
+        user_api = Veye::API::Resource.new(RESOURCE_PATH)
+        qparams = {:params => {:api_key => api_key}}
+
+        user_api.resource.get(qparams) do |response, request, result|
+          Veye::API::JSONResponse.new(request, result, response)
+        end
+      end
+
+      def self.get_favorites(api_key, options)
+        user_api = Veye::API::Resource.new(RESOURCE_PATH)
+        page = options[:page] || 1
+        qparams = {
+          :params => {
+            :api_key => api_key,
+            :page => page
+          }
+        }
+
+        user_api.resource['/favorites'].get(qparams) do |response, request, result|
+          Veye::API::JSONResponse.new(request, result, response)
+        end
+      end
+    end
+
     class Me < BaseExecutor
 
       @@profile_formats = {
@@ -21,39 +46,19 @@ module Veye
       }
 
       def self.get_profile(api_key, options)
-        user_api = API::Resource.new(RESOURCE_PATH)
-        results = nil
-        qparams = {:params => {:api_key => api_key}}
-
-        user_api.resource.get(qparams) do |response, request, result|
-          results = API::JSONResponse.new(request, result, response)
+        results = API.get_profile(api_key, options)
+        if valid_response?(results, "Failed to read profile.")
+          show_results(@@profile_formats, results.data, options)
         end
-
-        catch_request_error(results, "Failed to read profile.")
-        show_results(@@profile_formats, results.data, options)
-        results
       end
 
       def self.get_favorites(api_key, options)
-        user_api = API::Resource.new(RESOURCE_PATH)
-        results = nil
-        page = options[:page] || 1
-        qparams = {
-          :params => {
-            :api_key => api_key,
-            :page => page
-          }
-        }
+        results = API.get_favorites(api_key, options)
 
-        user_api.resource['/favorites'].get(qparams) do |response, request, result|
-          results = API::JSONResponse.new(request, result, response)
+        if valid_response?(results, "Failed to read favorites.")
+          show_results(@@favorite_formats, results.data, options, results.data['paging'])
         end
-
-        catch_request_error(results, "Failed to read favorites.")
-        show_results(@@favorite_formats, results.data, options, results.data['paging'])
-        results
       end
     end
   end
 end
-
