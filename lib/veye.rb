@@ -31,10 +31,10 @@ end
 
 def check_config_file
   unless config_exists?
-    msg = sprintf("%s: %s\n",
+    p sprintf("%s: %s\n",
                   "config file doesnt exist. ".color(:red),
                   "Use `veye initconfig` to initialize settings file.")
-    exit_now!(msg)
+    exit
   end
 end
 

@@ -15,6 +15,6 @@ require_relative 'package/references_table.rb'
 
 
 module Veye
-  module Github
+  module Package
   end
 end

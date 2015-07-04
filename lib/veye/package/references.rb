@@ -1,3 +1,4 @@
+require 'gli'
 require_relative '../views/package.rb'
 require_relative '../base_executor.rb'
 
@@ -18,11 +19,12 @@ module Veye
             Example: clojure/ztellman/aleph, which as required structure
             <prog lang>/<product_code>
           ]
-          error_msg = sprintf("%s. \n%s",
-                               "Error: Malformed key.".color(:red),
-                               msg)
-          exit_now!(error_msg)
+          printf("%s. \n%s",
+                 "Error: Malformed key.".color(:red),
+                 msg)
+          return false
         end
+        return true
       end
 
       def self.get_references(package_key, options = {})
@@ -32,7 +34,7 @@ module Veye
         lang = Package.encode_language(tokens.first).capitalize #endpoint bug
 
         safe_prod_key = Package.encode_prod_key(tokens.drop(1).join("/"))
-        validate_input!(lang, safe_prod_key)
+        return unless validate_input!(lang, safe_prod_key)
 
         api_path = "/#{lang}/#{safe_prod_key}/references"
         page_nr = options[:page] || "1"
@@ -51,4 +53,3 @@ module Veye
     end
   end
 end
-

@@ -40,15 +40,17 @@ module Veye
         file_path = File.absolute_path(filename)
 
         unless File.exists?(file_path)
-          error_msg = sprintf("%s: Cant read file `%s`",
-                              "Error".color(:red),
-                              "#{filename}".color(:yellow))
-          exit_now!(error_msg)
+          printf("%s: Cant read file `%s`",
+                 "Error".color(:red),
+                 "#{filename}".color(:yellow))
+
+          exit_now
         end
 
         file_size = File.size(file_path)
         unless file_size != 0 and file_size < MAX_FILE_SIZE
-          exit_now!("Size of file is not acceptable: 0kb < x <= #{MAX_FILE_SIZE/1000}kb")
+          p "Size of file is not acceptable: 0kb < x <= #{MAX_FILE_SIZE/1000}kb"
+          exit
         end
 
         project_api = API::Resource.new(RESOURCE_PATH)
@@ -75,16 +77,18 @@ module Veye
         file_path = File.absolute_path(filename)
 
         unless File.exists?(file_path)
-          error_msg = sprintf("%s: Cant read file `%s`",
-                              "Error".color(:red),
-                              "#{filename}".color(:yellow)
-                             )
-          exit_now!(error_msg)
+          printf(
+            "%s: Cant read file `%s`",
+            "Error".color(:red),
+            "#{filename}".color(:yellow)
+          )
+          exit
         end
 
         file_size = File.size(file_path)
         unless file_size != 0 and file_size < MAX_FILE_SIZE
-          exit_now!(" The size of file is not acceptable: 0kb < x <= #{MAX_FILE_SIZE/1000}kb")
+          p " The size of file is not acceptable: 0kb < x <= #{MAX_FILE_SIZE/1000}kb"
+          exit
         end
 
         project_api = API::Resource.new("#{RESOURCE_PATH}/#{project_key}")
@@ -106,10 +110,10 @@ module Veye
         project_api = API::Resource.new(RESOURCE_PATH)
 
         if project_key.nil? or project_key.empty?
-          error_msg = sprintf("%s: %s",
-                             "Error".color(:red),
-                             "Not valid project_key: `#{project_key}`")
-          exit_now! error_msg
+          printf("%s: %s",
+                 "Error".color(:red),
+                 "Not valid project_key: `#{project_key}`")
+          exit
         end
 
         project_url = "/#{project_key}"
@@ -161,4 +165,3 @@ module Veye
     end
   end
 end
-

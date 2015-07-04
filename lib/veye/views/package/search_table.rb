@@ -4,7 +4,7 @@ module Veye
   module Package
     class SearchTable < BaseTable
       def initialize
-        headings = %w(index name version product_key language group_id)
+        headings = %w(index name version product_key language)
         super("Package search", headings)
       end
 
@@ -14,8 +14,6 @@ module Veye
         items.each_with_index do |result, index|
           row = [index+1, result["name"], result["version"], result["prod_key"]]
           row << result["language"]
-          row << result["group_id"]
-
           @table << row
         end
       end

@@ -16,10 +16,10 @@ module Veye
         project_api = API::Resource.new(RESOURCE_PATH)
 
         if project_key.nil? or project_key.empty?
-          error_msg = sprintf("%s: %s",
-                             "Error".color(:red),
-                             "Not valid project_key: `#{project_key}`")
-          exit_now! error_msg
+          printf("%s: %s",
+                 "Error".color(:red),
+                 "Not valid project_key: `#{project_key}`")
+          exit
         end
 
         project_url = "/#{project_key}/licenses"
@@ -35,4 +35,3 @@ module Veye
     end
   end
 end
-

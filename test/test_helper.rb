@@ -1,4 +1,6 @@
 require 'minitest/autorun'
+require "minitest/reporters"
+
 require 'webmock/minitest'
 require 'vcr'
 require 'veye'
@@ -19,6 +21,8 @@ def capture_stdout
     $stdout = previous_stdout
   end
 end
+
+Minitest::Reporters.use!
 
 VCR.configure do |config|
   config.cassette_library_dir = "test/fixtures/vcr_cassettes"

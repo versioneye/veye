@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class ServiceTest < Minitest::Test
-
   def setup
     init_environment #load config file and set keys
   end

@@ -13,12 +13,11 @@ module Veye
     end
 
     def self.encode_prod_key(prod_key)
-      prod_key = prod_key.to_s
-      prod_key.gsub(/\//, ":").gsub(/\./, "~")
+      prod_key.to_s.gsub(/\//, ":").gsub(/\./, "~")
     end
 
     def self.encode_language(lang)
-      lang.gsub(/\./, "").downcase
+      lang.to_s.gsub(/\./, "").downcase
     end
   end
 end

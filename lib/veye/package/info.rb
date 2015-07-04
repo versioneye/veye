@@ -23,10 +23,11 @@ module Veye
             You missed language or product key.
             Example: clojure/ztellman/aleph, which as required structure <prog lang>/<product_code>
           ]
-          error_msg = sprintf("%s. \n%s",
-                               "Error: Malformed key.".color(:red),
-                               msg)
-          exit_now!(error_msg)
+          printf("%s. \n%s",
+                 "Error: Malformed key.".color(:red),
+                  msg)
+          p error_msg
+          exit
         end
 
         product_api.resource["/#{lang}/#{safe_prod_key}"].get do |response, request, result, &block|

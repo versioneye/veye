@@ -28,6 +28,7 @@ spec = Gem::Specification.new do |s|
 
   s.add_development_dependency('rake',  '~> 10.4')
   s.add_development_dependency('minitest',  '>= 5.7')
+  s.add_development_dependency('minitest-reporters', '>= 1.0')
   s.add_development_dependency('vcr',  '>= 2.9')
   s.add_development_dependency('webmock',  '>= 1.21')
   s.add_development_dependency('rdoc',  '~> 4.2')

@@ -4,7 +4,7 @@ module Veye
   module Package
     class SearchCSV < BaseCSV
       def initialize
-        headers = "nr,name,version,prod_key,version,language,group_id"
+        headers = "nr,name,version,prod_key,language,group_id"
         super(headers)
       end
 
@@ -13,12 +13,11 @@ module Veye
         return if items.nil?
 
         items.each_with_index do |result, index|
-          printf("%d,%s,%s,%s,%s,%s,%s\n",
+          printf("%d,%s,%s,%s,%s,%s\n",
                   index + 1,
                   result["name"],
                   result["version"],
                   result["prod_key"],
-                  result["version"],
                   result["language"],
                   result["group_id"])
         end
