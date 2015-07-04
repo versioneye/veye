@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class PackageTest < MiniTest::Test
+class PackageSearchTest < MiniTest::Test
   def setup
     init_environment
   end

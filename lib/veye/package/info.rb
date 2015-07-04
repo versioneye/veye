@@ -3,20 +3,13 @@ require_relative '../base_executor.rb'
 
 module Veye
   module Package
-    class Info < BaseExecutor
-      @@output_formats = {
-        'csv'       => Package::InfoCSV.new,
-        'json'      => Package::InfoJSON.new,
-        'pretty'    => Package::InfoPretty.new,
-        'table'     => Package::InfoTable.new
-      }
-
+    module API
       def self.get_package(package_key, options = {})
-        product_api = API::Resource.new(RESOURCE_PATH)
+        product_api = Veye::API::Resource.new(RESOURCE_PATH)
         tokens = package_key.to_s.split('/')
         lang = Package.encode_language(tokens.first)
         safe_prod_key = Package.encode_prod_key(tokens.drop(1).join("/"))
-        results = nil
+
 
         if lang.nil? or safe_prod_key.nil?
           msg =  %Q[
@@ -26,19 +19,31 @@ module Veye
           printf("%s. \n%s",
                  "Error: Malformed key.".color(:red),
                   msg)
-          p error_msg
           exit
         end
 
+        results = nil
         product_api.resource["/#{lang}/#{safe_prod_key}"].get do |response, request, result, &block|
-          results = API::JSONResponse.new(request, result, response)
+          results = Veye::API::JSONResponse.new(request, result, response)
         end
-
-        catch_request_error(results, "Didnt find any package with product_key: `#{package_key}`")
-        show_results(@@output_formats, results.data, options, results.data['paging'])
         return results
       end
     end
 
+    class Info < BaseExecutor
+      @@output_formats = {
+        'csv'       => Package::InfoCSV.new,
+        'json'      => Package::InfoJSON.new,
+        'pretty'    => Package::InfoPretty.new,
+        'table'     => Package::InfoTable.new
+      }
+
+      def self.get_package(package_key, options = {})
+        results  = API.get_package(package_key, options)
+        if valid_response?(results, "Didnt find any package with product_key: `#{package_key}`")
+          show_results(@@output_formats, results.data, options, results.data['paging'])
+        end
+      end
+    end
   end
 end

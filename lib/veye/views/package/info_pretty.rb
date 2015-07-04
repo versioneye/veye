@@ -16,7 +16,7 @@ module Veye
                                 "#{result["prod_key"]}".bright)
         printf("\t%-15s:\n\t %s\n", "Description", result["description"])
         printf("\t%-15s: %s\n", "Group id", result["group_id"])
-        printf("\t%-15s: %s\n", "Link", result["link"])
+        printf("\t%-15s: %s\n", "Link", result["links"].first.fetch('link'))
 
       end
     end
