@@ -4,14 +4,7 @@ require_relative '../base_executor.rb'
 
 module Veye
   module Package
-    class References < BaseExecutor
-      @@output_formats = {
-        'csv'       => Package::ReferencesCSV.new,
-        'json'      => Package::ReferencesJSON.new,
-        'pretty'    => Package::ReferencesPretty.new,
-        'table'     => Package::ReferencesTable.new
-      }
-
+    module API
       def self.validate_input!(lang, safe_prod_key)
         if lang.nil? or safe_prod_key.nil?
           msg =  %Q[
@@ -28,7 +21,7 @@ module Veye
       end
 
       def self.get_references(package_key, options = {})
-        product_api = API::Resource.new(RESOURCE_PATH)
+        product_api = Veye::API::Resource.new(RESOURCE_PATH)
 
         tokens = package_key.to_s.split('/')
         lang = Package.encode_language(tokens.first).capitalize #endpoint bug
@@ -42,13 +35,25 @@ module Veye
         results = nil
 
         product_api.resource[api_path].get(qparams) do |response, request, result, &block|
-          results = API::JSONResponse.new(request, result, response)
+          results = Veye::API::JSONResponse.new(request, result, response)
         end
-
-        catch_request_error(results, "No references for: `#{package_key}`")
-        show_results(@@output_formats, results.data, options, results.data['paging'])
         return results
+      end
+    end
 
+    class References < BaseExecutor
+      @@output_formats = {
+        'csv'       => Package::ReferencesCSV.new,
+        'json'      => Package::ReferencesJSON.new,
+        'pretty'    => Package::ReferencesPretty.new,
+        'table'     => Package::ReferencesTable.new
+      }
+
+      def self.get_references(package_key, options = {})
+        results = API.get_references(package_key, options)
+        if valid_response?(results, "No references for: `#{package_key}`")
+          show_results(@@output_formats, results.data, options, results.data['paging'])
+        end
       end
     end
   end
