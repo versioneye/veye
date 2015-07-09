@@ -423,7 +423,7 @@ All contributions are welcome - comments, new ideas, help with documentation & h
 # License
 The MIT License (MIT)
 
-Copyright (c)2015 **VersionEye GMHB**
+Copyright (c)2015 **VersionEye GmbH**
 
 
 [MIT licence](http://choosealicense.com/licenses/mit/)
