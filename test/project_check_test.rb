@@ -299,4 +299,103 @@ List of projects                                                                
       )
     end
   end
+
+  def test_get_project_api_call
+    VCR.use_cassette("project_get") do
+      res = Veye::Project::API.get_project(@project_key, @api_key)
+      refute_nil res
+      assert_equal true, res.success
+      assert_equal 200, res.code
+      
+      proj = res.data
+      assert_equal @project_key, proj["project_key"]
+      assert_equal "OpenEJB :: Maven Plugins", proj["name"]
+      assert_equal "Maven2", proj["project_type"]
+      assert_equal true, proj["public"]
+      assert_equal "API", proj["source"]
+      assert_equal 11, proj["dependencies"].count
+    end
+  end
+
+  def test_get_project_default
+    VCR.use_cassette("project_get") do
+      output = capture_stdout do
+        Veye::Project::Check.get_project(@project_key, @api_key, {})
+      end
+
+      refute_nil output
+      rows = output.split(/\n/)
+      assert_equal "  1 - \e[32m\e[1mOpenEJB :: Maven Plugins\e[0m", rows[0]
+      assert_equal "\tProject key    : \e[1mmaven2_openejb_maven_plugins_1\e[0m", rows[1]
+      assert_equal "\tProject type   : Maven2", rows[2]
+      assert_equal "\tPublic         : true", rows[3]
+      assert_equal "\tPeriod         : daily", rows[4]
+      assert_equal "\tSource         : API", rows[5]
+      assert_equal "\tDependencies   : \e[1m11\e[0m", rows[6]
+      assert_equal "\tOutdated       : \e[31m10\e[0m", rows[7]
+    end
+  end
+
+  def test_get_project_csv
+    VCR.use_cassette("project_get") do
+      output = capture_stdout do
+        Veye::Project::Check.get_project(@project_key, @api_key, {format: 'csv'})
+      end
+
+      refute_nil output
+      rows = CSV.parse(output)
+      assert_equal ["nr", "name", "project_key", "public", "period", "source", "dep_number", "out_number", "created_at"], rows[0]
+
+      assert_equal ["1", "OpenEJB :: Maven Plugins", "maven2_openejb_maven_plugins_1", "true", "daily", "API", "11", "10"], rows[1].take(8)
+    end
+  end
+
+  def test_get_project_json
+    VCR.use_cassette("project_get") do
+      output = capture_stdout do
+        Veye::Project::Check.get_project(@project_key, @api_key, {format: 'json'})
+      end
+
+      refute_nil output
+      doc = JSON.parse(output)
+      proj = doc["projects"]
+      assert_equal @project_key, proj["project_key"]
+      assert_equal "OpenEJB :: Maven Plugins", proj["name"]
+      assert_equal true, proj["public"]
+      assert_equal "API", proj["source"]
+      assert_equal "daily", proj["period"]
+      assert_equal 11, proj["dependencies"].count
+    end
+  end
+
+  def test_get_project_table
+    VCR.use_cassette("project_get") do
+      output = capture_stdout do
+        Veye::Project::Check.get_project(@project_key, @api_key, {format: 'table'})
+      end
+
+      refute_nil output
+
+      rows = output.split(/\n/)
+      assert_match(
+        /| index \| name\s+\| project_key\s\| private \| period \| source \|/,
+        rows[4]
+      )
+      assert_match(
+        /\| 1\s+\| OpenEJB :: Maven Plugins \| maven2_openejb_maven_plugins_1 \|/,
+        rows[5]
+      )
+
+      assert_match(
+      /\| index \| name\s+\| prod_key\s+\| version_current \| version_requested\s+\| outdated | stable/,
+        rows[10]
+      )
+
+      assert_match(
+        /\| 1\s+\| aether-api\s+\| org.sonatype.aether\/aether-api/,
+        rows[12]
+      )
+    end
+  end
+
 end

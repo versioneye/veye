@@ -61,6 +61,21 @@ module Veye
           Veye::API::JSONResponse.new(request, result, response)
         end
       end
+
+      def self.get_project(project_key, api_key)
+        if project_key.nil? or project_key.empty?
+          printf("%s: %s",
+                 "Error".color(:red),
+                 "Not valid project_key: `#{project_key}`")
+          return
+        end
+
+        project_api = Veye::API::Resource.new("#{RESOURCE_PATH}/#{project_key}")
+        qparams = {:params => {:api_key => api_key}}
+        project_api.resource.get(qparams) do |response, request, result|
+          Veye::API::JSONResponse.new(request, result, response)
+        end
+      end
     end
 
     class Check < BaseExecutor
@@ -104,23 +119,9 @@ module Veye
       end
 
       def self.get_project(project_key, api_key, options)
-        results = nil
-        project_api = API::Resource.new(RESOURCE_PATH)
-
-        if project_key.nil? or project_key.empty?
-          printf("%s: %s",
-                 "Error".color(:red),
-                 "Not valid project_key: `#{project_key}`")
-          exit
-        end
-
-        project_url = "/#{project_key}"
-        qparams = {:params => {:api_key => api_key}}
-        project_api.resource[project_url].get(qparams) do |response, request, result|
-          results = API::JSONResponse.new(request, result, response)
-        end
-
-        catch_request_error(results, "Cant read information about project: `#{project_key}`")
+        results = API.get_project(project_key, api_key)
+        err_msg = "No data for the project: `#{project_key}`"
+        catch_request_error(results, err_msg)
         show_results(@@output_formats, results.data, options)
         show_dependencies(results.data, options)
         results
@@ -138,7 +139,8 @@ module Veye
         show_message(results, "Deleted", "Cant delete.")
         results
       end
-
+      
+      #-- layout helpers
       def self.show_dependencies(results, options)
         format = options[:format]
         format ||= 'pretty'
