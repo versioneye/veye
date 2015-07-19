@@ -46,6 +46,21 @@ module Veye
           Veye::API::JSONResponse.new(request, result, response)
         end
       end
+
+      def self.update(project_key, filename, api_key)
+        project_api = Veye::API::Resource.new("#{RESOURCE_PATH}/#{project_key}")
+        file_path = check_file(filename)
+        return if file_path.nil? 
+
+        file_obj = File.open(file_path, 'rb')
+        upload_data = {
+          :project_file   => file_obj,
+          :api_key        => api_key
+        }
+        project_api.resource.post(upload_data) do |response, request, result, &block|
+          Veye::API::JSONResponse.new(request, result, response)
+        end
+      end
     end
 
     class Check < BaseExecutor
@@ -82,38 +97,12 @@ module Veye
       end
 
       def self.update(project_key, filename, api_key, options)
-        results = {:success => false}
-        file_path = File.absolute_path(filename)
-
-        unless File.exists?(file_path)
-          printf(
-            "%s: Cant read file `%s`",
-            "Error".color(:red),
-            "#{filename}".color(:yellow)
-          )
-          exit
-        end
-
-        file_size = File.size(file_path)
-        unless file_size != 0 and file_size < MAX_FILE_SIZE
-          p " The size of file is not acceptable: 0kb < x <= #{MAX_FILE_SIZE/1000}kb"
-          exit
-        end
-
-        project_api = API::Resource.new("#{RESOURCE_PATH}/#{project_key}")
-        file_obj = File.open(file_path, 'rb')
-        upload_data = {
-          :project_file   => file_obj,
-          :api_key        => api_key
-        }
-        project_api.resource.post(upload_data) do |response, request, result, &block|
-          results = API::JSONResponse.new(request, result, response)
-        end
+        results = API.update(project_key, filename, api_key)
         catch_request_error(results, "Re-upload failed.")
         show_results(@@output_formats, results.data, options)
         show_dependencies(results.data, options)
-        results
       end
+
       def self.get_project(project_key, api_key, options)
         results = nil
         project_api = API::Resource.new(RESOURCE_PATH)
