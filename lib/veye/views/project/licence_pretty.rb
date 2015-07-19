@@ -5,7 +5,7 @@ module Veye
   module Project
     class LicencePretty < BasePretty
       def format(results)
-        return if result.nil?
+        return if results.nil?
         n = 1
         results["licenses"].each_pair do |licence, products|
           product_keys = products.map {|prod| prod["prod_key"]}

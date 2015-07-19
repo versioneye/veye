@@ -111,7 +111,7 @@ command :info do |c|
     error_msg = Rainbow("package_key is missing").red
     help_now!(error_msg) if args.empty?
     package_key = args.shift
-    response = Veye::Package::Info.get_package(package_key, options)
+    Veye::Package::Info.get_package(package_key, options)
   end
 end
 
@@ -133,7 +133,7 @@ command :references do |c|
     error_msg = Rainbow("package_key is missing").red
     help_now!(error_msg) if args.empty?
     package_key = args.shift
-    response = Veye::Package::References.get_references(package_key, options)
+    Veye::Package::References.get_references(package_key, options)
   end
 end
 
@@ -149,7 +149,7 @@ command :check do |c|
     help_now!("Project file is missing.".color(:red)) if args.empty?
     file_name = args.shift
     api_key = global_options[:api_key]
-    response = Veye::Project::Check.upload(file_name, api_key, options)
+    Veye::Project::Check.upload(file_name, api_key, options)
   end
 end
 
@@ -203,14 +203,14 @@ command :projects do |c|
     end
   end
 
-  c.desc "show licences of subdependencies"
+  c.desc "show licenses of subdependencies"
   c.arg_name "project_key"
-  c.command :licenses do |licences|
-    licences.action do |global_options, options, args|
+  c.command :licenses do |licenses|
+    licenses.action do |global_options, options, args|
       help_now!("Project's key is unspecified".color(:red)) if args.empty?
       proj_key = args.shift
       api_key = global_options[:api_key]
-      Veye::Project::Licence.get_project(proj_key, api_key, options)
+      Veye::Project::License.get_licenses(proj_key, api_key, options)
     end
   end
 
@@ -331,7 +331,7 @@ command :github do |c|
 
     list.action do |global_options, options, args|
       api_key = global_options[:api_key]
-      response = Veye::Github::List.get_list(api_key, options)
+      Veye::Github::List.get_list(api_key, options)
     end
   end #end-of-list
 
@@ -342,7 +342,7 @@ command :github do |c|
 
     sync.action do |global_options, options, args|
       api_key = global_options[:api_key]
-      response = Veye::Github::Sync.import_all(api_key, options)
+      Veye::Github::Sync.import_all(api_key, options)
     end
   end #end of sync
 

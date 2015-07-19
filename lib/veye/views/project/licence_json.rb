@@ -4,7 +4,7 @@ module Veye
   module Project
     class LicenceJSON < BaseJSON
       def format(results)
-        @results[:licences] = results["licenses"]
+        @results[:licenses] = results["licenses"]
       end
     end
   end
