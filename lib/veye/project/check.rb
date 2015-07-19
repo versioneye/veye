@@ -3,6 +3,51 @@ require_relative '../base_executor.rb'
 
 module Veye
   module Project
+    module API
+      def self.get_list(api_key)
+        project_api = Veye::API::Resource.new(RESOURCE_PATH)
+        qparams = {:params => {:api_key => api_key}}
+        project_api.resource.get(qparams) do |response, request, result|
+          Veye::API::JSONResponse.new(request, result, response)
+        end
+      end
+
+      def self.check_file(filename)
+        file_path = File.absolute_path(filename)
+
+        unless File.exists?(file_path)
+          printf("%s: Cant read file `%s`",
+                 "Error".color(:red),
+                 "#{filename}".color(:yellow))
+          return nil
+        end
+
+        file_size = File.size(file_path)
+        unless file_size != 0 and file_size < MAX_FILE_SIZE
+          p "Size of file is not acceptable: 0kb < x <= #{MAX_FILE_SIZE/1000}kb"
+          return nil
+        end
+
+        file_path
+      end
+
+      def self.upload(filename, api_key)
+        project_api = Veye::API::Resource.new(RESOURCE_PATH)
+        file_path = check_file(filename)
+        return if file_path.nil?
+
+        file_obj = File.open(file_path, 'rb')
+        upload_data = {
+          :upload   => file_obj,
+          :api_key  => api_key
+        }
+
+        project_api.resource.post(upload_data) do |response, request, result, &block|
+          Veye::API::JSONResponse.new(request, result, response)
+        end
+      end
+    end
+
     class Check < BaseExecutor
       extend FormatHelpers
 
@@ -23,53 +68,17 @@ module Veye
       }
 
       def self.get_list(api_key, options)
-        project_api = API::Resource.new(RESOURCE_PATH)
-        qparams = {:params => {:api_key => api_key}}
-        results = nil
-        project_api.resource.get(qparams) do |response, request, result|
-          results = API::JSONResponse.new(request, result, response)
-        end
-
+        results = API.get_list(api_key)
         catch_request_error(results, "Can not read list of projects.")
         show_results(@@output_formats, results.data, options)
-        results
       end
 
       def self.upload(filename, api_key, options)
-        results = {:success => false}
-        file_path = File.absolute_path(filename)
-
-        unless File.exists?(file_path)
-          printf("%s: Cant read file `%s`",
-                 "Error".color(:red),
-                 "#{filename}".color(:yellow))
-
-          exit_now
-        end
-
-        file_size = File.size(file_path)
-        unless file_size != 0 and file_size < MAX_FILE_SIZE
-          p "Size of file is not acceptable: 0kb < x <= #{MAX_FILE_SIZE/1000}kb"
-          exit
-        end
-
-        project_api = API::Resource.new(RESOURCE_PATH)
-        puts "built new project_api successfully"
-
-        file_obj = File.open(file_path, 'rb')
-
-        upload_data = {
-          :upload   => file_obj,
-          :api_key  => api_key
-        }
-        project_api.resource.post(upload_data) do |response, request, result, &block|
-          results = API::JSONResponse.new(request, result, response)
-        end
+        results = API.upload(filename, api_key)
 
         catch_request_error(results, "Upload failed.")
         show_results(@@output_formats, results.data, options)
         show_dependencies(results.data, options)
-        results
       end
 
       def self.update(project_key, filename, api_key, options)
@@ -143,6 +152,7 @@ module Veye
 
       def self.show_dependencies(results, options)
         format = options[:format]
+        format ||= 'pretty'
         return if format == 'json'
         self.supported_format?(@@dependency_output_formats, format)
 
