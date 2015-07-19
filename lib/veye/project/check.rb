@@ -76,6 +76,15 @@ module Veye
           Veye::API::JSONResponse.new(request, result, response)
         end
       end
+
+      def self.delete_project(project_key, api_key)
+        project_api = Veye::API::Resource.new("#{RESOURCE_PATH}/#{project_key}")
+        qparams = {:params => {:api_key => api_key}}
+
+        project_api.resource.delete(qparams) do |response, request, result|
+          Veye::API::JSONResponse.new(request, result, response)
+        end
+      end 
     end
 
     class Check < BaseExecutor
@@ -128,14 +137,8 @@ module Veye
       end
 
       def self.delete_project(project_key, api_key)
-        project_api = Veye::API::Resource.new(RESOURCE_PATH)
-        qparams = {:params => {:api_key => api_key}}
-        results = nil
-
-        project_api.resource["/#{project_key}"].delete(qparams) do |response, request, result|
-          results = API::JSONResponse.new(request, result, response)
-        end
-        catch_request_error(results, "Cant delete project: `#{project_key}`")
+        results = Veye::Project::API.delete_project(project_key, api_key)
+        catch_request_error(results, "Failed to delete project: `#{project_key}`")
         show_message(results, "Deleted", "Cant delete.")
         results
       end

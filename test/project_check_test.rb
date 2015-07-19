@@ -398,4 +398,27 @@ List of projects                                                                
     end
   end
 
+  def test_delete_project_api_call
+    VCR.use_cassette("project_delete") do
+      res = Veye::Project::API.delete_project(@project_key, @api_key)
+      refute_nil res
+      assert_equal 200, res.code
+      assert_equal true, res.success
+      assert_equal(
+        {"success"=>true, "message"=>"Project deleted successfully."},
+        res.data
+      )
+    end
+  end
+
+  def test_delete_project_default
+    VCR.use_cassette("project_delete") do
+      output = capture_stdout do 
+        Veye::Project::Check.delete_project(@project_key, @api_key)
+      end
+
+      refute_nil output
+      assert_equal "\e[32mDeleted\n\e[0m", output
+    end
+  end
 end
