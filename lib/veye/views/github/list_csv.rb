@@ -4,13 +4,14 @@ module Veye
   module Github
     class ListCSV < BaseCSV
       def initialize
-        headers = "nr,fullname,language,owner_login,owner_type,private,fork,branches,description"
+        headers = "nr,fullname,language,owner_login,owner_type,private,fork,\
+branches,imported,description"
         super(headers)
       end
 
       def format(results)
         results['repos'].each_with_index do |result, index|
-          printf("%d,%s,%s,%s,%s,%s,%s,%s,%s\n",
+          printf("%d,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
                 index + 1,
                 result['fullname'],
                 result['language'],
@@ -18,7 +19,8 @@ module Veye
                 result['owner_type'],
                 result['private'],
                 result['fork'],
-                result['branches'].join('|'),
+                result['branches'].to_a.join('|'),
+                result['imported'].to_a.join('|'),
                 result['description']
                 )
         end

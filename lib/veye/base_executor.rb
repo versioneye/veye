@@ -22,6 +22,7 @@ class BaseExecutor
     return true
   end
 
+  #OBSOLETE: use valid_response?
   def self.catch_request_error(response, msg)
     valid_response?(response, msg)
   end

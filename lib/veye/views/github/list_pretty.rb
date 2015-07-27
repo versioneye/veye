@@ -18,9 +18,9 @@ module Veye
         printf("\t%-15s: %s\n", "Owner type", result['owner_type'])
         printf("\t%-15s: %s\n", "Private",    result['private'])
         printf("\t%-15s: %s\n", "Fork",       result['fork'])
-        printf("\t%-15s: %s\n", "Branches",   result['branches'].join(','))
+        printf("\t%-15s: %s\n", "Branches",   result['branches'].to_a.join(','))
         printf("\t%-15s: %s\n", "Description", result['description'])
-        printf("\t%-15s: %s\n", "Imported", result['imported_projects'].join(','))
+        printf("\t%-15s: %s\n", "Imported", result['imported_projects'].to_a.join(','))
       end
     end
   end
