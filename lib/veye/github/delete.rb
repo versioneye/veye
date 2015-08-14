@@ -2,23 +2,24 @@ require_relative '../base_executor.rb'
 
 module Veye
   module Github
+    module API
+      def self.delete_repo(api_key, repo_name, branch = nil)
+        safe_repo_key = self.encode_repo_key(repo_name)
+        github_api = Veye::API::Resource.new("#{RESOURCE_PATH}/#{safe_repo_key}")
+        qparams = { :api_key => api_key }
+        qparams[:branch] = branch unless branch.nil?
+
+        github_api.resource.delete({params: qparams}) do |response, request, result|
+          Veye::API::JSONResponse.new(request, result, response)
+        end
+      end
+    end
+
     class Delete < BaseExecutor
 
       def self.delete_repo(api_key, repo_name, options)
-        github_api = API::Resource.new(RESOURCE_PATH)
-        qparams = {
-          :params => {
-            :api_key => api_key,
-            :branch => options[:branch]
-          }
-        }
-        response_data = nil
-        safe_repo_key = self.encode_repo_key(repo_name)
-        github_api.resource["/#{safe_repo_key}"].delete(qparams) do |response, request, result|
-          response_data = API::JSONResponse.new(request, result, response)
-        end
-        show_result(response_data)
-        response_data
+        response = Veye::Github::API.delete_repo(api_key, repo_name, options[:branch])
+        show_result(response)
       end
 
       def self.show_result(response)
