@@ -4,7 +4,7 @@ module Veye
   module Github
     class InfoCSV < BaseCSV
       def initialize
-        headers = "name,language,owner_login,owner_type,private,fork,branches,imported_projects, description"
+        headers = "name,language,owner_login,owner_type,private,fork,branches,imported_projects,description"
         super(headers)
       end
       def format(results)
@@ -20,8 +20,8 @@ module Veye
           repo['owner_type'],
           repo['private'],
           repo['fork'],
-          repo['branches'].join('|'),
-          imported_project_names.join('|'),
+          repo['branches'].to_a.join('|'),
+          imported_project_names.to_a.join('|'),
           repo['description']
         )
       end

@@ -7,13 +7,15 @@ module Veye
       def self.encode_repo_key(repo_key)
         repo_key.to_s.gsub(/\//, ":").gsub(/\./, "~")
       end
- 
-      def self.get_repo(api_key, repo_name)
+
+      def self.get_repo(api_key, repo_name, branch = nil, file = nil)
         safe_repo_name = self.encode_repo_key(repo_name)
         github_api = Veye::API::Resource.new("#{RESOURCE_PATH}/#{safe_repo_name}")
-        qparams = {params: {api_key: api_key}}
+        qparams = {api_key: api_key}
+        qparams[:branch] = branch unless branch.blank?
+        qparams[:file] = file unless file.blank?
 
-        github_api.resource.get(qparams) do |response, request, result|
+        github_api.resource.get({params: qparams}) do |response, request, result|
           Veye::API::JSONResponse.new(request, result, response)
         end
       end

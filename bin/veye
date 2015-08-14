@@ -265,7 +265,6 @@ command :products do |c|
   end
 end
 
-
 desc "handle your personal data"
 command :me do |c|
   c.desc "change output format"
@@ -313,6 +312,9 @@ command :github do |c|
 
   c.desc "specify branch"
   c.flag [:branch], :default_value => "master"
+  
+  c.desc "specify the name of the project file"
+  c.flag [:file, 'file'], :default_value => nil
 
   c.action do |global_options, options, args|
     help_now!

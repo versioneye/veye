@@ -11,7 +11,7 @@ class GithubInfoTest < Minitest::Test
   def test_api_call
     VCR.use_cassette('github_info') do
       res = Veye::Github::API.get_repo(@api_key, @repo_name)
-      refute nil, res
+      refute_nil res
       assert_equal 200, res.code
       repo = res.data["repo"]
       assert_equal "versioneye/veye", repo["fullname"]
@@ -29,7 +29,7 @@ class GithubInfoTest < Minitest::Test
         Veye::Github::Info.get_repo(@api_key, @repo_name, {})
       end
 
-      refute nil, output
+      refute_nil output
       rows = output.split(/\n/)
       assert_equal "\t\e[32mversioneye/veye\e[0m - \e[1mruby\e[0m", rows[0]
       assert_equal "\tDescription    : VersionEye command line tool ", rows[1]
