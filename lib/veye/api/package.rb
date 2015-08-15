@@ -16,31 +16,34 @@ module Veye
       end
 
       #return package information
-      def self.get_package(package_key, options = {})
-        product_api = Resource.new(RESOURCE_PATH)
-        tokens = package_key.to_s.split('/')
-        lang = Package.encode_language(tokens.first)
-        safe_prod_key = Package.encode_prod_key(tokens.drop(1).join("/"))
+      def self.get_package(prod_key, language)
+        product_api = Resource.new RESOURCE_PATH
+        lang = encode_language(language)
+        safe_prod_key = encode_prod_key(prod_key)
 
-
-        if lang.nil? or safe_prod_key.nil?
-          msg =  %Q[
-            You missed language or product key.
-            Example: clojure/ztellman/aleph, which as required structure <prog lang>/<product_code>
-          ]
-          printf("%s. \n%s",
-                 "Error: Malformed key.".color(:red),
-                  msg)
-          exit
-        end
-
-        results = nil
         product_api.resource["/#{lang}/#{safe_prod_key}"].get do |response, request, result, &block|
-          results = JSONResponse.new(request, result, response)
+          JSONResponse.new(request, result, response)
         end
-        return results
       end
- 
+
+      def self.search(search_term, language = nil, group_id = nil, page = "1")
+        search_api = Resource.new "#{RESOURCE_PATH}/search/#{search_term}"
+
+        search_params = {:q => search_term.to_s}
+        search_params[:lang] = encode_language(language) unless language.nil?
+        search_params[:g] = group_id unless group_id.nil?
+        unless page.nil?
+          search_params[:page] = page.to_s
+        else
+          search_params[:page] = "1"
+        end
+
+        request_params = {:params => search_params}
+        search_api.resource.get(request_params) do |response, request, result, &block|
+          JSONResponse.new(request, result, response)
+        end
+      end
+
     end
   end
 end
