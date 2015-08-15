@@ -1,89 +1,73 @@
 require 'test_helper'
+require 'csv'
 
 class PackageInfoTest < Minitest::Test
   def setup
     init_environment
   end
 
-  def test_info_success
+  def test_info_default
     VCR.use_cassette('package_info') do
       output = capture_stdout {|| Veye::Package::Info.get_package('ruby/veye')}
-      expected = "\t\e[32m\e[1mveye\e[0m - \e[1m0.0.9\e[0m\n\
-\tLanguage       : ruby\n\tLicense        : MIT\n\tProduct type   : RubyGem\n\
-\tProduct key    : \e[1mveye\e[0m\n\tDescription    :\n\
-\t \n    Veye is commandline tool like Heroku has own ToolBelt, \n\
-    and purpose of this tool is to make developer's life even\n\
-    more simpler and keep you up-to-date with freshest packages.\n\
-  \n\tGroup id       : \n\tLink           : https://github.com/versioneye/veye\n"
-      assert_equal expected, output
+      refute_nil output, "No command output"
+
+      rows = output.split(/\n/)
+      assert_equal "\t\e[32m\e[1mveye\e[0m - \e[1m0.0.9\e[0m", rows[0]
+      assert_equal "\tLanguage       : ruby", rows[1]
+      assert_equal "\tLicense        : MIT", rows[2]
+      assert_equal "\tProduct type   : RubyGem", rows[3]
+      assert_equal "\tProduct key    : \e[1mveye\e[0m", rows[4]
     end
   end
 
   def test_info_csv_format
     VCR.use_cassette('package_info') do
-      output = capture_stdout {|| Veye::Package::Info.get_package('ruby/veye', {format: 'csv'})}
-      expected = "name,version,language,prod_key,licence,prod_type,description,link\n\
-veye,0.0.9,ruby,veye,,RubyGem,,\n    Veye is commandline tool like Heroku has own ToolBelt, \n\
-    and purpose of this tool is to make developer's life even\n\
-    more simpler and keep you up-to-date with freshest packages.\n  \n"
-      assert_equal expected, output
+      output = capture_stdout do
+        Veye::Package::Info.get_package('ruby/veye', {format: 'csv'})
+      end
+
+      refute_nil output, "No command output"
+      rows = CSV.parse(output)
+      assert_equal ["name", "version", "language", "prod_key", "licence", "prod_type", "description", "link"], rows[0]
+      assert_equal ["veye", "0.0.9", "ruby", "veye", nil, "RubyGem", nil, nil], rows[1]
     end
   end
 
   def test_info_json_format
     VCR.use_cassette('package_info') do
-      output = capture_stdout {|| Veye::Package::Info.get_package('ruby/veye', {format: 'json'})}
-      expected = "{\
-\"package\":{\"name\":\"veye\",\"language\":\"ruby\",\"prod_key\":\"veye\",\
-\"version\":\"0.0.9\",\"prod_type\":\"RubyGem\",\"group_id\":null,\
-\"artifact_id\":null,\"license_info\":\"MIT\",\
-\"description\":\"\\n    Veye is commandline tool like Heroku has own ToolBelt, \
-\\n    and purpose of this tool is to make developer's life even\
-\\n    more simpler and keep you up-to-date with freshest packages.\
-\\n  \",\"updated_at\":\"2015-07-04T11:11:15.634Z\",\
-\"released_at\":\"2015-07-03T00:00:00.000+00:00\",\
-\"dependencies\":[{\"name\":\"rest-client\",\"dep_prod_key\":\"rest-client\",\
-\"version\":\"~> 1.6\",\"parsed_version\":\"1.8.0\",\"group_id\":null,\
-\"artifact_id\":null,\"scope\":\"runtime\"},{\"name\":\"render-as-markdown\",\
-\"dep_prod_key\":\"render-as-markdown\",\"version\":\"~> 0.0\",\
-\"parsed_version\":\"0.0.6\",\"group_id\":null,\"artifact_id\":null,\
-\"scope\":\"runtime\"},{\"name\":\"terminal-table\",\
-\"dep_prod_key\":\"terminal-table\",\"version\":\"~> 1.4\",\
-\"parsed_version\":\"1.5.2\",\"group_id\":null,\"artifact_id\":null,\
-\"scope\":\"runtime\"},{\"name\":\"rainbow\",\"dep_prod_key\":\"rainbow\",\
-\"version\":\"~> 2.0\",\"parsed_version\":\"2.0.0\",\"group_id\":null,\
-\"artifact_id\":null,\"scope\":\"runtime\"},{\"name\":\"gli\",\
-\"dep_prod_key\":\"gli\",\"version\":\"~> 2.11\",\"parsed_version\":\"2.13.1\",\
-\"group_id\":null,\"artifact_id\":null,\"scope\":\"runtime\"},{\"name\":\"awesome_print\",\
-\"dep_prod_key\":\"awesome_print\",\"version\":\"~> 1.2\",\"parsed_version\":\"1.6.1\",\
-\"group_id\":null,\"artifact_id\":null,\"scope\":\"runtime\"}],\
-\"licenses\":[{\"name\":\"MIT\",\"url\":null}],\
-\"links\":[{\"name\":\"Homepage\",\"link\":\"https://github.com/versioneye/veye\"},\
-{\"name\":\"Project\",\"link\":\"http://rubygems.org/gems/veye\"},\
-{\"name\":\"RubyGem Page\",\"link\":\"https://rubygems.org/gems/veye\"}],\
-\"archives\":[{\"name\":\"veye-0.0.9.gem\",\"link\":\"https://rubygems.org/gems/veye-0.0.9.gem\"}]}}\n"
+      output = capture_stdout do
+        Veye::Package::Info.get_package('ruby/veye', {format: 'json'})
+      end
+      refute_nil output
+      dt = JSON.parse(output)
+      package = dt["package"]
+      assert_equal "veye", package["name"]
+      assert_equal "ruby", package["language"]
+      assert_equal "veye", package["prod_key"]
+      assert_equal "0.0.9", package["version"]
+      assert_equal "RubyGem", package["prod_type"]
+      assert_equal "MIT", package["license_info"]
 
-      assert_equal expected, output
+      dep = package["dependencies"].first
+      assert_equal "awesome_print", dep["name"]
+      assert_equal "~> 1.2", dep["version"]
+
+      license = package["licenses"].first
+      assert_equal "MIT", license["name"]
+      assert_equal nil, license["url"]
     end
   end
 
   def test_info_table_format
     VCR.use_cassette('package_info') do
-      output = capture_stdout {|| Veye::Package::Info.get_package('ruby/veye', {format: 'table'})}
-      expected = "\
-+------+---------+-------------+----------+---------+------------------------------------------------------------------+\n\
-|                                                 Package information                                                  |\n\
-+------+---------+-------------+----------+---------+------------------------------------------------------------------+\n\
-| name | version | product_key | language | license | description                                                      |\n\
-+------+---------+-------------+----------+---------+------------------------------------------------------------------+\n\
-| veye | 0.0.9   | veye        | ruby     | MIT     |                                                                  |\n\
-|      |         |             |          |         |     Veye is commandline tool like Heroku has own ToolBelt,       |\n\
-|      |         |             |          |         |     and purpose of this tool is to make developer's life even    |\n\
-|      |         |             |          |         |     more simpler and keep you up-to-date with freshest packages. |\n\
-|      |         |             |          |         |                                                                  |\n\
-+------+---------+-------------+----------+---------+------------------------------------------------------------------+\n"
-
-      assert_equal expected, output
+      output = capture_stdout do
+        Veye::Package::Info.get_package('ruby/veye', {format: 'table'})
+      end
+      refute_nil output, "No command output"
+      rows = output.split(/\n/)
+      assert_match /\|\s+Package information\s+\|/, rows[1]
+      assert_match /\| name \| version \| product_key \| language \| license \| description/, rows[3]
+      assert_match /\| veye \| 0.0.9   \| veye\s+\| ruby\s+| MIT\s+\|/, rows[5]
     end
   end
 end
