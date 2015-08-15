@@ -8,9 +8,9 @@ module Veye
     class Resource < BaseResource
       def initialize(path = nil)
         super(path)
-        ssl_path  = File.expand_path($global_options[:ssl_path])
-        cert_path =  ssl_path + "/veye_cert.pem"
-        key_path  = ssl_path + "/veye_key.pem"
+        #ssl_path  = File.expand_path($global_options[:ssl_path])
+        #cert_path =  ssl_path + "/veye_cert.pem"
+        #key_path  = ssl_path + "/veye_key.pem"
         timeout   = $global_options[:timeout].to_i || 90
         open_timeout = $global_options[:open_timeout].to_i || 10
 

@@ -1,3 +1,4 @@
-require_relative 'api/resource.rb'
-require_relative 'api/json_response.rb'
+require_relative 'api/resource'
+require_relative 'api/json_response'
+require_relative 'api/package'
 
