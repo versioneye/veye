@@ -97,4 +97,22 @@ class ProjectTest < Minitest::Test
     end
   end
 
+  def test_get_licenses_api_call
+    VCR.use_cassette('project_license') do
+      res = Veye::API::Project.get_licenses(@api_key, 'rubygem_gemfile_lock_1')
+      assert_equal 200, res.code
+      assert_equal true, res.success
+      assert_equal true, res.data["success"]
+
+      licenses = res.data["licenses"]
+      unknown_license = licenses["unknown"].first
+      assert_equal({"name" => "gli" , "prod_key" => "gli" }, unknown_license)
+
+      ruby_license = licenses["Ruby"].first
+      assert_equal({ "name" => "json" , "prod_key" => "json"}, ruby_license)
+    end
+  end
+
+
+
 end

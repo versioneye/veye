@@ -86,6 +86,22 @@ module Veye
           JSONResponse.new(request, result, response)
         end
       end
+
+      #TODO: add throw exceptions
+      def self.get_licenses(api_key, project_key)
+        if project_key.nil? or project_key.empty?
+          printf("%s: %s",
+                 "Error".color(:red),
+                 "Not valid project_key: `#{project_key}`")
+          return
+        end
+        project_api = Resource.new("#{RESOURCE_PATH}/#{project_key}/licenses")
+        qparams = {:params => {:api_key => api_key}}
+        project_api.resource.get(qparams) do |response, request, result|
+          JSONResponse.new(request, result, response)
+        end
+      end
+
     end
   end
 end

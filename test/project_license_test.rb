@@ -1,29 +1,11 @@
 require 'test_helper'
 require 'csv'
 
-
 class ProjectLicenseTest < MiniTest::Test
   def setup
     init_environment
     @project_key = 'rubygem_gemfile_lock_1'
     @api_key = 'ba7d93beb5de7820764e'
-  end
-
-  def test_get_licenses_api_call
-    VCR.use_cassette('project_license') do
-      res = Veye::Project::API.get_licenses(@project_key, @api_key)
-
-      assert_equal 200, res.code
-      assert_equal true, res.success
-      assert_equal true, res.data["success"]
-
-      licenses = res.data["licenses"]
-      unknown_license = licenses["unknown"].first
-      assert_equal({"name" => "gli" , "prod_key" => "gli" }, unknown_license)
-
-      ruby_license = licenses["Ruby"].first
-      assert_equal({ "name" => "json" , "prod_key" => "json"}, ruby_license)
-    end
   end
 
   def test_get_licenses_default
