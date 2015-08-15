@@ -80,6 +80,20 @@ module Veye
         end
       end
 
+      def self.get_references(prod_key, language, page = nil)
+        product_api = Veye::API::Resource.new(RESOURCE_PATH)
+        lang = encode_language(language).capitalize #endpoint bug
+        safe_prod_key = encode_prod_key(prod_key)
+
+        api_path = "/#{lang}/#{safe_prod_key}/references"
+        page_nr = page.to_s unless page.nil?
+        page_nr ||= 1
+        qparams = {params: {page: page_nr}}
+        product_api.resource[api_path].get(qparams) do |response, request, result, &block|
+          Veye::API::JSONResponse.new(request, result, response)
+        end
+      end
+
     end
   end
 end

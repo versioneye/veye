@@ -5,40 +5,6 @@ require_relative '../base_executor.rb'
 module Veye
   module Package
     module API
-      def self.validate_input!(lang, safe_prod_key)
-        if lang.nil? or safe_prod_key.nil?
-          msg =  %Q[
-            You missed language or product key.
-            Example: clojure/ztellman/aleph, which as required structure
-            <prog lang>/<product_code>
-          ]
-          printf("%s. \n%s",
-                 "Error: Malformed key.".color(:red),
-                 msg)
-          return false
-        end
-        return true
-      end
-
-      def self.get_references(package_key, options = {})
-        product_api = Veye::API::Resource.new(RESOURCE_PATH)
-
-        tokens = package_key.to_s.split('/')
-        lang = Package.encode_language(tokens.first).capitalize #endpoint bug
-
-        safe_prod_key = Package.encode_prod_key(tokens.drop(1).join("/"))
-        return unless validate_input!(lang, safe_prod_key)
-
-        api_path = "/#{lang}/#{safe_prod_key}/references"
-        page_nr = options[:page] || "1"
-        qparams = {params: {page: page_nr}}
-        results = nil
-
-        product_api.resource[api_path].get(qparams) do |response, request, result, &block|
-          results = Veye::API::JSONResponse.new(request, result, response)
-        end
-        return results
-      end
     end
 
     class References < BaseExecutor
@@ -50,7 +16,8 @@ module Veye
       }
 
       def self.get_references(package_key, options = {})
-        results = API.get_references(package_key, options)
+        prod_key,lang = Package.parse_key(package_key)
+        results = Veye::API::Package.get_references(prod_key, lang, options[:page])
         if valid_response?(results, "No references for: `#{package_key}`")
           show_results(@@output_formats, results.data, options, results.data['paging'])
         end

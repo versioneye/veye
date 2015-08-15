@@ -66,4 +66,15 @@ class PackageTest < Minitest::Test
     end
   end
 
+  def test_reference_api_call
+    VCR.use_cassette('package_reference') do
+      res = Veye::API::Package.get_references('ruby', 'ruby')
+      refute_nil res
+      assert_equal 200, res.code
+      assert_equal true, res.success
+      assert_equal "acts_as_dasherize_vanity", res.data['results'].first.fetch("name", nil)
+    end
+  end
+
+
 end
