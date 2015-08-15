@@ -1,28 +1,12 @@
 require 'test_helper'
 require 'csv'
 
-class ProjectCheckTest < MiniTest::Test
+class ProjectCheckTest < Minitest::Test
   def setup
     init_environment
     @api_key = 'ba7d93beb5de7820764e'
     @test_file = "test/files/maven-1.0.1.pom.xml"
-    @project_key = "maven2_openejb_maven_plugins_1" 
-  end
-
-  def test_get_list_api_call
-    VCR.use_cassette('project_list') do
-      res = Veye::Project::API.get_list(@api_key)
-
-      assert_equal 200, res.code
-      assert_equal true, res.success
-
-      proj = res.data.first
-      assert_equal "bugtraqer", proj["name"]
-      assert_equal "lein_project_clj_1", proj["project_key"]
-      assert_equal "Lein", proj["project_type"]
-      assert_equal false, proj["public"]
-      assert_equal "upload", proj["source"]
-    end
+    @project_key = "maven2_openejb_maven_plugins_1"
   end
 
   def test_get_list_default
@@ -82,11 +66,7 @@ class ProjectCheckTest < MiniTest::Test
       end
 
       rows = output.split(/\n/)
-      assert_equal(
-        "|                                                              \
-List of projects                                                              |",
-        rows[1]
-      )
+      assert_match(/\|\s+List of projects\s+\|/, rows[1])
       assert_equal(
         "| index | name                    | project_key                     \
 | private | period | source | dependencies | outdated | created_at       |",
@@ -94,33 +74,6 @@ List of projects                                                              |"
       )
 
       assert_match(/| 1\s+| bugtraqer\s+| lein_project_clj_1/, rows[5])
-    end
-  end
-
-  def test_check_file
-    assert_match(
-      /.*veye\/test\/files\/maven-1\.0\.1\.pom\.xml$/, 
-      Veye::Project::API.check_file(@test_file)
-    )
-
-    assert_nil(Veye::Project::API.check_file("files/nO_such_file.exe"))
-  end
-
-  def test_upload_api_call_when_file_doesnt_exists
-    assert_nil Veye::Project::API.upload("files/nofile.erb", @api_key)
-  end
-
-  def test_upload_api_call_when_file_exists
-    VCR.use_cassette('project_upload') do
-      res = Veye::Project::API.upload(@test_file, @api_key)
-      refute_nil res
-      assert_equal 201, res.code
-      assert_equal true, res.success
-      assert_equal "maven2_openejb_maven_plugins_1", res.data["project_key"]
-      assert_equal "OpenEJB :: Maven Plugins", res.data["name"]
-      assert_equal "Maven2", res.data["project_type"]
-      assert_equal true, res.data["public"]
-      assert_equal "API", res.data["source"]
     end
   end
 
@@ -185,12 +138,7 @@ List of projects                                                              |"
 
       refute_nil output
       rows = output.split(/\n/)
-      assert_equal(
-      "|                                                                  \
-List of projects                                                                  |",
-      rows[1]
-      )
-
+      assert_match(/\|\s+List of projects\s+\|/, rows[1])
       assert_equal(
         "| index | name                     | project_key                    \
 | private | period | source | dependencies | outdated | created_at               |",
@@ -201,22 +149,6 @@ List of projects                                                                
         /\| 1\s+\| OpenEJB :: Maven Plugins \| maven2_openejb_maven_plugins_1/,
         rows[5]
       )
-    end
-  end
-
-  def test_update_api_call
-    VCR.use_cassette('project_update') do
-      res = Veye::Project::API.update(@project_key, @test_file, @api_key)
-      refute_nil res
-      assert_equal 201, res.code
-      assert_equal true, res.success
-      proj = res.data
-      assert_equal @project_key, proj["project_key"]
-      assert_equal "OpenEJB :: Maven Plugins", proj["name"]
-      assert_equal "Maven2", proj["project_type"]
-      assert_equal true, proj["public"]
-      assert_equal "API", proj["source"]
-      assert_equal 11, proj["dependencies"].count
     end
   end
 
@@ -297,23 +229,6 @@ List of projects                                                                
         /\| 1\s+\| aether-api\s+\| org.sonatype.aether\/aether-api/,
         rows[12]
       )
-    end
-  end
-
-  def test_get_project_api_call
-    VCR.use_cassette("project_get") do
-      res = Veye::Project::API.get_project(@project_key, @api_key)
-      refute_nil res
-      assert_equal true, res.success
-      assert_equal 200, res.code
-      
-      proj = res.data
-      assert_equal @project_key, proj["project_key"]
-      assert_equal "OpenEJB :: Maven Plugins", proj["name"]
-      assert_equal "Maven2", proj["project_type"]
-      assert_equal true, proj["public"]
-      assert_equal "API", proj["source"]
-      assert_equal 11, proj["dependencies"].count
     end
   end
 
@@ -398,22 +313,9 @@ List of projects                                                                
     end
   end
 
-  def test_delete_project_api_call
-    VCR.use_cassette("project_delete") do
-      res = Veye::Project::API.delete_project(@project_key, @api_key)
-      refute_nil res
-      assert_equal 200, res.code
-      assert_equal true, res.success
-      assert_equal(
-        {"success"=>true, "message"=>"Project deleted successfully."},
-        res.data
-      )
-    end
-  end
-
   def test_delete_project_default
     VCR.use_cassette("project_delete") do
-      output = capture_stdout do 
+      output = capture_stdout do
         Veye::Project::Check.delete_project(@project_key, @api_key)
       end
 
