@@ -12,12 +12,21 @@ module Veye
       Set.new ["Clojure", "Java", "Javascript", "Node.JS", "PHP", "Python", "Ruby", "R"]
     end
 
-    def self.encode_prod_key(prod_key)
-      prod_key.to_s.gsub(/\//, ":").gsub(/\./, "~")
-    end
+    def self.parse_key(package_key)
+      tokens = package_key.to_s.split('/')
+      lang = tokens.first
+      prod_key = tokens.drop(1).join("/")
 
-    def self.encode_language(lang)
-      lang.to_s.gsub(/\./, "").downcase
+      if lang.nil? or prod_key.nil?
+        msg =  %Q[
+          You missed language or product key.
+          Example: clojure/ztellman/aleph, as structured <prog lang>/<product_code>
+        ]
+        printf("%s. \n%s", "Error: Malformed key.".color(:red), msg)
+        exit
+      end
+
+      [prod_key, lang]
     end
   end
 end
