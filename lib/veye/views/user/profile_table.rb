@@ -4,7 +4,10 @@ module Veye
   module User
     class ProfileTable < BaseTable
       def initialize
-        headings = %w(username fullname email plan_name, admin, deleted, new_notifications, total_notifications)
+        headings = %w(
+          username fullname email plan_name admin deleted
+          new_notifications total_notifications
+        )
         super("User's profile", headings)
       end
 

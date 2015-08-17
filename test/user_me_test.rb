@@ -1,31 +1,22 @@
 require 'test_helper'
+require 'csv'
 
-class UserMeTest < MiniTest::Test
+class UserMeTest < Minitest::Test
   def setup
     init_environment
     @api_key = "ba7d93beb5de7820764e"
   end
 
-  def test_get_profile_api_call
-    VCR.use_cassette('user_get_profile') do
-      res = Veye::User::API.get_profile(@api_key, {})
-      refute_nil res
-      assert_equal 200, res.code
-      assert_equal true, res.success
-      assert_equal "timgluz", res.data["username"]
-      assert_equal "timgluz@gmail.com", res.data["email"]
-    end
-  end
-
   def test_get_profile
     VCR.use_cassette('user_get_profile') do
       out = capture_stdout do Veye::User::Me.get_profile(@api_key, {}); end
-      expected = "\t\e[32m\e[1mtimgluz\e[0m - \e[1mTim Gluz\e[0m\n\
-\tEmail          : timgluz@gmail.com\n\tPlan name      : \n\
-\tAdmin          : false\n\tDeleted        : \n\
-\tNew notif.s    : \e[1m1\e[0m\n\tTotal notif.s  : 1661\n"
-
-      assert_equal expected, out
+      refute_nil out
+      rows = out.split(/\n/)
+      assert_equal "\t\e[32m\e[1mtimgluz\e[0m - \e[1mTim Gluz\e[0m", rows[0]
+      assert_equal "\tEmail          : timgluz@gmail.com", rows[1]
+      assert_equal "\tPlan name      : ", rows[2]
+      assert_equal "\tAdmin          : false", rows[3]
+      assert_equal "\tDeleted        : ", rows[4] 
     end
   end
 
@@ -34,11 +25,11 @@ class UserMeTest < MiniTest::Test
       out = capture_stdout do
         Veye::User::Me.get_profile(@api_key, {format: 'csv'})
       end
-      expected = "\
-username,fullname,email,plan_name_id,admin,new_notifications,total_notifications\n\
-timgluz,Tim Gluz,timgluz@gmail.com,,false,1,1661\n"
 
-      assert_equal expected, out
+      refute_nil out
+      rows = CSV.parse(out)
+      assert_equal ["username", "fullname", "email", "plan_name_id", "admin", "new_notifications", "total_notifications"], rows[0]
+      assert_equal ["timgluz", "Tim Gluz", "timgluz@gmail.com", nil, "false", "0", "1767"], rows[1]
     end
   end
 
@@ -47,11 +38,16 @@ timgluz,Tim Gluz,timgluz@gmail.com,,false,1,1661\n"
       out = capture_stdout do
         Veye::User::Me.get_profile(@api_key, {format: 'json'})
       end
-
-      expected = "{\"profile\":{\"fullname\":\"Tim Gluz\",\"username\":\"timgluz\",\
-\"email\":\"timgluz@gmail.com\",\"admin\":false,\"deleted_user\":false,\
-\"notifications\":{\"new\":1,\"total\":1661},\"enterprise_projects\":1,\"active\":true}}\n"
-      assert_equal expected, out
+      
+      refute_nil out
+      dt = JSON.parse(out)
+      profile = dt["profile"]
+      refute_nil profile, "JSON response has no `profile` field"
+      assert_equal "Tim Gluz", profile["fullname"]
+      assert_equal "timgluz", profile["username"]
+      assert_equal "timgluz@gmail.com", profile["email"]
+      assert_equal true, profile["active"]
+      assert_equal 0, profile["notifications"]["new"]
     end
   end
 
@@ -60,25 +56,15 @@ timgluz,Tim Gluz,timgluz@gmail.com,,false,1,1661\n"
       out = capture_stdout do
         Veye::User::Me.get_profile(@api_key, {format: 'table'})
       end
-      expected = "\
-+----------+----------+-------------------+------------+--------+----------+--------------------+---------------------+\n\
-|                                                   User's profile                                                    |\n\
-+----------+----------+-------------------+------------+--------+----------+--------------------+---------------------+\n\
-| username | fullname | email             | plan_name, | admin, | deleted, | new_notifications, | total_notifications |\n\
-+----------+----------+-------------------+------------+--------+----------+--------------------+---------------------+\n\
-| timgluz  | Tim Gluz | timgluz@gmail.com |            | false  |          | 1                  | 1661                |\n\
-+----------+----------+-------------------+------------+--------+----------+--------------------+---------------------+\n"
-      assert_equal expected, out
-    end
-  end
+      refute_nil out
 
-  def test_get_favorites_api_call
-    VCR.use_cassette("user_get_favorites") do
-      res = Veye::User::API.get_favorites(@api_key, {})
-      refute_nil res
-      assert_equal 200, res.code
-      assert_equal true, res.success
-      assert_equal "h2", res.data['favorites'].first["name"]
+      rows = out.split(/\n/)
+      assert_match /\|\s+User\'s profile\s+\|/, rows[1]
+      assert_match(
+        /\| username \| fullname \| email\s+| plan_name \| admin \| deleted \| new_notifications \| total_notifications \|/,
+       rows[3]
+      )
+      assert_match /\| timgluz  \| Tim Gluz \| timgluz@gmail.com \|\s+\| false/, rows[5]
     end
   end
 
@@ -102,8 +88,11 @@ timgluz,Tim Gluz,timgluz@gmail.com,,false,1,1661\n"
       out = capture_stdout do
         Veye::User::Me.get_favorites(@api_key, {format: 'csv'})
       end
-      assert_match /\Aindex,name,prod_key,prod_type,version,language\n/, out
-      assert_match /h2,com.h2database\/h2,Maven2,1.4.187,java\n/, out
+      refute_nil out
+      rows = CSV.parse out
+      assert_equal ["index", "name", "prod_key", "prod_type", "version", "language"], rows[0]
+      assert_equal ["1", "h2", "com.h2database/h2", "Maven2", "1.4.188", "java"], rows[1]
+      assert_equal ["2", "mallet", "cc.mallet/mallet", "Maven2", "2.0.7", "java"], rows[2]
     end
   end
 
@@ -112,12 +101,13 @@ timgluz,Tim Gluz,timgluz@gmail.com,,false,1,1661\n"
       out = capture_stdout do
         Veye::User::Me.get_favorites(@api_key, {format: 'json'})
       end
-
-      assert_match /\"name\":\"h2\"/, out
-      assert_match /\"language\":\"java\"/, out
-      assert_match /\"prod_key\":\"com.h2database\/h2\"/, out
-      assert_match /\"version\":\"1.4.187\"/, out
-      assert_match /\"prod_type\":\"Maven2\"/, out
+      refute_nil out
+      dt = JSON.parse out
+      fav = dt["favorites"].first
+      assert_equal "h2", fav["name"]
+      assert_equal "java", fav["language"]
+      assert_equal "com.h2database/h2", fav["prod_key"]
+      assert_equal "Maven2", fav["prod_type"]
     end
   end
 
@@ -126,14 +116,11 @@ timgluz,Tim Gluz,timgluz@gmail.com,,false,1,1661\n"
       out = capture_stdout do
         Veye::User::Me.get_favorites(@api_key, {format: 'table'})
       end
-
+      refute_nil out
       rows = out.split(/\n/)
-      assert_equal "+----+---------------------------+------------------------------------+-----------------------+----------+", rows[0]
-      assert_equal "|                                           Favorite packages                                            |", rows[1]
-      assert_equal "+----+---------------------------+------------------------------------+-----------------------+----------+", rows[2]
-      assert_equal "| nr | name                      | product_key                        | version               | language |", rows[3]
-      assert_equal "+----+---------------------------+------------------------------------+-----------------------+----------+", rows[4]
-      assert_equal "| 1  | h2                        | com.h2database/h2                  | 1.4.187               | java     |", rows[5]
+      assert_match /\|\s+Favorite packages\s+\|/, rows[1]
+      assert_match /\| nr \| name\s+\| product_key\s+\| version\s+\| language\s+\|/, rows[3]
+      assert_match /\| 1\s+\| h2\s+\| com\.h2database\/h2\s+\| 1\.4\.188\s+\| java\s+\|/ , rows[5]
     end
   end
 end
