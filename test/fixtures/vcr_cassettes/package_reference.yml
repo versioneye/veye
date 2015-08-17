@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.versioneye.com/api/v2/products/Ruby/ruby/references?page=1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Date:
+      - Sat, 15 Aug 2015 15:42:46 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1145'
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Etag:
+      - W/"882c9a14c1b0ffecde4171c71064a911"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - b35dcdf8-6508-4477-9a89-9205e3085528
+      X-Runtime:
+      - '0.057860'
+    body:
+      encoding: UTF-8
+      string: '{"query":{"lang":"Ruby","prod_key":"ruby"},"paging":{"current_page":1,"per_page":30,"total_pages":9,"total_entries":9},"results":[{"name":"acts_as_dasherize_vanity","language":"ruby","prod_key":"acts_as_dasherize_vanity","version":"0.0.3","prod_type":"RubyGem"},{"name":"blacklisted_password","language":"ruby","prod_key":"blacklisted_password","version":"1.0.0","prod_type":"RubyGem"},{"name":"diamond_shell","language":"ruby","prod_key":"diamond_shell","version":"0.291","prod_type":"RubyGem"},{"name":"gitit","language":"ruby","prod_key":"gitit","version":"2.0.2","prod_type":"RubyGem"},{"name":"isaf_id_validator","language":"ruby","prod_key":"isaf_id_validator","version":"0.1.0","prod_type":"RubyGem"},{"name":"mute_updated_at","language":"ruby","prod_key":"mute_updated_at","version":"0.0.2","prod_type":"RubyGem"},{"name":"pakyow-slim","language":"ruby","prod_key":"pakyow-slim","version":"0.2.2","prod_type":"RubyGem"},{"name":"scm-workflow","language":"ruby","prod_key":"scm-workflow","version":"0.5.0","prod_type":"RubyGem"},{"name":"sink_utility","language":"ruby","prod_key":"sink_utility","version":"0.1.2","prod_type":"RubyGem"}]}'
+    http_version: 
+  recorded_at: Sat, 15 Aug 2015 15:42:35 GMT
+recorded_with: VCR 2.9.3

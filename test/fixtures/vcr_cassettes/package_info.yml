@@ -1,0 +1,56 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.versioneye.com/api/v2/products/ruby/veye
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Date:
+      - Sat, 15 Aug 2015 07:29:55 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1711'
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Etag:
+      - W/"33d64f71e1ab93e638a418ca181733ff"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 6e7b0124-8c15-4987-b5e6-9f98debc13df
+      X-Runtime:
+      - '0.070159'
+    body:
+      encoding: UTF-8
+      string: '{"name":"veye","language":"ruby","prod_key":"veye","version":"0.0.9","prod_type":"RubyGem","group_id":null,"artifact_id":null,"license_info":"MIT","description":"\n    Veye
+        is commandline tool like Heroku has own ToolBelt, \n    and purpose of this
+        tool is to make developer''s life even\n    more simpler and keep you up-to-date
+        with freshest packages.\n  ","updated_at":"2015-07-04T12:07:06.231Z","released_at":"2015-07-03T00:00:00.000+00:00","dependencies":[{"name":"awesome_print","dep_prod_key":"awesome_print","version":"~\u003e
+        1.2","parsed_version":"1.6.1","group_id":null,"artifact_id":null,"scope":"runtime"},{"name":"gli","dep_prod_key":"gli","version":"~\u003e
+        2.11","parsed_version":"2.13.1","group_id":null,"artifact_id":null,"scope":"runtime"},{"name":"rainbow","dep_prod_key":"rainbow","version":"~\u003e
+        2.0","parsed_version":"2.0.0","group_id":null,"artifact_id":null,"scope":"runtime"},{"name":"render-as-markdown","dep_prod_key":"render-as-markdown","version":"~\u003e
+        0.0","parsed_version":"0.0.6","group_id":null,"artifact_id":null,"scope":"runtime"},{"name":"rest-client","dep_prod_key":"rest-client","version":"~\u003e
+        1.6","parsed_version":"1.8.0","group_id":null,"artifact_id":null,"scope":"runtime"},{"name":"terminal-table","dep_prod_key":"terminal-table","version":"~\u003e
+        1.4","parsed_version":"1.5.2","group_id":null,"artifact_id":null,"scope":"runtime"}],"licenses":[{"name":"MIT","url":null}],"links":[{"name":"Homepage","link":"https://github.com/versioneye/veye"},{"name":"Project","link":"http://rubygems.org/gems/veye"},{"name":"RubyGem
+        Page","link":"https://rubygems.org/gems/veye"}],"archives":[{"name":"veye-0.0.9.gem","link":"https://rubygems.org/gems/veye-0.0.9.gem"}]}'
+    http_version: 
+  recorded_at: Sat, 15 Aug 2015 07:29:46 GMT
+recorded_with: VCR 2.9.3

@@ -1,0 +1,48 @@
+---
+http_interactions:
+- request:
+    method: delete
+    uri: https://www.versioneye.com/api/v2/products/ruby/ruby/follow.json?api_key=ba7d93beb5de7820764e
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Date:
+      - Sat, 15 Aug 2015 10:46:16 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '56'
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - api_key=ba7d93beb5de7820764e; secure
+      Etag:
+      - W/"8ab7070f3b063b2378ca199ebe369d32"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 62cc38bb-b08a-4878-ad44-6f3ea66cf49a
+      X-Runtime:
+      - '0.043851'
+    body:
+      encoding: UTF-8
+      string: '{"username":"timgluz","prod_key":"ruby","follows":false}'
+    http_version: 
+  recorded_at: Sat, 15 Aug 2015 10:46:06 GMT
+recorded_with: VCR 2.9.3

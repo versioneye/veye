@@ -1,0 +1,49 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.versioneye.com/api/v2/projects/rubygem_gemfile_lock_1/licenses?api_key=ba7d93beb5de7820764e
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Date:
+      - Sat, 15 Aug 2015 17:20:34 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1003'
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - api_key=ba7d93beb5de7820764e; secure
+      Etag:
+      - W/"3ab2f34de3a651a71f68f6bb8693921e"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - f5d9d98b-a617-4698-a2e8-87ea637a2b7c
+      X-Runtime:
+      - '0.502890'
+    body:
+      encoding: UTF-8
+      string: '{"success":true,"licenses":{"unknown":[{"name":"gli","prod_key":"gli"}],"MIT":[{"name":"veye","prod_key":"veye"},{"name":"awesome_print","prod_key":"awesome_print"},{"name":"rainbow","prod_key":"rainbow"},{"name":"render-as-markdown","prod_key":"render-as-markdown"},{"name":"rest-client","prod_key":"rest-client"},{"name":"terminal-table","prod_key":"terminal-table"},{"name":"aruba","prod_key":"aruba"},{"name":"childprocess","prod_key":"childprocess"},{"name":"cucumber","prod_key":"cucumber"},{"name":"rspec-expectations","prod_key":"rspec-expectations"},{"name":"builder","prod_key":"builder"},{"name":"gherkin","prod_key":"gherkin"},{"name":"multi_json","prod_key":"multi_json"},{"name":"multi_test","prod_key":"multi_test"},{"name":"rake","prod_key":"rake"}],"BSD":[{"name":"ffi","prod_key":"ffi"}],"MIT,
+        Artistic-2.0, GPL-2.0":[{"name":"diff-lcs","prod_key":"diff-lcs"},{"name":"mime-types","prod_key":"mime-types"}],"Ruby":[{"name":"json","prod_key":"json"},{"name":"rdoc","prod_key":"rdoc"}]}}'
+    http_version: 
+  recorded_at: Sat, 15 Aug 2015 17:20:23 GMT
+recorded_with: VCR 2.9.3

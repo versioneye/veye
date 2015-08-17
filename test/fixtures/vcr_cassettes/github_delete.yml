@@ -1,0 +1,48 @@
+---
+http_interactions:
+- request:
+    method: delete
+    uri: https://www.versioneye.com/api/v2/github/versioneye:veye?api_key=ba7d93beb5de7820764e&branch=master
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Date:
+      - Fri, 14 Aug 2015 17:18:24 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '16'
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - api_key=ba7d93beb5de7820764e; secure
+      Etag:
+      - W/"7363e85fe9edee6f053a4b319588c086"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - ada5986b-de47-4f47-9a78-32ad6620bd6d
+      X-Runtime:
+      - '0.173011'
+    body:
+      encoding: UTF-8
+      string: '{"success":true}'
+    http_version: 
+  recorded_at: Fri, 14 Aug 2015 17:18:15 GMT
+recorded_with: VCR 2.9.3
