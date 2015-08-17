@@ -15,31 +15,6 @@ class GithubImportTest < Minitest::Test
     }
   end
 
-  def test_api_call
-    VCR.use_cassette('github_import') do
-      res = Veye::Github::API.import_repo(@api_key, @repo_name, @branch, @file)
-      refute_nil res
-      assert_equal 201, res.code
-      repo = res.data["repo"]
-
-      assert_equal "veye", repo["name"]
-      assert_equal "versioneye/veye", repo["fullname"]
-      assert_equal "ruby", repo["language"]
-      assert_equal "versioneye", repo["owner_login"]
-      assert_equal "organization", repo["owner_type"]
-      assert_equal false, repo["private"]
-      assert_equal false, repo["fork"]
-
-      project = res.data["imported_projects"].first
-      refute_nil project, "imported_projects fields is missing"
-      assert_equal "rubygem_versioneye_veye_1", project["project_key"]
-      assert_equal "versioneye/veye", project["name"]
-      assert_equal "RubyGem", project["project_type"]
-      assert_equal true, project["public"]
-      assert_equal "github", project["source"]
-    end
-  end
-
   def test_import_default
     VCR.use_cassette('github_import') do
       res = capture_stdout do

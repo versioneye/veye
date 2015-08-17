@@ -49,6 +49,19 @@ module Veye
         end
       end
 
+      def self.import_repo(api_key, repo_name, branch = nil, filename = nil)
+        safe_repo_name = encode_repo_key(repo_name)
+        github_api = Resource.new("#{RESOURCE_PATH}/#{safe_repo_name}")
+
+        params = {api_key: api_key}
+        params[:branch] = branch unless branch.nil?
+        params[:file] = filename unless filename.nil?
+
+        github_api.resource.post(params) do |response, request, result|
+          JSONResponse.new(request, result, response)
+        end
+      end
+
     end
   end
 end
