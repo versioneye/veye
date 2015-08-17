@@ -1,9 +1,8 @@
+# Base class that will bring many helpers into command classes.
 class BaseExecutor
   extend FormatHelpers
-  extend RepoHelpers
 
   def self.show_results(output_formats, results, options = {}, paging = nil)
-
     format = options[:format] || 'pretty'
     self.supported_format?(output_formats, format)
     formatter = output_formats[format]
@@ -14,15 +13,15 @@ class BaseExecutor
   end
 
   def self.valid_response?(response, msg)
-    if response.nil? or response.success != true
-      p "#{msg.to_s.color(:red)}: #{response.data.to_s}\n"
+    if response.nil? || response.success != true
+      p "#{msg.to_s.color(:red)}: #{response.data}\n"
       return false
     end
 
-    return true
+    response.success
   end
 
-  #OBSOLETE: use valid_response?
+  # OBSOLETE: use valid_response?
   def self.catch_request_error(response, msg)
     valid_response?(response, msg)
   end

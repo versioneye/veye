@@ -5,7 +5,6 @@ require 'rest-client'
 require 'yaml'
 
 require 'veye/helpers/format_helpers.rb'
-require 'veye/helpers/repo_helpers.rb'
 
 require 'veye/version.rb'
 require 'veye/service.rb'

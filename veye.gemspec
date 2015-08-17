@@ -26,18 +26,20 @@ spec = Gem::Specification.new do |s|
   s.bindir = 'bin'
   s.executables << 'veye'
 
-  s.add_development_dependency('rake',  '~> 10.4')
+  s.add_development_dependency('rake',  '>= 10.4')
   s.add_development_dependency('minitest',  '>= 5.7')
   s.add_development_dependency('minitest-reporters', '>= 1.0')
   s.add_development_dependency('vcr',  '>= 2.9')
   s.add_development_dependency('webmock',  '>= 1.21')
   s.add_development_dependency('rdoc',  '~> 4.2')
   s.add_development_dependency('aruba', '>= 0.7')
+  s.add_development_dependency('rubocop', '>= 0.33')
 
   s.add_runtime_dependency('gli',               '> 2.13')
   s.add_runtime_dependency('rest-client',       '>= 1.8')
   s.add_runtime_dependency('awesome_print',     '>= 1.6')
   s.add_runtime_dependency('rainbow',           '>= 2.0')
   s.add_runtime_dependency('terminal-table',    '>= 1.4')
-  s.add_runtime_dependency('render-as-markdown','~> 0.0')
+  s.add_runtime_dependency('render-as-markdown','>= 0')
+  s.add_runtime_dependency('contracts',         '>= 0.11')
 end

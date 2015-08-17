@@ -8,7 +8,7 @@ require_relative 'github/delete.rb'
 require_relative 'views/github.rb'
 
 module Veye
+  # commands for the Github API on VersionEye
   module Github
-    RESOURCE_PATH = "/github"
   end
 end

@@ -9,6 +9,8 @@ require_relative 'user/favorite_pretty.rb'
 require_relative 'user/favorite_table.rb'
 
 module Veye
+  # User namespace includes user related commands
+  # and classes required to render results on commandline.
   module User
   end
 end

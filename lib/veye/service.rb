@@ -1,13 +1,13 @@
 module Veye
   #-- CLI wrappers for API
   class Service
-    def self.ping(n = 1)
+    def self.ping
       show_result(Veye::API::Service.ping)
     end
 
     def self.show_result(result)
       if result.nil?
-        puts "Request failure".color(:red)
+        puts 'Request failure'.color(:red)
       elsif result.success
         puts "#{result.data['message']}".color(:green)
       else
