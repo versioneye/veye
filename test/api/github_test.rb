@@ -72,4 +72,13 @@ class GithubTest < Minitest::Test
     end
   end
 
+  def test_delete_api
+    VCR.use_cassette('github_delete') do
+      res = Veye::API::Github.delete_repo(@api_key, @repo_name, @branch)
+
+      refute_nil res, "No API response"
+      assert_equal 200, res.code
+      assert_equal true, res.data["success"]
+    end
+  end
 end

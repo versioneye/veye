@@ -62,6 +62,16 @@ module Veye
         end
       end
 
+      def self.delete_repo(api_key, repo_name, branch = nil)
+        safe_repo_key = self.encode_repo_key(repo_name)
+        qparams = { :api_key => api_key }
+        qparams[:branch] = branch unless branch.nil?
+        github_api = Resource.new("#{RESOURCE_PATH}/#{safe_repo_key}")
+
+        github_api.resource.delete({params: qparams}) do |response, request, result|
+          JSONResponse.new(request, result, response)
+        end
+      end
     end
   end
 end

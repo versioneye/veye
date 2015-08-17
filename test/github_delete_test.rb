@@ -14,17 +14,7 @@ class GithubDeleteTest < Minitest::Test
   def import_project
     #import project before testing
     VCR.use_cassette('github_import') do
-      res = Veye::Github::API.import_repo(@api_key, @repo_name, @branch, 'Gemfile.locl')
-    end
-  end
-
-  def test_api_call
-    VCR.use_cassette('github_delete') do
-      res = Veye::Github::API.delete_repo(@api_key, @repo_name, @branch)
-
-      refute_nil res, "No API response"
-      assert_equal 200, res.code
-      assert_equal true, res.data["success"]
+      res = Veye::API::Github.import_repo(@api_key, @repo_name, @branch, 'Gemfile.locl')
     end
   end
 
