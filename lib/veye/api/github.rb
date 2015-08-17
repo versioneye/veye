@@ -22,6 +22,17 @@ module Veye
         end
       end
 
+      def self.import_all(api_key, force = false)
+        params = {api_key: api_key}
+        params[:force] = force || false
+        qparams = {params: params}
+        github_api = Resource.new(RESOURCE_PATH)
+
+        github_api.resource['/sync'].get(qparams) do |response, request, result|
+          JSONResponse.new(request, result, response)
+        end
+      end
+
     end
   end
 end
