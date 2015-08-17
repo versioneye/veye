@@ -8,21 +8,6 @@ class GithubInfoTest < Minitest::Test
     @repo_name = 'versioneye/veye'
   end
 
-  def test_api_call
-    VCR.use_cassette('github_info') do
-      res = Veye::Github::API.get_repo(@api_key, @repo_name)
-      refute_nil res
-      assert_equal 200, res.code
-      repo = res.data["repo"]
-      assert_equal "versioneye/veye", repo["fullname"]
-      assert_equal "ruby", repo["language"]
-      assert_equal "versioneye", repo["owner_login"]
-      assert_equal false, repo["private"]
-      assert_equal false, repo["fork"]
-      assert_equal [], res.data["imported_projects"]
-    end
-  end
-
   def test_get_repo_default
     VCR.use_cassette('github_info') do
       output = capture_stdout do
@@ -49,7 +34,7 @@ class GithubInfoTest < Minitest::Test
 
       refute nil, output
       rows = CSV.parse(output)
-      assert_equal ["name", "language", "owner_login", "owner_type", "private", "fork", "branches", "imported_projects", " description"], rows[0]
+      assert_equal ["name", "language", "owner_login", "owner_type", "private", "fork", "branches", "imported_projects", "description"], rows[0]
       assert_equal ["versioneye/veye", "ruby", "versioneye", "organization", "false", "false", "master|references", nil, "VersionEye command line tool "], rows[1]
     end
   end
