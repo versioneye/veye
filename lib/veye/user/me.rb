@@ -21,14 +21,14 @@ module Veye
       }
 
       def self.get_profile(api_key, options)
-        results = Veye::API::User.get_profile(api_key, options)
+        results = Veye::API::User.get_profile(api_key)
         if valid_response?(results, 'Failed to read profile.')
           show_results(@profile_formats, results.data, options)
         end
       end
 
       def self.get_favorites(api_key, options)
-        results = Veye::API::User.get_favorites(api_key, options)
+        results = Veye::API::User.get_favorites(api_key, options[:page])
 
         if valid_response?(results, 'Failed to read favorites.')
           paging = results.data['paging']

@@ -8,7 +8,7 @@ class UserTest < Minitest::Test
 
   def test_get_profile_api_call
     VCR.use_cassette('user_get_profile') do
-      res = Veye::API::User.get_profile(@api_key, {})
+      res = Veye::API::User.get_profile(@api_key)
       refute_nil res
       assert_equal 200, res.code
       assert_equal true, res.success
@@ -19,7 +19,7 @@ class UserTest < Minitest::Test
 
   def test_get_favorites_api_call
     VCR.use_cassette("user_get_favorites") do
-      res = Veye::API::User.get_favorites(@api_key, {})
+      res = Veye::API::User.get_favorites(@api_key)
       refute_nil res
       assert_equal 200, res.code
       assert_equal true, res.success

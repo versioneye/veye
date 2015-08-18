@@ -1,28 +1,29 @@
 module Veye
   module API
+    # API wrappers for User api
     module User
-      RESOURCE_PATH = "/me"
+      RESOURCE_PATH = '/me'
 
-      def self.get_profile(api_key, options)
+      def self.get_profile(api_key)
         user_api = Resource.new RESOURCE_PATH
-        qparams = {:params => {:api_key => api_key}}
+        qparams = { params: { api_key: api_key } }
 
         user_api.resource.get(qparams) do |response, request, result|
           JSONResponse.new(request, result, response)
         end
       end
 
-      def self.get_favorites(api_key, options)
-        user_api = Resource.new RESOURCE_PATH
-        page = options[:page] || 1
+      def self.get_favorites(api_key, page = 1)
+        fav_api = Resource.new "#{RESOURCE_PATH}/favorites"
+        page ||= 1
         qparams = {
-          :params => {
-            :api_key => api_key,
-            :page => page
+          params: {
+            api_key: api_key,
+            page: page
           }
         }
 
-        user_api.resource['/favorites'].get(qparams) do |response, request, result|
+        fav_api.resource.get(qparams) do |response, request, result|
           JSONResponse.new(request, result, response)
         end
       end
