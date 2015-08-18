@@ -72,6 +72,20 @@ module Veye
           JSONResponse.new(request, result, response)
         end
       end
+
+      def self.search(api_key, term, lang = nil, user = nil, page = 1)
+        github_api = Resource.new("#{RESOURCE_PATH}/search")
+
+        params = {api_key: api_key, q: search_term}
+        params[:langs] = lang unless lang.nil?
+        params[:users] = user unless user.nil?
+        params[:page]  = page || "1"
+        qparams = {params: params}
+
+        github_api.resource.get(qparams) do |response, request, result|
+          JSONResponse.new(request, result, response)
+        end
+      end
     end
   end
 end
