@@ -3,6 +3,7 @@ require_relative 'base_resource.rb'
 
 #for ssl keys:
 #openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -nodes
+# TODO: clean up after client SSL issue is fixed
 module Veye
   module API
     class Resource < BaseResource
