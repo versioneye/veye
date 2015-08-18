@@ -1,5 +1,5 @@
 module Veye
-  #-- CLI wrappers for API
+  # CLI wrappers for API
   class Service
     def self.ping
       show_result(Veye::API::Service.ping)
