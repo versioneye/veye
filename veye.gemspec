@@ -18,7 +18,7 @@ spec = Gem::Specification.new do |s|
   s.post_install_message = "Thanks for installing! To get more info, use: veye help"
 
   # Add your other files here if you make them
-  s.files = %w(lib/veye.rb)
+  #s.files = %w(lib/veye.rb)
   s.files += Dir['lib/**/*.rb'] + Dir['bin/*']
   s.files += Dir['[A-Z]*'] + Dir['test/**/*']
   s.require_paths << 'lib'
