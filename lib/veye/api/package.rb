@@ -20,7 +20,7 @@ module Veye
       def self.get_package(prod_key, language)
         lang = encode_language(language)
         safe_prod_key = encode_prod_key(prod_key)
-        product_api = Resource.new "RESOURCE_PATH/#{lang}/#{safe_prod_key}"
+        product_api = Resource.new "#{RESOURCE_PATH}/#{lang}/#{safe_prod_key}"
         product_api.resource.get do |response, request, result|
           JSONResponse.new(request, result, response)
         end
