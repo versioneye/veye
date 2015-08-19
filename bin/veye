@@ -348,17 +348,6 @@ command :github do |c|
     end
   end #end of sync
 
-  c.desc "search repositories on github"
-  c.arg_name "search_term"
-  c.command :search do |gsearch|
-    gsearch.action do |global_options, options, args|
-      help_now!("the search term is mandatory.".color(:red)) if args.empty?
-      search_term = args.shift
-      api_key = global_options[:api_key]
-      Veye::Github::Search.search(api_key, search_term, options)
-    end
-  end # end of search
-
   c.desc "show more specific information for the repository"
   c.arg_name "repo_name"
   c.command :info do |info|

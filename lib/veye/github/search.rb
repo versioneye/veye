@@ -14,7 +14,7 @@ module Veye
 
       # TODO: add missing tests + API call test
       def self.search(api_key, search_term, options)
-        results = Veye::API::Github(
+        results = Veye::API::Github.search(
           api_key, search_term, options[:lang], options[:user], options[:page]
         )
         catch_request_error(results, 'No match')
