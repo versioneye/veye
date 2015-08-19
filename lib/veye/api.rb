@@ -11,8 +11,9 @@ require_relative 'api/user'
 $global_options = {
   protocol: 'https',
   server: 'www.versioneye.com',
-  path: 'api/v2/',
-  port: nil
+  path: 'api/v2',
+  port: nil,
+  timeout: 30
 }
 $global_options[:url] = Veye::API::Resource.build_url($global_options)
 

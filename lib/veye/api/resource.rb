@@ -12,7 +12,9 @@ module Veye
         #ssl_path  = File.expand_path($global_options[:ssl_path])
         #cert_path =  ssl_path + "/veye_cert.pem"
         #key_path  = ssl_path + "/veye_key.pem"
-        timeout   = $global_options[:timeout].to_i || 90
+        timeout_val = $global_options[:timeout].to_i
+        timeout = timeout_val if timeout_val > 0
+        timeout ||= 90
         open_timeout = $global_options[:open_timeout].to_i || 10
 
         #temporary workaround - RestClient didnt work with generated certs after update
