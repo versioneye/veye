@@ -6,6 +6,17 @@ require_relative 'api/github'
 require_relative 'api/service'
 require_relative 'api/user'
 
+# -- initialize global options
+# ps: command line interface overwrites those variables with init_enviroment
 $global_options = {
-  msg: 'here is right place'
+  protocol: 'https',
+  server: 'www.versioneye.com',
+  path: 'api/v2/',
+  port: nil
 }
+$global_options[:url] = Veye::API::Resource.build_url($global_options)
+
+module Veye
+  module API
+  end
+end
