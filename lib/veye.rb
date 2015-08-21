@@ -1,6 +1,5 @@
 # Add requires for other files you add to your project here, so
 # you just need to require this one file in your bin file
-require 'openssl'
 require 'rest-client'
 require 'yaml'
 
@@ -42,7 +41,6 @@ end
 def self.check_configs(global_opts, needs_api_key)
   check_config_file
   check_api_key(global_opts) if needs_api_key
-  generate_ssl_keys(global_opts) unless ssl_key_exists?(global_opts)
   true
 end
 
@@ -70,47 +68,14 @@ def check_api_key(global_opts)
   result
 end
 
-def ssl_key_exists?(global_opts)
-  fullpath = File.expand_path(global_opts[:ssl_path])
-  File.exist?("#{fullpath}/veye_cert.pem")
-end
-
-def generate_ssl_keys(global_opts)
-  result = false
-
-  Dir.chdir(Dir.home)
-  ssl_path = File.expand_path(global_opts[:ssl_path])
-  unless Dir.exist?(ssl_path)
-    print "Info: Creating folder for ssl keys: `#{ssl_path}`\n"
-    Dir.mkdir(ssl_path)
-  end
-
-  Dir.chdir(ssl_path)
-
-  key = OpenSSL::PKey::RSA.new 2048
-  open('veye_key.pem', 'w') { |io| io.write(key.to_pem) }
-  open('veye_cert.pem', 'w') { |io| io.write(key.public_key.to_pem) }
-
-  if ssl_key_exists?(global_opts)
-    print 'Success: SSL keys are generated.\n'
-    result = true
-  else
-    print 'Error: Cant generate SSL keys. Do you have openssl installed?\n'
-  end
-
-  Dir.chdir(Dir.home)
-  result
-end
-
 def save_configs
   filepath = get_config_fullpath
   File.open(filepath, 'w') do |f|
     f.puts $global_options.to_yaml
   end
-  msg = format(
+  print format(
     "%s: %s",
     'Success'.color(:green),
-    'new settings are saved into file: `#{filepath}`\n'
+    "new settings are saved into file: `#{filepath}`"
   )
-  print msg
 end
