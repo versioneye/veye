@@ -1,6 +1,21 @@
 # Changelogs
 
-## 0.0.x
+## 0.1
+
+* first stable release - no new functionalities
+* all commands' have tests
+* refactored API calls out of commands
+* moved API into own namespace
+* made API accessible from other projects
+* fixed SSL issue;
+* removed SSL generatation
+* added Rubocop and removed biggest code smells
+* github import supports now file and branch parameters
+* fixed bugs in presentations when fields are nil
+* updated dependencies
+
+
+## 0.0.9
 
 * added references endpoint
 * updated docs
