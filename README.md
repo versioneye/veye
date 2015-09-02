@@ -20,14 +20,14 @@ Most endpoints require the api-key, which you can get [here](https://www.version
 ![Main help](http://dl.dropbox.com/u/19578784/versioneye/cli_start_page.png)
 
 
-## Install
+## Install via RubyGems
 
 
 ```
   $> gem install veye
 ```
 
-### only for dev-version
+### Install from source
 
 ###### Download source
 
