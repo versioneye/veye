@@ -4,19 +4,16 @@
 [![Join the chat at https://gitter.im/versioneye/veye](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/versioneye/veye?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
+**veye** is a command line tool for [VersionEye](https://www.versioneye.com/). It is a wrapper around the [VersionEye API](https://www.versioneye.com/api), implemented in Ruby. The tool allows you to write scripts for continuous updating and due diligence. 
 
+Most endpoints require an API key, which you can get [here](https://www.versioneye.com/settings/api).
 
-[VersionEye](http://www.versioneye.com/) is a cross-platform search engine and crowdsourcing app for opensource software libraries.
+[VersionEye](https://www.versioneye.com/) is a cross-platform search engine and crowdsourcing app for opensource software libraries.
 
  * Take advantage of the extended search to find any library you look for.
  * Follow and track your favorite software packages via RSS feed.
  * Leave comments and add additional meta information to the libraries to improve the quality of the data.
  * Contribute to this crowdsourcing project to make the world a better place for software developers.
-
-
-**veye** is opensource commandline tool and API client to make all this available on your console and allows you write scripts for continous updating and due diligence.
-
-Most endpoints require the api-key, which you can get [here](https://www.versioneye.com/settings/api).
 
 ![Main help](http://dl.dropbox.com/u/19578784/versioneye/cli_start_page.png)
 
