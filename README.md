@@ -22,12 +22,11 @@ Most endpoints require the api-key, which you can get [here](https://www.version
 
 ## Install via RubyGems
 
-
 ```
   $> gem install veye
 ```
 
-### Install from source
+## Install from source
 
 ###### Download source
 
