@@ -1,8 +1,9 @@
 # Veye
 
+[![Dependency Status](https://www.versioneye.com/ruby/veye/0.1/badge.svg)](https://www.versioneye.com/ruby/veye/0.1) 
 [![Join the chat at https://gitter.im/versioneye/veye](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/versioneye/veye?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Dependency Status](https://www.versioneye.com/ruby/veye/0.1/badge.svg)](https://www.versioneye.com/ruby/veye/0.1)
+
 
 
 [VersionEye](http://www.versioneye.com/) is a cross-platform search engine and crowdsourcing app for opensource software libraries.
