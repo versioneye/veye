@@ -203,7 +203,11 @@ $> rake test TEST=test/file_you_changed.rb
 $> rubocop lib/your_file.rb
 ```
 
-# License
+## Furhter documentation
+
+More documentation can be found in the [wiki](https://github.com/versioneye/veye/wiki). 
+
+## License
 The MIT License (MIT)
 
 Copyright (c)2015 **VersionEye GmbH**
