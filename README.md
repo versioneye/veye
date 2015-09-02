@@ -51,13 +51,13 @@ Most endpoints require the api-key, which you can get [here](https://www.version
 
 ## Initial configuration
 
-The tool will raise exception when a configuration file is missing. The tool needs configuration file to keep user specific settings and  authorization key.
+The tool will raise an exception if the configuration file is missing. Veye needs a configuration file to keep the user specific settings and the API Key.
 
 #### create config file
 
   ```
   $> veye initconfig
-  #it creates configuration file for VersionEye CLI
+  # it creates configuration file for VersionEye CLI
   $> cat ~/.veye.rc
   :api_key: <add your key>
   :server: 127.0.0.1
@@ -65,9 +65,9 @@ The tool will raise exception when a configuration file is missing. The tool nee
   ....
   ```
 
-#### initialize api key
+#### initialize API key
 
-Please visit [your settings page](https://www.versioneye.com/settings/api) on VersionEye for the api-key and then use command `veye change_key` to save your api key.
+Please visit [your settings page](https://www.versioneye.com/settings/api) on VersionEye for the API key and then use command `veye change_key` to save your api key.
 
 ```
  $> veye change_key abj23j2bj33k14
@@ -75,7 +75,6 @@ Please visit [your settings page](https://www.versioneye.com/settings/api) on Ve
 ```
 
 # Basic usage
-
 
 ```bash
 $> veye ping
@@ -86,7 +85,6 @@ $> veye search json --lang=r,php --page=2
 #you can cancel pagination with --no-pagination argument
 $> veye search junit --page 3 --no-pagination
 ```
-
 
 ## Output formats
 
