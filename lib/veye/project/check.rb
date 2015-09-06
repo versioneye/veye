@@ -59,16 +59,24 @@ module Veye
       end
 
       #-- layout helpers
+      def self.filter_dependencies(results, options)
+        if options[:all]
+           results['dependencies'].to_a.sort_by {|x| x['outdated'].hash}
+         else
+           results['dependencies'].to_a.keep_if {|x| x['outdated']}
+         end
+      end
+      
       def self.show_dependencies(results, options)
         format = options[:format]
         format ||= 'pretty'
         return if format == 'json'
         self.supported_format?(@dependency_output_formats, format)
 
+        deps = filter_dependencies(results, options)     
         formatter = @dependency_output_formats[format]
-
         formatter.before
-        formatter.format results['dependencies']
+        formatter.format deps
         formatter.after
       end
 

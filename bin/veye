@@ -35,9 +35,6 @@ flag :path, :default_value => "api/v2"
 desc 'set connection protocol'
 flag :protocol, :default_value => "https"
 
-desc 'set folder of veye_cert.pem'
-flag :ssl_path, :default_value => "~/.ssh"
-
 desc "don't use colors"
 switch 'color', :default_value => true, :negetable => true
 
@@ -160,6 +157,9 @@ command :projects do |c|
   c.desc "change output format"
   c.flag [:format, 'format-name'], :default_value => 'pretty'
 
+  c.desc "show all dependencies"
+  c.flag [:all, 'show-all'], default_value: false
+
   c.desc "show all projects"
   c.command :list do |list|
     list.action do |global_options, options, args|
@@ -175,6 +175,7 @@ command :projects do |c|
       help_now!("Project_key is unspecified".color(:red)) if args.empty?
       proj_key = args.shift
       api_key = global_options[:api_key]
+
       Veye::Project::Check.get_project(proj_key, api_key, options)
     end
   end
@@ -312,7 +313,7 @@ command :github do |c|
 
   c.desc "specify branch"
   c.flag [:branch], :default_value => "master"
-  
+
   c.desc "specify the name of the project file"
   c.flag [:file, 'file'], :default_value => nil
 
