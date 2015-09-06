@@ -1,33 +1,30 @@
 # Veye
 
+[![Dependency Status](https://www.versioneye.com/ruby/veye/0.1/badge.svg)](https://www.versioneye.com/ruby/veye/0.1) 
 [![Join the chat at https://gitter.im/versioneye/veye](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/versioneye/veye?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Dependency Status](https://www.versioneye.com/ruby/veye/0.1/badge.svg)](https://www.versioneye.com/ruby/veye/0.1)
 
+**veye** is a command line tool for [VersionEye](https://www.versioneye.com/). It is a wrapper around the [VersionEye API](https://www.versioneye.com/api), implemented in Ruby. The tool allows you to write scripts for continuous updating and due diligence. 
 
-[VersionEye](http://www.versioneye.com/) is a cross-platform search engine and crowdsourcing app for opensource software libraries.
+Most endpoints require an API key, which you can get [here](https://www.versioneye.com/settings/api).
+
+[VersionEye](https://www.versioneye.com/) is a cross-platform search engine and crowdsourcing app for opensource software libraries.
 
  * Take advantage of the extended search to find any library you look for.
  * Follow and track your favorite software packages via RSS feed.
  * Leave comments and add additional meta information to the libraries to improve the quality of the data.
  * Contribute to this crowdsourcing project to make the world a better place for software developers.
 
-
-**veye** is opensource commandline tool and API client to make all this available on your console and allows you write scripts for continous updating and due diligence.
-
-Most endpoints require the api-key, which you can get [here](https://www.versioneye.com/settings/api).
-
 ![Main help](http://dl.dropbox.com/u/19578784/versioneye/cli_start_page.png)
 
 
-## Install
-
+## Install via RubyGems
 
 ```
   $> gem install veye
 ```
 
-### only for dev-version
+## Install from source
 
 ###### Download source
 
@@ -52,13 +49,13 @@ Most endpoints require the api-key, which you can get [here](https://www.version
 
 ## Initial configuration
 
-The tool will raise exception when a configuration file is missing. The tool needs configuration file to keep user specific settings and  authorization key.
+The tool will raise an exception if the configuration file is missing. Veye needs a configuration file to keep the user specific settings and the API Key.
 
 #### create config file
 
   ```
   $> veye initconfig
-  #it creates configuration file for VersionEye CLI
+  # it creates configuration file for VersionEye CLI
   $> cat ~/.veye.rc
   :api_key: <add your key>
   :server: 127.0.0.1
@@ -66,9 +63,9 @@ The tool will raise exception when a configuration file is missing. The tool nee
   ....
   ```
 
-#### initialize api key
+#### initialize API key
 
-Please visit [your settings page](https://www.versioneye.com/settings/api) on VersionEye for the api-key and then use command `veye change_key` to save your api key.
+Please visit [your settings page](https://www.versioneye.com/settings/api) on VersionEye for the API key and then use command `veye change_key` to save your api key.
 
 ```
  $> veye change_key abj23j2bj33k14
@@ -76,7 +73,6 @@ Please visit [your settings page](https://www.versioneye.com/settings/api) on Ve
 ```
 
 # Basic usage
-
 
 ```bash
 $> veye ping
@@ -87,7 +83,6 @@ $> veye search json --lang=r,php --page=2
 #you can cancel pagination with --no-pagination argument
 $> veye search junit --page 3 --no-pagination
 ```
-
 
 ## Output formats
 
@@ -208,7 +203,11 @@ $> rake test TEST=test/file_you_changed.rb
 $> rubocop lib/your_file.rb
 ```
 
-# License
+## Furhter documentation
+
+More documentation can be found in the [wiki](https://github.com/versioneye/veye/wiki). 
+
+## License
 The MIT License (MIT)
 
 Copyright (c)2015 **VersionEye GmbH**
