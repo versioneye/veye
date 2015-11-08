@@ -9,7 +9,7 @@ module FormatHelpers
 
   def formats_attached?(output_formats)
     if output_formats.nil?
-      p 'Executor doesnt have any formattor defined.'.color(:red)
+      printf 'Executor doesnt have any formattor defined.\n'.color(:red)
     end
     !output_formats.nil?
   end
@@ -18,7 +18,7 @@ module FormatHelpers
     unless output_formats.key?(format)
       msg = "Unsupported output format: `#{format}`\n".color(:red)
       msg += "Supported formats: #{output_formats.keys.join(', ')}\n"
-      p msg
+      printf msg
       return false
     end
     true

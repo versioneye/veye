@@ -5,7 +5,7 @@ http_interactions:
     uri: https://www.versioneye.com/api/v2/projects
     body:
       encoding: ASCII-8BIT
-      string: "--134613\r\nContent-Disposition: form-data; name=\"upload\"; filename=\"maven-1.0.1.pom.xml\"\r\nContent-Type:
+      string: "--899280\r\nContent-Disposition: form-data; name=\"upload\"; filename=\"maven-1.0.1.pom.xml\"\r\nContent-Type:
         application/xml\r\n\r\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!--\n
         \ Licensed to the Apache Software Foundation (ASF) under one or more\n   contributor
         license agreements.  See the NOTICE file distributed with\n   this work for
@@ -55,8 +55,8 @@ http_interactions:
         \       </configuration>\n      </plugin>\n    </plugins>\n  </build>\n\n
         \ <reporting>\n    <plugins>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n
         \       <artifactId>maven-plugin-plugin</artifactId>\n        <version>3.0</version>\n
-        \     </plugin>\n    </plugins>\n  </reporting>\n</project>\n\r\n--134613\r\nContent-Disposition:
-        form-data; name=\"api_key\"\r\n\r\nba7d93beb5de7820764e\r\n--134613--\r\n"
+        \     </plugin>\n    </plugins>\n  </reporting>\n</project>\n\r\n--899280\r\nContent-Disposition:
+        form-data; name=\"api_key\"\r\n\r\n316dbd6b80b053f5b1e5\r\n--899280--\r\n"
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -65,7 +65,7 @@ http_interactions:
       Content-Length:
       - '4455'
       Content-Type:
-      - multipart/form-data; boundary=134613
+      - multipart/form-data; boundary=899280
       User-Agent:
       - Ruby
   response:
@@ -76,29 +76,27 @@ http_interactions:
       Server:
       - nginx/1.4.6 (Ubuntu)
       Date:
-      - Sun, 19 Jul 2015 18:27:23 GMT
+      - Sun, 08 Nov 2015 16:41:49 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '3467'
+      - '4849'
       Connection:
       - keep-alive
-      Strict-Transport-Security:
-      - max-age=31536000
       Set-Cookie:
-      - api_key=ba7d93beb5de7820764e; secure
+      - api_key=316dbd6b80b053f5b1e5
       Etag:
-      - W/"829f6bfcb1208b615d8dedff01dd79f0"
+      - W/"b6f1f13b0244f320e69ada64e4079197"
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - 740525e9-ed68-4d90-a1f3-1bcbbb23c1b2
+      - 16bbedf4-3d32-474b-bfcf-eeaf6ca96a77
       X-Runtime:
-      - '1.005053'
+      - '0.685710'
     body:
       encoding: UTF-8
-      string: '{"id":"55abec3d633134000d068baf","project_key":"maven2_openejb_maven_plugins_1","name":"OpenEJB
-        :: Maven Plugins","project_type":"Maven2","public":true,"private_scm":false,"period":"daily","source":"API","dep_number":11,"out_number":10,"licenses_red":0,"licenses_unknown":3,"created_at":"2015-07-19T18:28:13.572Z","updated_at":"2015-07-19T18:28:14.121Z","license_whitelist":null,"dependencies":[{"name":"maven-plugin-annotations","prod_key":"org.apache.maven.plugin-tools/maven-plugin-annotations","group_id":"org.apache.maven.plugin-tools","artifact_id":"maven-plugin-annotations","language":"java","version_current":"3.4","version_requested":"3.1","comparator":"=","unknown":false,"outdated":true,"stable":true},{"name":"plexus-utils","prod_key":"org.codehaus.plexus/plexus-utils","group_id":"org.codehaus.plexus","artifact_id":"plexus-utils","language":"java","version_current":"3.0.22","version_requested":"3.0.1","comparator":"=","unknown":false,"outdated":true,"stable":true},{"name":"maven-plugin-api","prod_key":"org.apache.maven/maven-plugin-api","group_id":"org.apache.maven","artifact_id":"maven-plugin-api","language":"java","version_current":"3.3.3","version_requested":"2.2.1","comparator":"=","unknown":false,"outdated":true,"stable":true},{"name":"maven-project","prod_key":"org.apache.maven/maven-project","group_id":"org.apache.maven","artifact_id":"maven-project","language":"java","version_current":"2.2.1","version_requested":"2.2.1","comparator":"=","unknown":false,"outdated":false,"stable":true},{"name":"maven-core","prod_key":"org.apache.maven/maven-core","group_id":"org.apache.maven","artifact_id":"maven-core","language":"java","version_current":"3.3.3","version_requested":"2.2.1","comparator":"=","unknown":false,"outdated":true,"stable":true},{"name":"maven-artifact","prod_key":"org.apache.maven/maven-artifact","group_id":"org.apache.maven","artifact_id":"maven-artifact","language":"java","version_current":"3.3.3","version_requested":"2.2.1","comparator":"=","unknown":false,"outdated":true,"stable":true},{"name":"aether-api","prod_key":"org.sonatype.aether/aether-api","group_id":"org.sonatype.aether","artifact_id":"aether-api","language":"java","version_current":"1.13.1","version_requested":"${aether.version}","comparator":"=","unknown":false,"outdated":true,"stable":true},{"name":"openejb-core","prod_key":"org.apache.openejb/openejb-core","group_id":"org.apache.openejb","artifact_id":"openejb-core","language":"java","version_current":"4.7.2","version_requested":"${openejb.version}","comparator":"=","unknown":false,"outdated":true,"stable":true},{"name":"openejb-client","prod_key":"org.apache.openejb/openejb-client","group_id":"org.apache.openejb","artifact_id":"openejb-client","language":"java","version_current":"4.7.2","version_requested":"${openejb.version}","comparator":"=","unknown":false,"outdated":true,"stable":true},{"name":"maven-plugin-plugin","prod_key":"org.apache.maven.plugins/maven-plugin-plugin","group_id":"org.apache.maven.plugins","artifact_id":"maven-plugin-plugin","language":"java","version_current":"3.4","version_requested":"3.1","comparator":"=","unknown":false,"outdated":true,"stable":true},{"name":"maven-plugin-plugin","prod_key":"org.apache.maven.plugins/maven-plugin-plugin","group_id":"org.apache.maven.plugins","artifact_id":"maven-plugin-plugin","language":"java","version_current":"3.4","version_requested":"3.0","comparator":"=","unknown":false,"outdated":true,"stable":true}]}'
+      string: '{"id":"563f7acac5999a000d01a34a","project_key":"maven2_openejb_maven_plugins_2","name":"OpenEJB
+        :: Maven Plugins","project_type":"Maven2","public":true,"private_scm":false,"period":"daily","source":"API","dep_number":11,"out_number":10,"licenses_red":0,"licenses_unknown":3,"created_at":"2015-11-08T16:39:38.621Z","updated_at":"2015-11-08T16:39:39.032Z","license_whitelist":null,"dependencies":[{"name":"maven-plugin-annotations","prod_key":"org.apache.maven.plugin-tools/maven-plugin-annotations","group_id":"org.apache.maven.plugin-tools","artifact_id":"maven-plugin-annotations","language":"java","version_current":"3.4","version_requested":"3.1","comparator":"=","unknown":false,"outdated":true,"stable":true,"licenses":[{"name":"Apache-2.0","url":"http://www.apache.org/licenses/LICENSE-2.0","on_whitelist":null,"on_cwl":null}],"security_vulnerabilities":null},{"name":"plexus-utils","prod_key":"org.codehaus.plexus/plexus-utils","group_id":"org.codehaus.plexus","artifact_id":"plexus-utils","language":"java","version_current":"3.0.22","version_requested":"3.0.1","comparator":"=","unknown":false,"outdated":true,"stable":true,"licenses":[{"name":"Apache-2.0","url":"http://www.apache.org/licenses/LICENSE-2.0.txt","on_whitelist":null,"on_cwl":null}],"security_vulnerabilities":null},{"name":"maven-plugin-api","prod_key":"org.apache.maven/maven-plugin-api","group_id":"org.apache.maven","artifact_id":"maven-plugin-api","language":"java","version_current":"3.3.3","version_requested":"2.2.1","comparator":"=","unknown":false,"outdated":true,"stable":true,"licenses":[{"name":"Apache-2.0","url":"http://www.apache.org/licenses/LICENSE-2.0.txt","on_whitelist":null,"on_cwl":null}],"security_vulnerabilities":null},{"name":"maven-project","prod_key":"org.apache.maven/maven-project","group_id":"org.apache.maven","artifact_id":"maven-project","language":"java","version_current":"2.2.1","version_requested":"2.2.1","comparator":"=","unknown":false,"outdated":false,"stable":true,"licenses":[{"name":"Apache-2.0","url":"http://www.apache.org/licenses/LICENSE-2.0.txt","on_whitelist":null,"on_cwl":null}],"security_vulnerabilities":null},{"name":"maven-core","prod_key":"org.apache.maven/maven-core","group_id":"org.apache.maven","artifact_id":"maven-core","language":"java","version_current":"3.3.3","version_requested":"2.2.1","comparator":"=","unknown":false,"outdated":true,"stable":true,"licenses":[{"name":"Apache-2.0","url":"http://www.apache.org/licenses/LICENSE-2.0.txt","on_whitelist":null,"on_cwl":null}],"security_vulnerabilities":null},{"name":"maven-artifact","prod_key":"org.apache.maven/maven-artifact","group_id":"org.apache.maven","artifact_id":"maven-artifact","language":"java","version_current":"3.3.3","version_requested":"2.2.1","comparator":"=","unknown":false,"outdated":true,"stable":true,"licenses":[{"name":"Apache-2.0","url":"http://www.apache.org/licenses/LICENSE-2.0.txt","on_whitelist":null,"on_cwl":null}],"security_vulnerabilities":null},{"name":"aether-api","prod_key":"org.sonatype.aether/aether-api","group_id":"org.sonatype.aether","artifact_id":"aether-api","language":"java","version_current":"1.13.1","version_requested":"${aether.version}","comparator":"=","unknown":false,"outdated":true,"stable":true,"licenses":[],"security_vulnerabilities":null},{"name":"openejb-core","prod_key":"org.apache.openejb/openejb-core","group_id":"org.apache.openejb","artifact_id":"openejb-core","language":"java","version_current":"4.7.2","version_requested":"${openejb.version}","comparator":"=","unknown":false,"outdated":true,"stable":true,"licenses":[],"security_vulnerabilities":null},{"name":"openejb-client","prod_key":"org.apache.openejb/openejb-client","group_id":"org.apache.openejb","artifact_id":"openejb-client","language":"java","version_current":"4.7.2","version_requested":"${openejb.version}","comparator":"=","unknown":false,"outdated":true,"stable":true,"licenses":[],"security_vulnerabilities":null},{"name":"maven-plugin-plugin","prod_key":"org.apache.maven.plugins/maven-plugin-plugin","group_id":"org.apache.maven.plugins","artifact_id":"maven-plugin-plugin","language":"java","version_current":"3.4","version_requested":"3.1","comparator":"=","unknown":false,"outdated":true,"stable":true,"licenses":[{"name":"Apache-2.0","url":"http://www.apache.org/licenses/LICENSE-2.0.txt","on_whitelist":null,"on_cwl":null}],"security_vulnerabilities":null},{"name":"maven-plugin-plugin","prod_key":"org.apache.maven.plugins/maven-plugin-plugin","group_id":"org.apache.maven.plugins","artifact_id":"maven-plugin-plugin","language":"java","version_current":"3.4","version_requested":"3.0","comparator":"=","unknown":false,"outdated":true,"stable":true,"licenses":[{"name":"Apache-2.0","url":"http://www.apache.org/licenses/LICENSE-2.0.txt","on_whitelist":null,"on_cwl":null}],"security_vulnerabilities":null}]}'
     http_version: 
-  recorded_at: Sun, 19 Jul 2015 18:25:12 GMT
+  recorded_at: Sun, 08 Nov 2015 16:38:43 GMT
 recorded_with: VCR 2.9.3

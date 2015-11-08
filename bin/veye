@@ -143,10 +143,17 @@ command :check do |c|
   c.flag [:format, 'format-name'], :default_value => 'pretty'
 
   c.action do |global_options, options, args|
-    help_now!("Project file is missing.".color(:red)) if args.empty?
-    file_name = args.shift
+    file_path = args.shift
+    file_path ||= Dir.pwd
+
     api_key = global_options[:api_key]
-    Veye::Project::Check.upload(file_name, api_key, options)
+    files = Veye::Project.get_files(file_path)
+
+    if files.empty?
+      printf "Found no project files in: ".color(:red) + file_path + "\n"
+    else
+      Veye::Project::Check.check(file_path, files, api_key, options)
+    end
   end
 end
 

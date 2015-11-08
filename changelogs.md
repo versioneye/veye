@@ -1,5 +1,13 @@
 # Changelogs
 
+## 0.2
+
+* breaking changes in `check` command - it tracks all supported project files in the folder
+* add `veye.json` file to keep and manage a project specific configurations
+* fixed licenses field in project output
+* add Settings class to manage `veye.json` file
+
+
 ## 0.1
 
 * first stable release - no new functionalities

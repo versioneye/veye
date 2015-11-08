@@ -7,18 +7,20 @@ module Veye
         headings = %w{index name prod_key version_current version_requested outdated stable license}
         super("Project dependencies", headings)
       end
-      def format(results)
+      def format(results, filename = nil)
         results = [results] if results.is_a?(Hash)
 
         results.each_with_index do |result, index|
-          row = [index + 1,
-            result["name"],
+          row = [
+            index + 1,
+            (filename or result["name"]),
             result["prod_key"],
             result["version_current"],
             result["version_requested"],
             result["outdated"] ? "outdated":"no",
             result["stable"] ? "stable": "unstable",
-            result["license"]]
+            result["licenses"].to_a.map {|x| x['name']}.join(',')
+          ]
           @table << row
         end
       end

@@ -1,5 +1,5 @@
-require_relative '../views/project.rb'
-require_relative '../base_executor.rb'
+require_relative '../views/project'
+require_relative '../base_executor'
 
 module Veye
   module Project
@@ -25,69 +25,82 @@ module Veye
 
       def self.get_list(api_key, options)
         results = Veye::API::Project.get_list(api_key)
-        catch_request_error(results, 'Can not read list of projects.')
+        valid_response?(results, 'Can not read list of projects.')
         show_results(@output_formats, results.data, options)
-      end
-
-      def self.upload(filename, api_key, options)
-        results = Veye::API::Project.upload(api_key, filename)
-        catch_request_error(results, 'Upload failed.')
-        show_results(@output_formats, results.data, options)
-        show_dependencies(results.data, options)
-      end
-
-      def self.update(project_key, filename, api_key, options)
-        results = Veye::API::Project.update(api_key, project_key, filename)
-        catch_request_error(results, 'Re-upload failed.')
-        show_results(@output_formats, results.data, options)
-        show_dependencies(results.data, options)
       end
 
       def self.get_project(project_key, api_key, options)
         results = Veye::API::Project.get_project(api_key, project_key)
         err_msg = "No data for the project: `#{project_key}`"
-        catch_request_error(results, err_msg)
+        valid_response?(results, err_msg)
         show_results(@output_formats, results.data, options)
-        show_dependencies(results.data, options)
+        if options[:format] != 'json'
+          show_dependencies(@dependency_output_formats, results.data, options)
+        end
+      end
+
+      def self.upload(filename, api_key, options)
+        results = Veye::API::Project.upload(api_key, filename)
+        valid_response?(results, 'Upload failed.')
+        show_results(@output_formats, results.data, options)
+        if options[:format] != 'json'
+          show_dependencies(@dependency_output_formats, results.data, options)
+        end
+      end
+
+      def self.update(project_key, filename, api_key, options)
+        results = Veye::API::Project.update(api_key, project_key, filename)
+        valid_response?(results, 'Re-upload failed.')
+        show_results(@output_formats, results.data, options)
+        if options[:format] != 'json'
+          show_dependencies(@dependency_output_formats, results.data, options)
+        end
+      end
+
+      #checks project file and initializes veye.json file iff it's missing
+      #files - an array with filenames to check, ['Gemfile', 'bower.json']
+      #path - nil or string, a relative path to the project root directory
+      def self.check(path, files, api_key, options)
+        project_settings = Veye::Settings.load(path)
+        #initialize project settings to keep various project specific data
+        if project_settings.nil?
+          file_map = files.to_a.inject({}) {|acc, x| acc.store(x, nil); acc}
+          opts = {'projects' => file_map}
+          project_settings = Veye::Settings.init(path, opts)
+        end
+
+        unless project_settings.has_key?('projects')
+          printf "veye.json is malformed - missing `project` key".color(:red)
+          exit 0
+        end
+
+        deps = {}
+        project_settings['projects'].each do |filename, project_id|
+          filepath = "#{path}/#{filename}"
+          results = if project_id.nil?
+                      Veye::API::Project.upload(api_key, filepath)
+                    else
+                      Veye::API::Project.update(api_key, project_id, filepath)
+                    end
+          error_msg = "Failed to check dependencies for `#{filename.to_s.color(:red)}`"
+          if valid_response?(results, error_msg)
+            deps[filename] = results.data
+            project_settings['projects'].store(filename, results.data['project_key'])
+          else
+            deps[filename] = {error: "Failed to check a file `#{filepath}`"}
+          end
+        end
+
+        Veye::Settings.dump(path, project_settings)
+        #show_results(@output_formats, deps, options)
+        show_bulk_dependencies(@dependency_output_formats, deps, options)
       end
 
       def self.delete_project(project_key, api_key)
         results = Veye::API::Project.delete_project(api_key, project_key)
         err_msg = "Failed to delete project: `#{project_key}`"
-        catch_request_error(results, err_msg)
+        valid_response?(results, err_msg)
         show_message(results, 'Deleted', 'Cant delete.')
-      end
-
-      #-- layout helpers
-      def self.filter_dependencies(results, options)
-        if options[:all]
-           results['dependencies'].to_a.sort_by {|x| x['outdated'].hash}
-         else
-           results['dependencies'].to_a.keep_if {|x| x['outdated']}
-         end
-      end
-      
-      def self.show_dependencies(results, options)
-        format = options[:format]
-        format ||= 'pretty'
-        return if format == 'json'
-        self.supported_format?(@dependency_output_formats, format)
-
-        deps = filter_dependencies(results, options)     
-        formatter = @dependency_output_formats[format]
-        formatter.before
-        formatter.format deps
-        formatter.after
-      end
-
-      def self.show_message(results, success_msg, fail_msg)
-        if results.success
-          printf "#{success_msg}\n".color(:green)
-        else
-          printf("Error: %s\n%s\n",
-                 fail_msg.color(:red),
-                 response.data['error'])
-        end
       end
     end
   end

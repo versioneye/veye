@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    veye (0.1.1)
+    veye (0.2.pre.snapshot)
       awesome_print (>= 1.6)
       contracts (>= 0.11)
       gli (> 2.13)

@@ -4,9 +4,9 @@ require 'csv'
 class ProjectCheckTest < Minitest::Test
   def setup
     init_environment
-    @api_key = 'ba7d93beb5de7820764e'
+    @api_key = '316dbd6b80b053f5b1e5'
     @test_file = "test/files/maven-1.0.1.pom.xml"
-    @project_key = "maven2_openejb_maven_plugins_1"
+    @project_key = "maven2_openejb_maven_plugins_2"
   end
 
   def test_get_list_default
@@ -38,8 +38,6 @@ class ProjectCheckTest < Minitest::Test
                     "dep_number", "out_number", "created_at"], rows[0]
       assert_equal ["1", "bugtraqer", "lein_project_clj_1", "false", "weekly",
                     "upload", "9", "8", "19.08.2013-18:31"], rows[1]
-      assert_equal ["2", "Calidu/API", "lein_calidu_api_1", "true", "daily",
-                    "github", "13", "1"], rows[2].take(8)
     end
   end
 
@@ -67,9 +65,8 @@ class ProjectCheckTest < Minitest::Test
 
       rows = output.split(/\n/)
       assert_match(/\|\s+List of projects\s+\|/, rows[1])
-      assert_equal(
-        "| index | name                    | project_key                     \
-| private | period | source | dependencies | outdated | created_at       |",
+      assert_match(
+        /\| index\s+\| name\s+\| project_key\s+\| private \| period \| source \| dependencies \| outdated \| created_at\s+\|/,
         rows[3]
       )
 
@@ -86,7 +83,7 @@ class ProjectCheckTest < Minitest::Test
       refute_nil output
       rows = output.split(/\n/)
       assert_equal "  1 - \e[32m\e[1mOpenEJB :: Maven Plugins\e[0m", rows[0]
-      assert_equal "\tProject key    : \e[1mmaven2_openejb_maven_plugins_1\e[0m", rows[1]
+      assert_equal "\tProject key    : \e[1mmaven2_openejb_maven_plugins_2\e[0m", rows[1]
       assert_equal "\tProject type   : Maven2", rows[2]
       assert_equal "\tPublic         : true", rows[3]
       assert_equal "\tPeriod         : daily", rows[4]
@@ -106,7 +103,7 @@ class ProjectCheckTest < Minitest::Test
       rows = CSV.parse(output)
       assert_equal ["nr", "name", "project_key", "public", "period", "source",
                     "dep_number", "out_number", "created_at"], rows[0]
-      assert_equal ["1", "OpenEJB :: Maven Plugins", "maven2_openejb_maven_plugins_1",
+      assert_equal ["1", "OpenEJB :: Maven Plugins", "maven2_openejb_maven_plugins_2",
                     "true", "daily", "API", "11", "10"],
                     rows[1].take(8)
 
@@ -121,7 +118,7 @@ class ProjectCheckTest < Minitest::Test
 
       refute_nil output
       res = JSON.parse(output)
-      assert_equal "maven2_openejb_maven_plugins_1", res["projects"]["project_key"]
+      assert_equal "maven2_openejb_maven_plugins_2", res["projects"]["project_key"]
       assert_equal "OpenEJB :: Maven Plugins", res["projects"]["name"]
       assert_equal "Maven2", res["projects"]["project_type"]
       assert_equal true, res["projects"]["public"]
@@ -146,7 +143,7 @@ class ProjectCheckTest < Minitest::Test
       )
 
       assert_match(
-        /\| 1\s+\| OpenEJB :: Maven Plugins \| maven2_openejb_maven_plugins_1/,
+        /\| 1\s+\| OpenEJB :: Maven Plugins \| maven2_openejb_maven_plugins/,
         rows[5]
       )
     end
@@ -160,7 +157,7 @@ class ProjectCheckTest < Minitest::Test
       refute_nil output
       rows = output.split(/\n/)
       assert_equal "  1 - \e[32m\e[1mOpenEJB :: Maven Plugins\e[0m", rows[0]
-      assert_equal "\tProject key    : \e[1mmaven2_openejb_maven_plugins_1\e[0m", rows[1]
+      assert_equal "\tProject key    : \e[1mmaven2_openejb_maven_plugins_2\e[0m", rows[1]
       assert_equal "\tProject type   : Maven2", rows[2]
       assert_equal "\tPublic         : true", rows[3]
       assert_equal "\tPeriod         : daily", rows[4]
@@ -180,7 +177,7 @@ class ProjectCheckTest < Minitest::Test
       rows = CSV.parse(output)
       assert_equal ["nr", "name", "project_key", "public", "period", "source",
                     "dep_number", "out_number", "created_at"], rows[0]
-      assert_equal ["1", "OpenEJB :: Maven Plugins", "maven2_openejb_maven_plugins_1",
+      assert_equal ["1", "OpenEJB :: Maven Plugins", "maven2_openejb_maven_plugins_2",
                     "true", "daily", "API", "11", "10"], rows[1].take(8)
     end
   end
@@ -216,7 +213,7 @@ class ProjectCheckTest < Minitest::Test
         rows[4]
       )
       assert_match(
-        /\| 1\s+\| OpenEJB :: Maven Plugins \| maven2_openejb_maven_plugins_1 \|/,
+        /\| 1\s+\| OpenEJB :: Maven Plugins \| maven2_openejb_maven_plugins_2 \|/,
         rows[5]
       )
 
@@ -225,10 +222,7 @@ class ProjectCheckTest < Minitest::Test
         rows[10]
       )
 
-      assert_match(
-        /\| 1\s+\| aether-api\s+\| org.sonatype.aether\/aether-api/,
-        rows[12]
-      )
+      assert_match(/\| 1\s+\| openejb-client\s+\|/, rows[12])
     end
   end
 
@@ -241,7 +235,7 @@ class ProjectCheckTest < Minitest::Test
       refute_nil output
       rows = output.split(/\n/)
       assert_equal "  1 - \e[32m\e[1mOpenEJB :: Maven Plugins\e[0m", rows[0]
-      assert_equal "\tProject key    : \e[1mmaven2_openejb_maven_plugins_1\e[0m", rows[1]
+      assert_equal "\tProject key    : \e[1mmaven2_openejb_maven_plugins_2\e[0m", rows[1]
       assert_equal "\tProject type   : Maven2", rows[2]
       assert_equal "\tPublic         : true", rows[3]
       assert_equal "\tPeriod         : daily", rows[4]
@@ -261,7 +255,8 @@ class ProjectCheckTest < Minitest::Test
       rows = CSV.parse(output)
       assert_equal ["nr", "name", "project_key", "public", "period", "source", "dep_number", "out_number", "created_at"], rows[0]
 
-      assert_equal ["1", "OpenEJB :: Maven Plugins", "maven2_openejb_maven_plugins_1", "true", "daily", "API", "11", "10"], rows[1].take(8)
+      assert_equal ["1", "OpenEJB :: Maven Plugins", "maven2_openejb_maven_plugins_2",
+                    "true", "daily", "API", "11", "10"], rows[1].take(8)
     end
   end
 
@@ -271,7 +266,7 @@ class ProjectCheckTest < Minitest::Test
         Veye::Project::Check.get_project(@project_key, @api_key, {format: 'json'})
       end
 
-      refute_nil output
+      refute_nil output, "test_get_project_json output cant be empty"
       doc = JSON.parse(output)
       proj = doc["projects"]
       assert_equal @project_key, proj["project_key"]
@@ -297,18 +292,13 @@ class ProjectCheckTest < Minitest::Test
         rows[4]
       )
       assert_match(
-        /\| 1\s+\| OpenEJB :: Maven Plugins \| maven2_openejb_maven_plugins_1 \|/,
+        /\| 1\s+\| OpenEJB :: Maven Plugins \| maven2_openejb_maven_plugins_2\s+\|/,
         rows[5]
       )
 
       assert_match(
       /\| index \| name\s+\| prod_key\s+\| version_current \| version_requested\s+\| outdated | stable/,
         rows[10]
-      )
-
-      assert_match(
-        /\| 1\s+\| aether-api\s+\| org.sonatype.aether\/aether-api/,
-        rows[12]
       )
     end
   end
@@ -322,5 +312,46 @@ class ProjectCheckTest < Minitest::Test
       refute_nil output
       assert_equal "\e[32mDeleted\n\e[0m", output
     end
+  end
+
+  def delete_file(file_path)
+    abs_path = File.absolute_path(file_path)
+    begin
+      File.delete(File.absolute_path(abs_path))
+    rescue
+      p "failed to delete file #{abs_path}"
+    end
+  end
+  #checking a files when project ids dont exists yet
+  def test_check_default
+    test_path = "test/files"
+    settings_file = 'test/files/veye.json'
+
+    delete_file(settings_file)
+
+    VCR.use_cassette("project_check_new") do
+      output = capture_stdout do
+        Veye::Project::Check.check(test_path, ['Gemfile', 'maven-1.0.1.pom.xml'], @api_key, {})
+      end
+      
+      refute_nil output, "output of project_check_new cant be empty "
+      rows = output.split(/\n/)
+
+      assert_equal "  1 - \e[32m\e[1mcoffee-rails\e[0m", rows[0]
+    end
+
+    project_settings = Veye::Settings.load(settings_file)
+
+    VCR.use_cassette("project_check_update") do
+      output = capture_stdout do
+        Veye::Project::Check.check(test_path, ['Gemfile', 'maven-1.0.1.pom.xml'], @api_key, {})
+      end
+
+      refute_nil output, "output of project_check_update cant be empty"
+      rows = output.split(/\n/)
+      assert_equal "  1 - \e[32m\e[1mcoffee-rails\e[0m", rows[0]
+    end
+
+    delete_file(settings_file)
   end
 end

@@ -5,14 +5,15 @@ require 'yaml'
 
 require 'veye/helpers/format_helpers.rb'
 
-require 'veye/version.rb'
-require 'veye/service.rb'
-require 'veye/api.rb'
-require 'veye/package.rb'
-require 'veye/project.rb'
-require 'veye/user.rb'
-require 'veye/github.rb'
-require 'veye/pagination.rb'
+require 'veye/version'
+require 'veye/service'
+require 'veye/api'
+require 'veye/package'
+require 'veye/project'
+require 'veye/user'
+require 'veye/github'
+require 'veye/pagination'
+require 'veye/settings'
 
 $global_options ||= {}
 DEFAULT_CONFIG_FILE = '.veye.rc'
