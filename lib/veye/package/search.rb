@@ -13,9 +13,10 @@ module Veye
         'table'     => Package::SearchTable.new
       }
 
-      def self.search(search_term, options)
+      def self.search(api_key, search_term, options)
         results = Veye::API::Package.search(
-          search_term, options[:language], options['group-id'], options[:page]
+          api_key, search_term, options[:language],
+          options['group-id'], options[:page]
         )
         if valid_response?(results, "No results for `#{search_term}`")
           show_results(@output_formats,

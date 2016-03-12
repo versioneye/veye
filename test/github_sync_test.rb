@@ -3,7 +3,7 @@ require 'test_helper'
 class GithubSyncTest < Minitest::Test
   def setup
     init_environment # load config files and initialize options
-    @api_key = 'ba7d93beb5de7820764e'
+    @api_key = ENV['VEYE_API_KEY']
   end
 
   def test_sync_when_success

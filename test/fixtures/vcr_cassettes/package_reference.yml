@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://www.versioneye.com/api/v2/products/Ruby/ruby/references?page=1
+    uri: https://www.versioneye.com/api/v2/products/Ruby/ruby/references?api_key=316dbd6b80b053f5b1e5&page=1
     body:
       encoding: US-ASCII
       string: ''
@@ -21,26 +21,24 @@ http_interactions:
       Server:
       - nginx/1.4.6 (Ubuntu)
       Date:
-      - Sat, 15 Aug 2015 15:42:46 GMT
+      - Sat, 12 Mar 2016 19:38:49 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1145'
+      - '1254'
       Connection:
       - keep-alive
-      Strict-Transport-Security:
-      - max-age=31536000
       Etag:
-      - W/"882c9a14c1b0ffecde4171c71064a911"
+      - W/"3ae404812a717c01dc9946dc027b8da9"
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - b35dcdf8-6508-4477-9a89-9205e3085528
+      - 52abc406-cc6b-4f24-b4a1-236e2134f6c2
       X-Runtime:
-      - '0.057860'
+      - '0.079660'
     body:
       encoding: UTF-8
-      string: '{"query":{"lang":"Ruby","prod_key":"ruby"},"paging":{"current_page":1,"per_page":30,"total_pages":9,"total_entries":9},"results":[{"name":"acts_as_dasherize_vanity","language":"ruby","prod_key":"acts_as_dasherize_vanity","version":"0.0.3","prod_type":"RubyGem"},{"name":"blacklisted_password","language":"ruby","prod_key":"blacklisted_password","version":"1.0.0","prod_type":"RubyGem"},{"name":"diamond_shell","language":"ruby","prod_key":"diamond_shell","version":"0.291","prod_type":"RubyGem"},{"name":"gitit","language":"ruby","prod_key":"gitit","version":"2.0.2","prod_type":"RubyGem"},{"name":"isaf_id_validator","language":"ruby","prod_key":"isaf_id_validator","version":"0.1.0","prod_type":"RubyGem"},{"name":"mute_updated_at","language":"ruby","prod_key":"mute_updated_at","version":"0.0.2","prod_type":"RubyGem"},{"name":"pakyow-slim","language":"ruby","prod_key":"pakyow-slim","version":"0.2.2","prod_type":"RubyGem"},{"name":"scm-workflow","language":"ruby","prod_key":"scm-workflow","version":"0.5.0","prod_type":"RubyGem"},{"name":"sink_utility","language":"ruby","prod_key":"sink_utility","version":"0.1.2","prod_type":"RubyGem"}]}'
+      string: '{"query":{"lang":"Ruby","prod_key":"ruby"},"paging":{"current_page":1,"per_page":30,"total_pages":1,"total_entries":10},"results":[{"name":"gitit","language":"ruby","prod_key":"gitit","version":"2.0.2","prod_type":"RubyGem"},{"name":"pakyow-slim","language":"ruby","prod_key":"pakyow-slim","version":"1.0.0","prod_type":"RubyGem"},{"name":"scm-workflow","language":"ruby","prod_key":"scm-workflow","version":"0.5.0","prod_type":"RubyGem"},{"name":"blacklisted_password","language":"ruby","prod_key":"blacklisted_password","version":"1.0.0","prod_type":"RubyGem"},{"name":"mute_updated_at","language":"ruby","prod_key":"mute_updated_at","version":"0.0.2","prod_type":"RubyGem"},{"name":"sink_utility","language":"ruby","prod_key":"sink_utility","version":"0.1.2","prod_type":"RubyGem"},{"name":"isaf_id_validator","language":"ruby","prod_key":"isaf_id_validator","version":"0.1.0","prod_type":"RubyGem"},{"name":"acts_as_dasherize_vanity","language":"ruby","prod_key":"acts_as_dasherize_vanity","version":"0.0.3","prod_type":"RubyGem"},{"name":"diamond_shell","language":"ruby","prod_key":"diamond_shell","version":"0.436","prod_type":"RubyGem"},{"name":"overspeeding","language":"ruby","prod_key":"overspeeding","version":"1.0.0","prod_type":"RubyGem"}]}'
     http_version: 
-  recorded_at: Sat, 15 Aug 2015 15:42:35 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Sat, 12 Mar 2016 19:31:28 GMT
+recorded_with: VCR 3.0.1

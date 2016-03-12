@@ -3,7 +3,7 @@ require 'test_helper'
 class PackageFollowTest < MiniTest::Test
   def setup
     init_environment
-    @api_key = "ba7d93beb5de7820764e"
+    @api_key = ENV['VEYE_API_KEY']
   end
 
   def test_get_follow_status

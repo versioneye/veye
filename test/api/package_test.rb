@@ -8,7 +8,7 @@ class PackageTest < Minitest::Test
 
   def test_info_api_call
     VCR.use_cassette('package_info') do
-      res = Veye::API::Package::get_package('veye', 'ruby')
+      res = Veye::API::Package::get_package(@api_key, 'veye', 'ruby')
 
       assert_equal 200, res.code
       assert_equal true, res.success
@@ -20,7 +20,7 @@ class PackageTest < Minitest::Test
 
   def test_search_api_call
     VCR.use_cassette('package_search') do
-      res = Veye::API::Package.search('veye')
+      res = Veye::API::Package.search(@api_key, 'veye')
       refute_nil res
       assert_equal true, res.success
       assert_equal 200, res.code
@@ -68,11 +68,12 @@ class PackageTest < Minitest::Test
 
   def test_reference_api_call
     VCR.use_cassette('package_reference') do
-      res = Veye::API::Package.get_references('ruby', 'ruby')
+      res = Veye::API::Package.get_references(@api_key, 'ruby', 'ruby')
       refute_nil res
+
       assert_equal 200, res.code
       assert_equal true, res.success
-      assert_equal "acts_as_dasherize_vanity", res.data['results'].first.fetch("name", nil)
+      assert_equal "gitit", res.data['results'].first.fetch("name", nil)
     end
   end
 

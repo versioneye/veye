@@ -4,12 +4,13 @@ require 'csv'
 class PackageSearchTest < MiniTest::Test
   def setup
     init_environment
+    @api_key = ENV["VEYE_API_KEY"]
   end
 
   def test_search_when_success
     VCR.use_cassette('package_search') do
       output = capture_stdout do
-        Veye::Package::Search.search('veye', {})
+        Veye::Package::Search.search(@api_key, 'veye', {})
       end
       refute_nil output, "Command output was nil"
       rows = output.split(/\n/)
