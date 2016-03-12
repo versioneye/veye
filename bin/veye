@@ -16,7 +16,7 @@ program_long_desc Rainbow(Veye::BIGEYE).green
 wrap_help_text :verbatim
 version Veye::VERSION
 
-COMMANDS_WITHOUT_API_KEY = [:help, :ping, :search]
+COMMANDS_WITHOUT_API_KEY = [:help, :ping]
 
 config_file '.veye.rc'
 
@@ -93,8 +93,9 @@ command :search do |c|
   c.action do |global_options, options, args|
     error_msg = "the search term is mandatory.".color(:red)
     help_now!(error_msg) if args.empty?
+    api_key = global_options[:api_key]
     search_term = args.shift
-    Veye::Package::Search.search(search_term, options)
+    Veye::Package::Search.search(api_key, search_term, options)
   end
 end
 
@@ -107,8 +108,9 @@ command :info do |c|
   c.action do |global_options, options, args|
     error_msg = Rainbow("package_key is missing").red
     help_now!(error_msg) if args.empty?
+    api_key = global_options[:api_key]
     package_key = args.shift
-    Veye::Package::Info.get_package(package_key, options)
+    Veye::Package::Info.get_package(api_key, package_key, options)
   end
 end
 
@@ -130,7 +132,9 @@ command :references do |c|
     error_msg = Rainbow("package_key is missing").red
     help_now!(error_msg) if args.empty?
     package_key = args.shift
-    Veye::Package::References.get_references(package_key, options)
+
+    api_key = global_options[:api_key]
+    Veye::Package::References.get_references(api_key, package_key, options)
   end
 end
 

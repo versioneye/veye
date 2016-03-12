@@ -13,7 +13,7 @@ module Veye
         printf(
           "%3d - %s\n",
           index + 1,
-          "#{result["name"]}".color(:green).bright
+          "#{result["name"]}".color(:green)
         )
         printf("\t%-15s: %s\n", 'language', result['language'])
         printf("\t%-15s: %s\n", 'owner_name', result['owner_name'])

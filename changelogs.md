@@ -2,6 +2,8 @@
 
 ## 0.2
 
+* updated dependencies
+* add api_keys for packages api;
 * breaking changes in `check` command - it tracks all supported project files in the folder
 * add `veye.json` file to keep and manage a project specific configurations
 * fixed licenses field in project output

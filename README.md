@@ -193,7 +193,8 @@ All contributions are welcome - comments, new ideas, help with documentation & h
 
 
 ```
-$> rake test
+$> rm test/fixtures/vcr_cassettes/* #if needed
+$> VEYE_API_KEY=<YOUR_API_KEY> rake test
 $> rake test TEST=test/file_you_changed.rb
 ```
 
