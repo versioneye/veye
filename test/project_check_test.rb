@@ -77,7 +77,7 @@ class ProjectCheckTest < Minitest::Test
   def test_upload_default
     VCR.use_cassette('project_upload') do
       output = capture_stdout do
-        Veye::Project::Check.upload(@test_file, @api_key, {})
+        Veye::Project::Check.upload(@api_key, @test_file, {})
       end
 
       refute_nil output
@@ -96,7 +96,7 @@ class ProjectCheckTest < Minitest::Test
   def test_upload_csv
     VCR.use_cassette('project_upload') do
       output = capture_stdout do
-        Veye::Project::Check.upload(@test_file, @api_key, {format: "csv"})
+        Veye::Project::Check.upload(@api_key, @test_file, {format: "csv"})
       end
 
       refute_nil output
@@ -113,7 +113,7 @@ class ProjectCheckTest < Minitest::Test
   def test_upload_json
     VCR.use_cassette('project_upload') do
       output = capture_stdout do
-        Veye::Project::Check.upload(@test_file, @api_key, {format: "json"})
+        Veye::Project::Check.upload(@api_key, @test_file, {format: "json"})
       end
 
       refute_nil output
@@ -130,7 +130,7 @@ class ProjectCheckTest < Minitest::Test
   def test_upload_table
     VCR.use_cassette('project_upload') do
       output = capture_stdout do
-        Veye::Project::Check.upload(@test_file, @api_key, {format: "table"})
+        Veye::Project::Check.upload(@api_key, @test_file, {format: "table"})
       end
 
       refute_nil output
@@ -152,7 +152,7 @@ class ProjectCheckTest < Minitest::Test
   def test_update_default
     VCR.use_cassette('project_update') do
       output = capture_stdout do
-        Veye::Project::Check.update(@project_key, @test_file, @api_key, {})
+        Veye::Project::Check.update(@api_key, @project_key, @test_file, {})
       end
       refute_nil output
       rows = output.split(/\n/)
@@ -170,7 +170,7 @@ class ProjectCheckTest < Minitest::Test
   def test_update_csv
     VCR.use_cassette('project_update') do
       output = capture_stdout do
-        Veye::Project::Check.update(@project_key, @test_file, @api_key, {format: 'csv'})
+        Veye::Project::Check.update(@api_key, @project_key, @test_file, {format: 'csv'})
       end
 
       refute_nil output
@@ -185,7 +185,7 @@ class ProjectCheckTest < Minitest::Test
   def test_update_json
     VCR.use_cassette('project_update') do
       output = capture_stdout do
-        Veye::Project::Check.update(@project_key, @test_file, @api_key, {format: 'json'})
+        Veye::Project::Check.update(@api_key, @project_key, @test_file, {format: 'json'})
       end
 
       refute_nil output
@@ -203,7 +203,7 @@ class ProjectCheckTest < Minitest::Test
   def test_update_table
     VCR.use_cassette('project_update') do
       output = capture_stdout do
-        Veye::Project::Check.update(@project_key, @test_file, @api_key, {format: 'table'})
+        Veye::Project::Check.update(@api_key, @project_key, @test_file, {format: 'table'})
       end
 
       refute_nil output
@@ -229,7 +229,7 @@ class ProjectCheckTest < Minitest::Test
   def test_get_project_default
     VCR.use_cassette("project_get") do
       output = capture_stdout do
-        Veye::Project::Check.get_project(@project_key, @api_key, {})
+        Veye::Project::Check.get_project(@api_key, @project_key, {})
       end
 
       refute_nil output
@@ -248,7 +248,7 @@ class ProjectCheckTest < Minitest::Test
   def test_get_project_csv
     VCR.use_cassette("project_get") do
       output = capture_stdout do
-        Veye::Project::Check.get_project(@project_key, @api_key, {format: 'csv'})
+        Veye::Project::Check.get_project(@api_key, @project_key, {format: 'csv'})
       end
 
       refute_nil output
@@ -263,7 +263,7 @@ class ProjectCheckTest < Minitest::Test
   def test_get_project_json
     VCR.use_cassette("project_get") do
       output = capture_stdout do
-        Veye::Project::Check.get_project(@project_key, @api_key, {format: 'json'})
+        Veye::Project::Check.get_project(@api_key, @project_key, {format: 'json'})
       end
 
       refute_nil output, "test_get_project_json output cant be empty"
@@ -281,7 +281,7 @@ class ProjectCheckTest < Minitest::Test
   def test_get_project_table
     VCR.use_cassette("project_get") do
       output = capture_stdout do
-        Veye::Project::Check.get_project(@project_key, @api_key, {format: 'table'})
+        Veye::Project::Check.get_project(@api_key, @project_key, {format: 'table'})
       end
 
       refute_nil output
@@ -306,7 +306,7 @@ class ProjectCheckTest < Minitest::Test
   def test_delete_project_default
     VCR.use_cassette("project_delete") do
       output = capture_stdout do
-        Veye::Project::Check.delete_project(@project_key, @api_key)
+        Veye::Project::Check.delete_project(@api_key, @project_key)
       end
 
       refute_nil output
@@ -331,7 +331,9 @@ class ProjectCheckTest < Minitest::Test
 
     VCR.use_cassette("project_check_new") do
       output = capture_stdout do
-        Veye::Project::Check.check(test_path, ['Gemfile', 'maven-1.0.1.pom.xml'], @api_key, {})
+        Veye::Project::Check.check(
+          @api_key, test_path, ['Gemfile', 'maven-1.0.1.pom.xml'], {}
+        )
       end
       
       refute_nil output, "output of project_check_new cant be empty "
@@ -341,10 +343,11 @@ class ProjectCheckTest < Minitest::Test
     end
 
     Veye::Settings.load(settings_file)
-
     VCR.use_cassette("project_check_update") do
       output = capture_stdout do
-        Veye::Project::Check.check(test_path, ['Gemfile', 'maven-1.0.1.pom.xml'], @api_key, {})
+        Veye::Project::Check.check(
+          @api_key, test_path, ['Gemfile', 'maven-1.0.1.pom.xml'], {}
+        )
       end
 
       refute_nil output, "output of project_check_update cant be empty"

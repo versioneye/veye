@@ -12,7 +12,7 @@ module Veye
         'table'   => Project::LicenceTable.new
       }
 
-      def self.get_licenses(project_key, api_key, options)
+      def self.get_licenses(api_key, project_key, options)
         results = Veye::API::Project.get_licenses(api_key, project_key)
         err_msg = "Cant access a information for project `#{project_key}`."
         catch_request_error(results, err_msg)

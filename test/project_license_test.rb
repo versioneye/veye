@@ -11,7 +11,7 @@ class ProjectLicenseTest < MiniTest::Test
   def test_get_licenses_default
     VCR.use_cassette("project_license") do
       output = capture_stdout do |x|
-        Veye::Project::License.get_licenses(@project_key, @api_key, {})
+        Veye::Project::License.get_licenses(@api_key, @project_key, {})
       end
 
       rows = output.split(/\n/)
@@ -23,7 +23,7 @@ class ProjectLicenseTest < MiniTest::Test
   def test_get_licenses_json
     VCR.use_cassette('project_license') do
       output = capture_stdout do |x|
-        Veye::Project::License.get_licenses(@project_key, @api_key, {format: "json"})
+        Veye::Project::License.get_licenses(@api_key, @project_key, {format: "json"})
       end
 
       res = JSON.parse(output)
@@ -35,7 +35,7 @@ class ProjectLicenseTest < MiniTest::Test
   def test_get_licenses_csv
     VCR.use_cassette('project_license') do
       output = capture_stdout do |x|
-        Veye::Project::License.get_licenses(@project_key, @api_key, {format: "csv"})
+        Veye::Project::License.get_licenses(@api_key, @project_key, {format: "csv"})
       end
 
       rows = CSV.parse(output)
@@ -48,7 +48,7 @@ class ProjectLicenseTest < MiniTest::Test
   def test_get_licenses_table
     VCR.use_cassette('project_license') do
       output = capture_stdout do |x|
-        Veye::Project::License.get_licenses(@project_key, @api_key, {format: "table"})
+        Veye::Project::License.get_licenses(@api_key, @project_key, {format: "table"})
       end
 
       rows = output.split(/\n/)

@@ -29,7 +29,7 @@ module Veye
         show_results(@output_formats, results.data, options)
       end
 
-      def self.get_project(project_key, api_key, options)
+      def self.get_project(api_key, project_key, options)
         results = Veye::API::Project.get_project(api_key, project_key)
         err_msg = "No data for the project: `#{project_key}`"
         valid_response?(results, err_msg)
@@ -39,7 +39,7 @@ module Veye
         end
       end
 
-      def self.upload(filename, api_key, options)
+      def self.upload(api_key, filename, options)
         results = Veye::API::Project.upload(api_key, filename)
         valid_response?(results, 'Upload failed.')
         show_results(@output_formats, results.data, options)
@@ -48,7 +48,7 @@ module Veye
         end
       end
 
-      def self.update(project_key, filename, api_key, options)
+      def self.update(api_key, project_key, filename, options)
         results = Veye::API::Project.update(api_key, project_key, filename)
         valid_response?(results, 'Re-upload failed.')
         show_results(@output_formats, results.data, options)
@@ -60,7 +60,7 @@ module Veye
       #checks project file and initializes veye.json file iff it's missing
       #files - an array with filenames to check, ['Gemfile', 'bower.json']
       #path - nil or string, a relative path to the project root directory
-      def self.check(path, files, api_key, options)
+      def self.check(api_key, path, files, options)
         project_settings = Veye::Settings.load(path)
         #initialize project settings to keep various project specific data
         if project_settings.nil?
@@ -96,7 +96,7 @@ module Veye
         show_bulk_dependencies(@dependency_output_formats, deps, options)
       end
 
-      def self.delete_project(project_key, api_key)
+      def self.delete_project(api_key, project_key)
         results = Veye::API::Project.delete_project(api_key, project_key)
         err_msg = "Failed to delete project: `#{project_key}`"
         valid_response?(results, err_msg)

@@ -187,7 +187,7 @@ command :projects do |c|
       proj_key = args.shift
       api_key = global_options[:api_key]
 
-      Veye::Project::Check.get_project(proj_key, api_key, options)
+      Veye::Project::Check.get_project(api_key, proj_key, options)
     end
   end
 
@@ -198,7 +198,7 @@ command :projects do |c|
       help_now!("The filepath is missing.".color(:red)) if args.empty?
       filename = args.shift
       api_key = global_options[:api_key]
-      Veye::Project::Check.upload(filename, api_key, options)
+      Veye::Project::Check.upload(api_key, filename, options)
    end
   end
 
@@ -211,7 +211,7 @@ command :projects do |c|
 
       project_key, filename = args
       api_key = global_options[:api_key]
-      Veye::Project::Check.update(project_key, filename, api_key, options)
+      Veye::Project::Check.update(api_key, project_key, filename, options)
     end
   end
 
@@ -222,7 +222,7 @@ command :projects do |c|
       help_now!("Project's key is unspecified".color(:red)) if args.empty?
       proj_key = args.shift
       api_key = global_options[:api_key]
-      Veye::Project::License.get_licenses(proj_key, api_key, options)
+      Veye::Project::License.get_licenses(api_key, proj_key, options)
     end
   end
 
@@ -233,7 +233,7 @@ command :projects do |c|
       help_now!("Project is missing".color(:red)) if args.empty?
       proj_key = args.shift
       api_key = global_options[:api_key]
-      Veye::Project::Check.delete_project(proj_key, api_key)
+      Veye::Project::Check.delete_project(api_key, proj_key)
     end
   end
 end
@@ -250,7 +250,7 @@ command :products do |c|
       help_now!("Product's key is missing".color(:red)) if args.empty?
       prod_key = args.shift
       api_key = global_options[:api_key]
-      Veye::Package::Follow.get_follow_status( api_key, prod_key)
+      Veye::Package::Follow.get_follow_status(api_key, prod_key)
     end
   end
 
