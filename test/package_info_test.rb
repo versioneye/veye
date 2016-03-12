@@ -65,9 +65,9 @@ class PackageInfoTest < Minitest::Test
       end
       refute_nil output, "No command output"
       rows = output.split(/\n/)
-      assert_match /\|\s+Package information\s+\|/, rows[1]
-      assert_match /\| name \| version \| product_key \| language \| license \| description/, rows[3]
-      assert_match /\| veye \| 0.0.9   \| veye\s+\| ruby\s+| MIT\s+\|/, rows[5]
+      assert_match(/\|\s+Package information\s+\|/, rows[1])
+      assert_match(/\| name \| version \| product_key \| language \| license \| description/, rows[3])
+      assert_match(/\| veye \| 0.0.9   \| veye\s+\| ruby\s+| MIT\s+\|/, rows[5])
     end
   end
 end
