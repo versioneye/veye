@@ -58,9 +58,15 @@ class PackageReferenceTest < MiniTest::Test
       end
       refute_nil output, "Command output was nil"
       rows = output.split(/\n/)
-      assert_match /\|\s+Package references\s+\|/, rows[1]
-      assert_match /\| index \| name\s+\| version \| product_key\s+\| product_type \| language \|/, rows[3]
-      assert_match /\| 1\s+\| acts_as_dasherize_vanity \| 0.0.3\s+\| acts_as_dasherize_vanity \| RubyGem\s+\| ruby\s+\|/, rows[5]
+      assert_match(/\|\s+Package references\s+\|/, rows[1])
+      assert_match(
+        /\| index \| name\s+\| version \| product_key\s+\| product_type \| language \|/,
+        rows[3]
+      )
+      assert_match(
+        /\| 1\s+\| acts_as_dasherize_vanity \| 0.0.3\s+\| acts_as_dasherize_vanity \| RubyGem\s+\| ruby\s+\|/,
+        rows[5]
+      )
     end
   end
 

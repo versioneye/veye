@@ -58,9 +58,9 @@ class PackageSearchTest < MiniTest::Test
       refute_nil output, "Command output was nil"
 
       rows = output.split(/\n/)
-      assert_match /\|\s+Package search\s+\|/, rows[1]
-      assert_match /\| index \| name \| version \| product_key \| language \|/, rows[3]
-      assert_match /\| 1\s+\| veye \| 0.0.9\s+\| veye\s+\| ruby\s+\|/, rows[5]
+      assert_match(/\|\s+Package search\s+\|/, rows[1])
+      assert_match(/\| index \| name \| version \| product_key \| language \|/, rows[3])
+      assert_match(/\| 1\s+\| veye \| 0.0.9\s+\| veye\s+\| ruby\s+\|/, rows[5])
     end
   end
 end

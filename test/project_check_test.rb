@@ -340,7 +340,7 @@ class ProjectCheckTest < Minitest::Test
       assert_equal "  1 - \e[32m\e[1mcoffee-rails\e[0m", rows[0]
     end
 
-    project_settings = Veye::Settings.load(settings_file)
+    Veye::Settings.load(settings_file)
 
     VCR.use_cassette("project_check_update") do
       output = capture_stdout do
