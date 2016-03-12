@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://www.versioneye.com/api/v2/github/versioneye:veye?api_key=ba7d93beb5de7820764e
+    uri: https://www.versioneye.com/api/v2/github/versioneye:veye?api_key=316dbd6b80b053f5b1e5
     body:
       encoding: US-ASCII
       string: ''
@@ -21,29 +21,27 @@ http_interactions:
       Server:
       - nginx/1.4.6 (Ubuntu)
       Date:
-      - Sun, 09 Aug 2015 08:24:50 GMT
+      - Sat, 12 Mar 2016 18:48:21 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '472'
+      - '453'
       Connection:
       - keep-alive
-      Strict-Transport-Security:
-      - max-age=31536000
       Set-Cookie:
-      - api_key=ba7d93beb5de7820764e; secure
+      - api_key=316dbd6b80b053f5b1e5
       Etag:
-      - W/"406a9cdb2b9d8e681a09871e01c96a18"
+      - W/"f66ca9e1f4d09b82bfe661be75934fe5"
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - 2b7a1b05-fc6c-4cf6-97c8-104abf967792
+      - 6c3c14ee-5136-44ab-9446-e57a03d7dfb0
       X-Runtime:
-      - '0.045445'
+      - '0.050714'
     body:
       encoding: UTF-8
       string: '{"repo":{"name":"veye","fullname":"versioneye/veye","language":"ruby","owner_login":"versioneye","owner_type":"organization","description":"VersionEye
-        command line tool ","private":false,"fork":false,"branches":["master","references"],"git_url":"git://github.com/versioneye/veye.git","html_url":"https://github.com/versioneye/veye","created_at":"2012-12-27T11:15:03.000+00:00","cached_at":"2015-07-26T19:11:37.810+00:00","size":706,"homepage":null},"imported_projects":[]}'
+        command line tool ","private":false,"fork":false,"branches":null,"git_url":"git://github.com/versioneye/veye.git","html_url":"https://github.com/versioneye/veye","created_at":"2012-12-27T11:15:03.000+00:00","cached_at":"2016-02-24T10:25:53.782+00:00","size":832,"homepage":null},"imported_projects":[]}'
     http_version: 
-  recorded_at: Sun, 09 Aug 2015 08:22:18 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Sat, 12 Mar 2016 18:41:00 GMT
+recorded_with: VCR 3.0.1

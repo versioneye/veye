@@ -4,7 +4,7 @@ require 'csv'
 class GithubInfoTest < Minitest::Test
   def setup
     init_environment
-    @api_key = 'ba7d93beb5de7820764e'
+    @api_key = ENV['VEYE_API_KEY']
     @repo_name = 'versioneye/veye'
   end
 
@@ -22,7 +22,7 @@ class GithubInfoTest < Minitest::Test
       assert_equal "\tOwner type     : organization", rows[3]
       assert_equal "\tPrivate        : false", rows[4]
       assert_equal "\tFork           : false", rows[5]
-      assert_equal "\tBranches       : master, references", rows[6]
+      assert_equal "\tBranches       : ", rows[6]
     end
   end
 
@@ -35,7 +35,11 @@ class GithubInfoTest < Minitest::Test
       refute nil, output
       rows = CSV.parse(output)
       assert_equal ["name", "language", "owner_login", "owner_type", "private", "fork", "branches", "imported_projects", "description"], rows[0]
-      assert_equal ["versioneye/veye", "ruby", "versioneye", "organization", "false", "false", "master|references", nil, "VersionEye command line tool "], rows[1]
+      assert_equal(
+        ["versioneye/veye", "ruby", "versioneye", "organization", "false", "false",
+         nil, nil, "VersionEye command line tool "],
+        rows[1]
+      )
     end
   end
 
@@ -54,7 +58,7 @@ class GithubInfoTest < Minitest::Test
       assert_equal "organization", repo["owner_type"]
       assert_equal false, repo["private"]
       assert_equal false, repo["fork"]
-      assert_equal ["master", "references"], repo["branches"]
+      assert_equal nil, repo["branches"]
     end
   end
 
@@ -66,8 +70,8 @@ class GithubInfoTest < Minitest::Test
 
       refute nil, output
       rows = output.split(/\n/)
-      assert_equal "| name            | language | owner_login | owner_type   | private | fork  | branches   | imported_projects | description                   |", rows[3]
-      assert_equal "| versioneye/veye | ruby     | versioneye  | organization | false   | false | master     |                   | VersionEye command line tool  |", rows[5]
+      assert_match(/\| name\s+| language | owner_login | owner_type\s| private | fork\s+| branches\s+| imported_projects | description\s+|/, rows[3])
+      assert_match(/| versioneye\/veye | ruby\s+| versioneye\s+| organization\s+| false\s+| false\s+| \s+|\s+| VersionEye command line tool\s+|/, rows[5])
     end
   end
 end

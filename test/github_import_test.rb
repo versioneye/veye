@@ -4,7 +4,7 @@ require 'csv'
 class GithubImportTest < Minitest::Test
   def setup
     init_environment
-    @api_key = 'ba7d93beb5de7820764e'
+    @api_key = ENV['VEYE_API_KEY']
     @repo_name = 'versioneye/veye'
     @branch = "master"
     @file = "Gemfile.lock"

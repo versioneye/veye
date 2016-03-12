@@ -3,7 +3,7 @@ require 'test_helper'
 class GithubDeleteTest < Minitest::Test
   def setup
     init_environment
-    @api_key = 'ba7d93beb5de7820764e'
+    @api_key = ENV['VEYE_API_KEY']
     @repo_name = 'versioneye/veye'
     @branch = "master"
     @opts = {branch: @branch}
