@@ -4,7 +4,7 @@ require 'csv'
 class ProjectCheckTest < Minitest::Test
   def setup
     init_environment
-    @api_key = '316dbd6b80b053f5b1e5'
+    @api_key = ENV['VEYE_API_KEY']
     @test_file = "test/files/maven-1.0.1.pom.xml"
     @project_key = "maven2_openejb_maven_plugins_2"
   end
