@@ -250,7 +250,7 @@ command :products do |c|
       help_now!("Product's key is missing".color(:red)) if args.empty?
       prod_key = args.shift
       api_key = global_options[:api_key]
-      Veye::Package::Follow.get_follow_status(prod_key, api_key)
+      Veye::Package::Follow.get_follow_status( api_key, prod_key)
     end
   end
 
@@ -261,7 +261,7 @@ command :products do |c|
       help_now!("Product's key is missing".color(:red)) if args.empty?
       prod_key = args.shift
       api_key = global_options[:api_key]
-      Veye::Package::Follow.follow(prod_key, api_key)
+      Veye::Package::Follow.follow(api_key, prod_key)
     end
   end
 
@@ -272,7 +272,7 @@ command :products do |c|
       help_now!("Product's key is missing".color(:red)) if args.empty?
       prod_key = args.shift
       api_key = global_options[:api_key]
-      Veye::Package::Follow.unfollow(prod_key, api_key)
+      Veye::Package::Follow.unfollow(api_key, prod_key)
     end
   end
 end

@@ -14,7 +14,7 @@ module Veye
         )
       end
 
-      def self.get_follow_status(package_key, api_key)
+      def self.get_follow_status(api_key, package_key)
         prod_key, lang = Package.parse_key(package_key)
         results = Veye::API::Package.get_follow_status(api_key, prod_key, lang)
         if valid_response?(results, 'Didnt get any response.')
@@ -22,7 +22,7 @@ module Veye
         end
       end
 
-      def self.follow(package_key, api_key)
+      def self.follow(api_key, package_key)
         prod_key, lang = Package.parse_key(package_key)
         results = Veye::API::Package.follow(api_key, prod_key, lang)
         if valid_response?(results, 'Cant follow.')
@@ -30,7 +30,7 @@ module Veye
         end
       end
 
-      def self.unfollow(package_key, api_key)
+      def self.unfollow(api_key, package_key)
         prod_key, lang = Package.parse_key(package_key)
         results = Veye::API::Package.unfollow(api_key, prod_key, lang)
         if valid_response?(results, 'Cant unfollow.')
