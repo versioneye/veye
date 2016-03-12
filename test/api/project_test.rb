@@ -3,7 +3,7 @@ require 'test_helper'
 class ProjectTest < Minitest::Test
   def setup
     init_environment
-    @api_key = 'ba7d93beb5de7820764e'
+    @api_key = ENV["VEYE_API_KEY"]
     @test_file = "test/files/maven-1.0.1.pom.xml"
     @project_key = "maven2_openejb_maven_plugins_1"
   end
