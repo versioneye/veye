@@ -2,7 +2,10 @@
 
 ## 0.2
 
-* updated dependencies
+* fixed dependency sorting - it show outdated dependencies first;
+* fixed projects which used old API project_key;
+* fixed parameter inconsistencies for `check`, `licenses` commands;
+* updated dependencies;
 * add api_keys for packages api;
 * breaking changes in `check` command - it tracks all supported project files in the folder
 * add `veye.json` file to keep and manage a project specific configurations

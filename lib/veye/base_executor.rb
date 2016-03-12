@@ -28,8 +28,9 @@ class BaseExecutor
   end
 
   def self.filter_dependencies(results, options)
+
     if options[:all]
-      results['dependencies'].to_a.sort_by {|x| x['outdated'].hash}
+      results['dependencies'].to_a.sort_by {|x| x['outdated'] ? -1 : 0}
     else
       results['dependencies'].to_a.keep_if {|x| x['outdated']}
     end

@@ -6,6 +6,7 @@ module Veye
       def format(results, filename = nil)
         return if results.nil?
         results = [results] if results.is_a?(Hash)
+        printf("#-- Dependencies ------------------------------------------\n")
         results.each_with_index do |result, index|
           project_name = "#{result['name']}".color(:green).bright
           printf("%3d - %s\n", index + 1, project_name)

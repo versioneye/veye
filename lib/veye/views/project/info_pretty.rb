@@ -11,7 +11,7 @@ module Veye
         results.each_with_index do |result, index|
           project_name = "#{result['name']}".color(:green).bright
           printf("%3d - %s\n", index + 1, project_name)
-          printf("\t%-15s: %s\n", "Project key", "#{result['project_key']}".bright)
+          printf("\t%-15s: %s\n", "Project key", "#{result['id']}".bright)
           printf("\t%-15s: %s\n", "Project type", result['project_type'])
           printf("\t%-15s: %s\n", "Public", result['public'])
           printf("\t%-15s: %s\n", "Period", result['period'])
