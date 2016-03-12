@@ -14,7 +14,7 @@ class GithubDeleteTest < Minitest::Test
   def import_project
     #import project before testing
     VCR.use_cassette('github_import') do
-      res = Veye::API::Github.import_repo(@api_key, @repo_name, @branch, 'Gemfile.locl')
+      Veye::API::Github.import_repo(@api_key, @repo_name, @branch, 'Gemfile.locl')
     end
   end
 

@@ -1,0 +1,48 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.versioneye.com/api/v2/projects/55dc6de68d9c4b00210007bf/licenses?api_key=316dbd6b80b053f5b1e5
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Date:
+      - Sat, 12 Mar 2016 17:49:34 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '2040'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - api_key=316dbd6b80b053f5b1e5
+      Etag:
+      - W/"7c1c0364e8eada88d96602b86ac5644b"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 51fc8f91-0efa-4e01-9595-2aa8eeb41a2f
+      X-Runtime:
+      - '0.487892'
+    body:
+      encoding: UTF-8
+      string: '{"success":true,"licenses":{"MIT":[{"name":"veye","prod_key":"veye"},{"name":"awesome_print","prod_key":"awesome_print"},{"name":"rainbow","prod_key":"rainbow"},{"name":"rest-client","prod_key":"rest-client"},{"name":"terminal-table","prod_key":"terminal-table"},{"name":"aruba","prod_key":"aruba"},{"name":"childprocess","prod_key":"childprocess"},{"name":"cucumber","prod_key":"cucumber"},{"name":"rspec-expectations","prod_key":"rspec-expectations"},{"name":"ast","prod_key":"ast"},{"name":"astrolabe","prod_key":"astrolabe"},{"name":"parser","prod_key":"parser"},{"name":"builder","prod_key":"builder"},{"name":"crack","prod_key":"crack"},{"name":"safe_yaml","prod_key":"safe_yaml"},{"name":"cucumber-core","prod_key":"cucumber-core"},{"name":"gherkin","prod_key":"gherkin"},{"name":"multi_json","prod_key":"multi_json"},{"name":"multi_test","prod_key":"multi_test"},{"name":"http-cookie","prod_key":"http-cookie"},{"name":"mime-types","prod_key":"mime-types"},{"name":"minitest","prod_key":"minitest"},{"name":"netrc","prod_key":"netrc"},{"name":"powerpack","prod_key":"powerpack"},{"name":"rake","prod_key":"rake"},{"name":"render-as-markdown","prod_key":"render-as-markdown"},{"name":"rspec-support","prod_key":"rspec-support"},{"name":"rubocop","prod_key":"rubocop"},{"name":"ruby-progressbar","prod_key":"ruby-progressbar"},{"name":"unf_ext","prod_key":"unf_ext"},{"name":"vcr","prod_key":"vcr"},{"name":"webmock","prod_key":"webmock"}],"unknown":[{"name":"contracts","prod_key":"contracts"},{"name":"gli","prod_key":"gli"},{"name":"minitest-reporters","prod_key":"minitest-reporters"}],"Apache-2.0":[{"name":"addressable","prod_key":"addressable"}],"BSD-2-Clause":[{"name":"ansi","prod_key":"ansi"},{"name":"unf","prod_key":"unf"}],"BSD":[{"name":"ffi","prod_key":"ffi"}],"MIT,
+        Artistic-2.0, GPL-2.0":[{"name":"diff-lcs","prod_key":"diff-lcs"}],"BSD-2-Clause,
+        BSD-3-Clause, MPL-1.1, GPL-2.0, LGPL-2.1":[{"name":"domain_name","prod_key":"domain_name"}],"Ruby":[{"name":"json","prod_key":"json"},{"name":"rdoc","prod_key":"rdoc"}]}}'
+    http_version: 
+  recorded_at: Sat, 12 Mar 2016 17:42:14 GMT
+recorded_with: VCR 3.0.1
