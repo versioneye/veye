@@ -4,7 +4,7 @@ require 'csv'
 class UserMeTest < Minitest::Test
   def setup
     init_environment
-    @api_key = "ba7d93beb5de7820764e"
+    @api_key = ENV["VEYE_API_KEY"]
   end
 
   def test_get_profile
@@ -29,7 +29,7 @@ class UserMeTest < Minitest::Test
       refute_nil out
       rows = CSV.parse(out)
       assert_equal ["username", "fullname", "email", "plan_name_id", "admin", "new_notifications", "total_notifications"], rows[0]
-      assert_equal ["timgluz", "Tim Gluz", "timgluz@gmail.com", nil, "false", "0", "1767"], rows[1]
+      assert_equal ["timgluz", "Tim Gluz", "timgluz@gmail.com", nil, "false", "0", "2467"], rows[1]
     end
   end
 
@@ -59,12 +59,12 @@ class UserMeTest < Minitest::Test
       refute_nil out
 
       rows = out.split(/\n/)
-      assert_match /\|\s+User\'s profile\s+\|/, rows[1]
+      assert_match(/\|\s+User\'s profile\s+\|/, rows[1])
       assert_match(
         /\| username \| fullname \| email\s+| plan_name \| admin \| deleted \| new_notifications \| total_notifications \|/,
        rows[3]
       )
-      assert_match /\| timgluz  \| Tim Gluz \| timgluz@gmail.com \|\s+\| false/, rows[5]
+      assert_match(/\| timgluz  \| Tim Gluz \| timgluz@gmail.com \|\s+\| false/, rows[5])
     end
   end
 
@@ -73,11 +73,11 @@ class UserMeTest < Minitest::Test
       out = capture_stdout do
         Veye::User::Me.get_favorites(@api_key, {})
       end
-      assert_match /\t\e\[32m\e\[1mh2\e\[0m - \e\[1mcom.h2database\/h2\e\[0m/, out
-      assert_match /\tProduct type   : Maven2\n/, out
-      assert_match /\tVersion        : \e\[1mMaven2\e\[0m\n/, out
-      assert_match /\tLanguage       : java\n/, out
-      assert_match /\t\e\[32m\e\[1mmallet\e\[0m - \e\[1mcc.mallet\/mallet\e\[0m\n/, out
+      assert_match(/\t\e\[32m\e\[1mh2\e\[0m - \e\[1mcom.h2database\/h2\e\[0m/, out)
+      assert_match(/\tProduct type   : Maven2\n/, out)
+      assert_match(/\tVersion        : \e\[1mMaven2\e\[0m\n/, out)
+      assert_match(/\tLanguage       : java\n/, out)
+      assert_match(/\t\e\[32m\e\[1mmallet\e\[0m - \e\[1mcc.mallet\/mallet\e\[0m\n/, out)
 
     end
   end
@@ -91,7 +91,7 @@ class UserMeTest < Minitest::Test
       refute_nil out
       rows = CSV.parse out
       assert_equal ["index", "name", "prod_key", "prod_type", "version", "language"], rows[0]
-      assert_equal ["1", "h2", "com.h2database/h2", "Maven2", "1.4.188", "java"], rows[1]
+      assert_equal ["1", "h2", "com.h2database/h2", "Maven2", "1.4.191", "java"], rows[1]
       assert_equal ["2", "mallet", "cc.mallet/mallet", "Maven2", "2.0.7", "java"], rows[2]
     end
   end
@@ -118,9 +118,9 @@ class UserMeTest < Minitest::Test
       end
       refute_nil out
       rows = out.split(/\n/)
-      assert_match /\|\s+Favorite packages\s+\|/, rows[1]
-      assert_match /\| nr \| name\s+\| product_key\s+\| version\s+\| language\s+\|/, rows[3]
-      assert_match /\| 1\s+\| h2\s+\| com\.h2database\/h2\s+\| 1\.4\.188\s+\| java\s+\|/ , rows[5]
+      assert_match(/\|\s+Favorite packages\s+\|/, rows[1])
+      assert_match(/\| nr \| name\s+\| product_key\s+\| version\s+\| language\s+\|/, rows[3])
+      assert_match(/\| 1\s+\| h2\s+\| com\.h2database\/h2\s+\| 1\.4\.191\s+\| java\s+\|/ , rows[5])
     end
   end
 end

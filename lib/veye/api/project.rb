@@ -8,7 +8,7 @@ module Veye
       def self.check_file(filename)
         file_path = File.absolute_path(filename)
 
-        unless File.exists?(file_path)
+        unless File.exist?(file_path)
           printf("%s: Cant read file `%s`",
                  "Error".color(:red),
                  "#{filename}".color(:yellow))

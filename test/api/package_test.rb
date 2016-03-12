@@ -3,7 +3,7 @@ require_relative '../test_helper'
 class PackageTest < Minitest::Test
   def setup
     init_environment
-    @api_key = "ba7d93beb5de7820764e"
+    @api_key = ENV["VEYE_API_KEY"]
   end
 
   def test_info_api_call

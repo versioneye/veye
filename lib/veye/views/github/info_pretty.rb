@@ -28,8 +28,7 @@ module Veye
         printf("\t%-15s: %s\n", "Imported", project_names.join(', '))
         printf("\t%-15s: %s\n", "Html url", repo['html_url'])
         printf("\t%-15s: %s\n", "Git url", repo['git_url'])
-
-     end
+      end
     end
   end
 end

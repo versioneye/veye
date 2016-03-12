@@ -29,7 +29,7 @@ module Veye
     #otherwise it returns a map of settings
     def self.load(path)
       file_path = file_fullpath(path)
-      return unless File.exists?(file_path)
+      return unless File.exist?(file_path)
       JSON.load(File.open(file_path, 'r'))
     end
 

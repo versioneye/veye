@@ -29,10 +29,10 @@ class BaseExecutor
 
   def self.filter_dependencies(results, options)
     if options[:all]
-       results['dependencies'].to_a.sort_by {|x| x['outdated'].hash}
-     else
-       results['dependencies'].to_a.keep_if {|x| x['outdated']}
-     end
+      results['dependencies'].to_a.sort_by {|x| x['outdated'].hash}
+    else
+      results['dependencies'].to_a.keep_if {|x| x['outdated']}
+    end
   end
   
   def self.show_dependencies(output_formats, results, options)
@@ -51,7 +51,6 @@ class BaseExecutor
     return if formatter.nil?
 
     formatter.before
-    dep_maps = {}
     results.each do |filename, deps|
       formatter.format filter_dependencies(deps, options), filename
     end
