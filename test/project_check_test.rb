@@ -17,7 +17,7 @@ class ProjectCheckTest < Minitest::Test
 
       rows = output.split(/\n/)
       assert_equal "  1 - \e[32m\e[1mbugtraqer\e[0m", rows[0]
-      assert_equal "\tProject key    : \e[1mlein_project_clj_1\e[0m", rows[1]
+      assert_equal "\tProject key    : \e[1m52126476632bac1ae3007c88\e[0m", rows[1]
       assert_equal "\tProject type   : Lein", rows[2]
       assert_equal "\tPublic         : false", rows[3]
       assert_equal "\tPeriod         : weekly", rows[4]
@@ -83,7 +83,7 @@ class ProjectCheckTest < Minitest::Test
       refute_nil output
       rows = output.split(/\n/)
       assert_equal "  1 - \e[32m\e[1mOpenEJB :: Maven Plugins\e[0m", rows[0]
-      assert_equal "\tProject key    : \e[1mmaven2_openejb_maven_plugins_2\e[0m", rows[1]
+      assert_equal "\tProject key    : \e[1m563f7acac5999a000d01a34a\e[0m", rows[1]
       assert_equal "\tProject type   : Maven2", rows[2]
       assert_equal "\tPublic         : true", rows[3]
       assert_equal "\tPeriod         : daily", rows[4]
@@ -157,7 +157,7 @@ class ProjectCheckTest < Minitest::Test
       refute_nil output
       rows = output.split(/\n/)
       assert_equal "  1 - \e[32m\e[1mOpenEJB :: Maven Plugins\e[0m", rows[0]
-      assert_equal "\tProject key    : \e[1mmaven2_openejb_maven_plugins_2\e[0m", rows[1]
+      assert_equal "\tProject key    : \e[1m563f7a57c5999a000901a55b\e[0m", rows[1]
       assert_equal "\tProject type   : Maven2", rows[2]
       assert_equal "\tPublic         : true", rows[3]
       assert_equal "\tPeriod         : daily", rows[4]
@@ -235,7 +235,7 @@ class ProjectCheckTest < Minitest::Test
       refute_nil output
       rows = output.split(/\n/)
       assert_equal "  1 - \e[32m\e[1mOpenEJB :: Maven Plugins\e[0m", rows[0]
-      assert_equal "\tProject key    : \e[1mmaven2_openejb_maven_plugins_2\e[0m", rows[1]
+      assert_equal "\tProject key    : \e[1m563f7a57c5999a000901a55b\e[0m", rows[1]
       assert_equal "\tProject type   : Maven2", rows[2]
       assert_equal "\tPublic         : true", rows[3]
       assert_equal "\tPeriod         : daily", rows[4]
@@ -339,7 +339,7 @@ class ProjectCheckTest < Minitest::Test
       refute_nil output, "output of project_check_new cant be empty "
       rows = output.split(/\n/)
 
-      assert_equal "  1 - \e[32m\e[1mcoffee-rails\e[0m", rows[0]
+      assert_equal "  1 - \e[32m\e[1mcoffee-rails\e[0m", rows[1]
     end
 
     Veye::Settings.load(settings_file)
@@ -352,7 +352,7 @@ class ProjectCheckTest < Minitest::Test
 
       refute_nil output, "output of project_check_update cant be empty"
       rows = output.split(/\n/)
-      assert_equal "  1 - \e[32m\e[1mcoffee-rails\e[0m", rows[0]
+      assert_equal "  1 - \e[32m\e[1mcoffee-rails\e[0m", rows[1]
     end
 
     delete_file(settings_file)
