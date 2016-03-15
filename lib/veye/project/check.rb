@@ -77,7 +77,7 @@ module Veye
         deps = {}
         project_settings['projects'].each do |filename, project_id|
           filepath = "#{path}/#{filename}"
-          results = if project_id.nil?
+          results = if project_id.to_s.empty?
                       Veye::API::Project.upload(api_key, filepath)
                     else
                       Veye::API::Project.update(api_key, project_id, filepath)
@@ -85,14 +85,18 @@ module Veye
           error_msg = "Failed to check dependencies for `#{filename.to_s.color(:red)}`"
           if valid_response?(results, error_msg)
             deps[filename] = results.data
-            project_settings['projects'].store(filename, results.data['project_key'])
+            project_settings['projects'].store(filename, results.data['id'])
           else
             deps[filename] = {error: "Failed to check a file `#{filepath}`"}
           end
         end
 
         Veye::Settings.dump(path, project_settings)
-        #show_results(@output_formats, deps, options)
+        printf(
+          "Checked files: %s\nproject ids are saved into `%s`\n",
+          files.to_a.join(', ').to_s.color(:green),
+          "veye.json".color(:yellow)
+        )
         show_bulk_dependencies(@dependency_output_formats, deps, options)
       end
 

@@ -11,7 +11,7 @@ require 'veye'
 include GLI::App
 
 program_desc 'VersionEye commandline tool'
-program_long_desc Rainbow(Veye::BIGEYE).green
+program_long_desc Rainbow(Veye::BIGEYE).to_s.color(:green)
 
 wrap_help_text :verbatim
 version Veye::VERSION
@@ -156,7 +156,7 @@ command :check do |c|
     if files.empty?
       printf "Found no project files in: ".color(:red) + file_path + "\n"
     else
-      Veye::Project::Check.check(file_path, files, api_key, options)
+      Veye::Project::Check.check(api_key, file_path, files, options)
     end
   end
 end

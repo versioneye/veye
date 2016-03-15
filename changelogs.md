@@ -1,5 +1,12 @@
 # Changelogs
 
+## 0.2.1 - 2016-03-15
+
+* fix check command, it used old argument orders;
+* fix saving project_id into `veye.json` after API uses only id-key;
+* remove redundant dependency - contracts;
+* update rake from 11.1.0 to 11.1.1
+
 ## 0.2
 
 * fixed dependency sorting - it show outdated dependencies first;
