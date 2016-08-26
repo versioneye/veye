@@ -4,7 +4,6 @@ require 'csv'
 class ProjectLicenseTest < MiniTest::Test
   def setup
     init_environment
-    @project_key = '55dc6de68d9c4b00210007bf'
     @api_key = ENV["VEYE_API_KEY"]
     @test_file = 'test/files/maven-1.0.1.pom.xml'
 

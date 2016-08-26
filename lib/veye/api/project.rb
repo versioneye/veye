@@ -24,15 +24,18 @@ module Veye
         file_path
       end
 
-      def self.get_list(api_key)
+      def self.get_list(api_key, org_name, team_name = nil)
         project_api = Resource.new(RESOURCE_PATH)
-        qparams = {:params => {:api_key => api_key}}
-        project_api.resource.get(qparams) do |response, request, result|
+        qparams = {:api_key => api_key}
+        qparams[:orga_name] = org_name.to_s.strip unless org_name.to_s.empty?
+        qparams[:team_name] = team_name.to_s.strip unless team_name.to_s.empty?
+
+        project_api.resource.get({:params => qparams}) do |response, request, result|
           JSONResponse.new(request, result, response)
         end
       end
 
-      def self.upload(api_key, filename)
+      def self.upload(api_key, filename, org_name = nil, team_name = nil, temporary = false, visibility = 'public')
         project_api = Resource.new(RESOURCE_PATH)
         file_path = check_file(filename)
         return if file_path.nil?
@@ -42,6 +45,10 @@ module Veye
           :upload   => file_obj,
           :api_key  => api_key
         }
+        upload_data[:orga_name] = org_name.to_s.strip unless org_name.to_s.empty?
+        upload_data[:team_name] = team_name.to_s.strip unless team_name.to_s.empty?
+        upload_data[:temporary] = true if temporary == true
+        upload_data[:visibility] = 'private' if visibility.to_s.strip != 'public'
 
         project_api.resource.post(upload_data) do |response, request, result, &block|
           JSONResponse.new(request, result, response)

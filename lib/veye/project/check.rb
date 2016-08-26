@@ -23,8 +23,8 @@ module Veye
         'md'        => Project::DependencyMarkdown.new
       }
 
-      def self.get_list(api_key, options)
-        results = Veye::API::Project.get_list(api_key)
+      def self.get_list(api_key, org_name = 'private', team_name = nil, options)
+        results = Veye::API::Project.get_list(api_key, org_name, team_name)
         valid_response?(results, 'Can not read list of projects.')
         show_results(@output_formats, results.data, options)
       end
@@ -39,8 +39,9 @@ module Veye
         end
       end
 
-      def self.upload(api_key, filename, options)
-        results = Veye::API::Project.upload(api_key, filename)
+      def self.upload(api_key, filename, org_name = 'private', team_name = nil, temporary = false, visibility = 'public', options)
+        results = Veye::API::Project.upload(api_key, filename, org_name, team_name, temporary, visibility)
+
         valid_response?(results, 'Upload failed.')
         show_results(@output_formats, results.data, options)
         if options[:format] != 'json'

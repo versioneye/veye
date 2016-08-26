@@ -181,11 +181,17 @@ command :projects do |c|
   c.desc "show all dependencies"
   c.flag [:all, 'show-all'], default_value: false
 
+	c.desc "filter by organisation name"
+	c.flag [:org, 'org-name'], :default_value => 'private'
+
+	c.desc 'filter by team name'
+	c.flag [:team, 'team-name']
+
   c.desc "show all projects"
   c.command :list do |list|
     list.action do |global_options, options, args|
       api_key = global_options[:api_key]
-      Veye::Project::Check.get_list(api_key, options)
+      Veye::Project::Check.get_list(api_key, options[:org], options[:team], options)
     end
   end
 

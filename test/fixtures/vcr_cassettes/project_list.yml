@@ -1,0 +1,48 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.versioneye.com/api/v2/projects?api_key=f82943fbd363bc640782&orga_name=veye_test
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.10.0 (Ubuntu)
+      Date:
+      - Fri, 26 Aug 2016 15:33:31 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1097'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - api_key=f82943fbd363bc640782
+      Etag:
+      - W/"27842d0e8da1073592707d09d0806679"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - c22e134e-1e03-48af-b0ff-142fed5e10be
+      X-Runtime:
+      - '0.252979'
+    body:
+      encoding: UTF-8
+      string: '[{"id":{"$oid":"57c05d11864739001066e3f1"},"ids":"57c05d11864739001066e3f1","name":"OpenEJB
+        :: Maven Plugins","project_type":"Maven2","organisation":{"name":"veye_test","company":"VersionEye","location":"Mannheim"},"public":false,"private_scm":false,"period":"daily","source":"API","dep_number":11,"out_number":10,"licenses_red":0,"licenses_unknown":3,"dep_number_sum":11,"out_number_sum":10,"licenses_red_sum":0,"licenses_unknown_sum":3,"license_whitelist_name":null,"created_at":"2016-08-26T15:15:30.021Z","updated_at":"2016-08-26T15:15:30.427Z"},{"id":{"$oid":"57c0614a864739001066fea3"},"ids":"57c0614a864739001066fea3","name":"OpenEJB
+        :: Maven Plugins","project_type":"Maven2","organisation":{"name":"veye_test","company":"VersionEye","location":"Mannheim"},"public":false,"private_scm":false,"period":"daily","source":"API","dep_number":11,"out_number":10,"licenses_red":0,"licenses_unknown":3,"dep_number_sum":11,"out_number_sum":10,"licenses_red_sum":0,"licenses_unknown_sum":3,"license_whitelist_name":null,"created_at":"2016-08-26T15:33:30.201Z","updated_at":"2016-08-26T15:33:30.615Z"}]'
+    http_version: 
+  recorded_at: Fri, 26 Aug 2016 15:33:31 GMT
+recorded_with: VCR 3.0.1
