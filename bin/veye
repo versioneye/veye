@@ -187,10 +187,17 @@ command :projects do |c|
 	c.desc 'filter by team name'
 	c.flag [:team, 'team-name']
 
+	c.desc 'specify project visibility when uploading a new project'
+	c.flag [:public, 'is-public'], :default_value => true
+
+	c.desc 'mark it as temporary project when uploading a new project'
+	c.flag [:temp, :temporary], :default_value => false
+
   c.desc "show all projects"
   c.command :list do |list|
     list.action do |global_options, options, args|
       api_key = global_options[:api_key]
+
       Veye::Project::Check.get_list(api_key, options[:org], options[:team], options)
     end
   end
@@ -214,7 +221,11 @@ command :projects do |c|
       help_now!("The filepath is missing.".color(:red)) if args.empty?
       filename = args.shift
       api_key = global_options[:api_key]
-      Veye::Project::Check.upload(api_key, filename, options)
+			org_name = (options[:org] || 'private')
+			is_temp  = (options[:temp] == true)
+			visibility = (options[:public] == false ? 'private' : 'public')
+
+      Veye::Project::Check.upload(api_key, filename, org_name, options[:team], is_temp, visibility, options)
    end
   end
 
