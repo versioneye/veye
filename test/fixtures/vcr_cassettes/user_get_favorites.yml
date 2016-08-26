@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.versioneye.com/api/v2/me/favorites?api_key=f82943fbd363bc640782&page=1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.10.0 (Ubuntu)
+      Date:
+      - Fri, 26 Aug 2016 13:07:27 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '3573'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - api_key=f82943fbd363bc640782
+      Etag:
+      - W/"2a4fd35ddb80dc39d000149a74f7427c"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 383e9d9b-4e0e-4187-b15b-bcd675b4345b
+      X-Runtime:
+      - '0.063758'
+    body:
+      encoding: UTF-8
+      string: '{"user":{"fullname":"Tim Gluz","username":"timgluz"},"favorites":[{"name":"h2","language":"java","prod_key":"com.h2database/h2","version":"1.4.192","prod_type":"Maven2"},{"name":"mallet","language":"java","prod_key":"cc.mallet/mallet","version":"2.0.8","prod_type":"Maven2"},{"name":"aws-java-sdk","language":"java","prod_key":"com.amazonaws/aws-java-sdk","version":"1.11.28","prod_type":"Maven2"},{"name":"bandalore","language":"java","prod_key":"com.cemerick/bandalore","version":"0.0.6","prod_type":"Maven2"},{"name":"clojure","language":"java","prod_key":"org.clojure/clojure","version":"1.8.0","prod_type":"Maven2"},{"name":"clojure-contrib","language":"java","prod_key":"org.clojure/clojure-contrib","version":"1.2.0","prod_type":"Maven2"},{"name":"core.cache","language":"java","prod_key":"org.clojure/core.cache","version":"0.6.5","prod_type":"Maven2"},{"name":"data.json","language":"java","prod_key":"org.clojure/data.json","version":"0.2.6","prod_type":"Maven2"},{"name":"tools.logging","language":"java","prod_key":"org.clojure/tools.logging","version":"0.3.1","prod_type":"Maven2"},{"name":"tools.namespace","language":"java","prod_key":"org.clojure/tools.namespace","version":"0.2.11","prod_type":"Maven2"},{"name":"tools.nrepl","language":"java","prod_key":"org.clojure/tools.nrepl","version":"0.2.12","prod_type":"Maven2"},{"name":"core.match","language":"java","prod_key":"org.clojure/core.match","version":"0.2.2","prod_type":"Maven2"},{"name":"data.codec","language":"java","prod_key":"org.clojure/data.codec","version":"0.1.0","prod_type":"Maven2"},{"name":"data.csv","language":"java","prod_key":"org.clojure/data.csv","version":"0.1.3","prod_type":"Maven2"},{"name":"data.zip","language":"java","prod_key":"org.clojure/data.zip","version":"0.1.2","prod_type":"Maven2"},{"name":"tools.cli","language":"java","prod_key":"org.clojure/tools.cli","version":"0.3.5","prod_type":"Maven2"},{"name":"lenskit","language":"java","prod_key":"org.grouplens.lenskit/lenskit","version":"2.0.5","prod_type":"Maven2"},{"name":"clojurescript","language":"java","prod_key":"org.clojure/clojurescript","version":"1.9.225","prod_type":"Maven2"},{"name":"google-closure-library","language":"java","prod_key":"org.clojure/google-closure-library","version":"0.0-20140226-71326067","prod_type":"Maven2"},{"name":"actionmailer","language":"ruby","prod_key":"actionmailer","version":"5.0.0.1","prod_type":"RubyGem"},{"name":"activerecord-import","language":"ruby","prod_key":"activerecord-import","version":"0.15.0","prod_type":"RubyGem"},{"name":"agent","language":"ruby","prod_key":"agent","version":"0.11.0","prod_type":"RubyGem"},{"name":"ar-octopus","language":"ruby","prod_key":"ar-octopus","version":"0.8.6","prod_type":"RubyGem"},{"name":"aspector","language":"ruby","prod_key":"aspector","version":"0.14.0","prod_type":"RubyGem"},{"name":"aws-s3","language":"ruby","prod_key":"aws-s3","version":"0.6.3","prod_type":"RubyGem"},{"name":"bunny","language":"ruby","prod_key":"bunny","version":"2.5.1","prod_type":"RubyGem"},{"name":"command_line_reporter","language":"ruby","prod_key":"command_line_reporter","version":"3.3.6","prod_type":"RubyGem"},{"name":"coreaudio","language":"ruby","prod_key":"coreaudio","version":"0.0.11","prod_type":"RubyGem"},{"name":"delayed_job","language":"ruby","prod_key":"delayed_job","version":"4.1.2","prod_type":"RubyGem"},{"name":"delayed_job_active_record","language":"ruby","prod_key":"delayed_job_active_record","version":"4.1.1","prod_type":"RubyGem"}],"paging":{"current_page":1,"per_page":30,"total_pages":10,"total_entries":277}}'
+    http_version: 
+  recorded_at: Fri, 26 Aug 2016 13:07:27 GMT
+recorded_with: VCR 3.0.1

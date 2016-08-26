@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.versioneye.com/api/v2/me?api_key=f82943fbd363bc640782
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.10.0 (Ubuntu)
+      Date:
+      - Fri, 26 Aug 2016 13:07:27 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '216'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - api_key=f82943fbd363bc640782
+      Etag:
+      - W/"86e6b2048f2efe0bfd7a0f037fb96528"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - da3f767e-3875-4a51-a194-ac4acd5d7954
+      X-Runtime:
+      - '0.096941'
+    body:
+      encoding: UTF-8
+      string: '{"fullname":"Tim Gluz","username":"timgluz","email":"timgluz@gmail.com","admin":false,"deleted_user":false,"notifications":{"new":0,"total":3015},"enterprise_projects":1,"rate_limit":50,"comp_limit":50,"active":true}'
+    http_version: 
+  recorded_at: Fri, 26 Aug 2016 13:07:27 GMT
+recorded_with: VCR 3.0.1

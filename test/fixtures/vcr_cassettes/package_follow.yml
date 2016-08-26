@@ -1,0 +1,50 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://www.versioneye.com/api/v2/products/ruby/ruby/follow.json?api_key=f82943fbd363bc640782
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Length:
+      - '0'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Server:
+      - nginx/1.10.0 (Ubuntu)
+      Date:
+      - Fri, 26 Aug 2016 13:07:08 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '55'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - api_key=f82943fbd363bc640782
+      Etag:
+      - W/"9d6323eb43938b708cb2b4b1d86ed307"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - bd35ff01-5c1d-4102-8086-6538b28ae9f2
+      X-Runtime:
+      - '0.045398'
+    body:
+      encoding: UTF-8
+      string: '{"username":"timgluz","prod_key":"ruby","follows":true}'
+    http_version: 
+  recorded_at: Fri, 26 Aug 2016 13:07:08 GMT
+recorded_with: VCR 3.0.1
