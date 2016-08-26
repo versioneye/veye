@@ -1,0 +1,47 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.versioneye.com/api/v2/projects/57c04b56864739001065d3e8/licenses?api_key=f82943fbd363bc640782
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.10.0 (Ubuntu)
+      Date:
+      - Fri, 26 Aug 2016 13:59:51 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '906'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - api_key=f82943fbd363bc640782
+      Etag:
+      - W/"bcc3569705470ce364b2bb0a0fa008d1"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - a1ed6a91-d827-463b-8e53-ae39683fea01
+      X-Runtime:
+      - '0.122504'
+    body:
+      encoding: UTF-8
+      string: '{"success":true,"licenses":{"Apache-2.0":[{"name":"maven-plugin-annotations","prod_key":"org.apache.maven.plugin-tools/maven-plugin-annotations"},{"name":"plexus-utils","prod_key":"org.codehaus.plexus/plexus-utils"},{"name":"maven-plugin-api","prod_key":"org.apache.maven/maven-plugin-api"},{"name":"maven-project","prod_key":"org.apache.maven/maven-project"},{"name":"maven-core","prod_key":"org.apache.maven/maven-core"},{"name":"maven-artifact","prod_key":"org.apache.maven/maven-artifact"},{"name":"openejb-core","prod_key":"org.apache.openejb/openejb-core"},{"name":"openejb-client","prod_key":"org.apache.openejb/openejb-client"},{"name":"maven-plugin-plugin","prod_key":"org.apache.maven.plugins/maven-plugin-plugin"},{"name":"maven-plugin-plugin","prod_key":"org.apache.maven.plugins/maven-plugin-plugin"}],"EPL-1.0,
+        Apache-2.0":[{"name":"aether-api","prod_key":"org.sonatype.aether/aether-api"}]}}'
+    http_version: 
+  recorded_at: Fri, 26 Aug 2016 13:59:51 GMT
+recorded_with: VCR 3.0.1

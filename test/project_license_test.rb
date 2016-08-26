@@ -6,6 +6,21 @@ class ProjectLicenseTest < MiniTest::Test
     init_environment
     @project_key = '55dc6de68d9c4b00210007bf'
     @api_key = ENV["VEYE_API_KEY"]
+    @test_file = 'test/files/maven-1.0.1.pom.xml'
+
+    project_dt = upload_project(@api_key, @test_file)
+    @project_key = project_dt['id']
+  end
+
+  def upload_project(api_key, test_file)
+    VCR.use_cassette('project_upload') do
+      output = capture_stdout do
+        Veye::Project::Check.upload(api_key, test_file, {format: 'json'})
+      end
+
+      res = JSON.parse(output)
+      res["projects"]
+    end
   end
 
   def test_get_licenses_default
@@ -15,8 +30,8 @@ class ProjectLicenseTest < MiniTest::Test
       end
 
       rows = output.split(/\n/)
-      assert_equal("  1 - \e[32m\e[1mMIT\e[0m", rows[0])
-      assert_match(/\tProducts\s+ : veye, awesome_print/, rows[1])
+      assert_equal("  1 - \e[32m\e[1mApache-2.0\e[0m", rows[0])
+      assert_match(/\tProducts\s+:\s+org\.apache\.maven\.plugin-tools\/maven-plugin-annotations/, rows[1])
     end
   end
 
@@ -27,8 +42,7 @@ class ProjectLicenseTest < MiniTest::Test
       end
 
       res = JSON.parse(output)
-      unknown_licenses = res["licenses"]["unknown"]
-      assert_equal({"name" => "gli", "prod_key" => "gli"}, unknown_licenses[1])
+      assert_equal(false, res["licenses"].has_key?("unknown") )
     end
   end
 
@@ -40,7 +54,10 @@ class ProjectLicenseTest < MiniTest::Test
 
       rows = CSV.parse(output)
       assert_equal(["nr", "license", "product_keys"], rows[0])
-      assert_equal(["1", "MIT", "veye", "awesome_print"], rows[1][0,4])
+      assert_equal(
+        ["1", "Apache-2.0", "org.apache.maven.plugin-tools/maven-plugin-annotations", "org.codehaus.plexus/plexus-utils"], 
+        rows[1][0,4]
+      )
     end
   end
 
