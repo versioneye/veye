@@ -102,15 +102,25 @@ end
 desc 'returns package information'
 arg_name 'product_key'
 command :info do |c|
+  c.desc 'specify a language of the product'
+  c.flag [:l, :language, 'language-name']
+
+  c.desc 'specify a version of the product'
+  c.flag [:v, :version, 'version-id']
+
   c.desc "change output format"
   c.flag [:format, 'format-name'], :default_value => 'pretty'
 
   c.action do |global_options, options, args|
     error_msg = Rainbow("package_key is missing").red
     help_now!(error_msg) if args.empty?
+
+    error_msg = 'no language specified - use -l/--language/--language-name key'.color(:red)
+    help_now!(error_msg) if options[:language].nil?
+
     api_key = global_options[:api_key]
     package_key = args.shift
-    Veye::Package::Info.get_package(api_key, package_key, options)
+    Veye::Package::Info.get_package(api_key, package_key, options[:language], options[:version], options)
   end
 end
 

@@ -12,7 +12,8 @@ module Veye
         'pretty'    => Package::SearchPretty.new,
         'table'     => Package::SearchTable.new
       }
-
+      
+      #TODO: remove options param and extraxt option map in the bin/veye command
       def self.search(api_key, search_term, options)
         results = Veye::API::Package.search(
           api_key, search_term, options[:language],

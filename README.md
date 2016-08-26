@@ -1,12 +1,12 @@
 # Veye
 
-[![Dependency Status](https://www.versioneye.com/ruby/veye/0.1/badge.svg)](https://www.versioneye.com/ruby/veye/0.1) 
+[![Dependency Status](https://www.versioneye.com/user/projects/57c0303c939fc600508e8b9a/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57c0303c939fc600508e8b9a)
 [![Join the chat at https://gitter.im/versioneye/veye](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/versioneye/veye?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
 **veye** is a command line tool for [VersionEye](https://www.versioneye.com/). It is a wrapper around the [VersionEye API](https://www.versioneye.com/api), implemented in Ruby. The tool allows you to write scripts for continuous updating and due diligence. 
 
-Most endpoints require an API key, which you can get [here](https://www.versioneye.com/settings/api).
+Most endpoints require an API key, which you can get [here](https://www.versioneye.com/settings/api) and i recommend you to use an organization API-key.
 
 [VersionEye](https://www.versioneye.com/) is a cross-platform search engine and crowdsourcing app for opensource software libraries.
 
@@ -18,13 +18,16 @@ Most endpoints require an API key, which you can get [here](https://www.versione
 ![Main help](http://dl.dropbox.com/u/19578784/versioneye/cli_start_page.png)
 
 
-## Install via RubyGems
+## Getting started with RubyGems
 
 ```
   $> gem install veye
+  $> veye
+  $> veye initconfig
+  $> veye change_key a124423233
 ```
 
-## Install from source
+## Getting started for developers
 
 ###### Download source
 
@@ -33,7 +36,7 @@ Most endpoints require an API key, which you can get [here](https://www.versione
   $> cd veye
  ```
 
-###### Run without installing
+###### Execute the CLI-tool without installing
  ```
   $> bundle
   $> bundle exec bin/veye ping
@@ -49,7 +52,7 @@ Most endpoints require an API key, which you can get [here](https://www.versione
 
 ## Initial configuration
 
-The tool will raise an exception if the configuration file is missing. Veye needs a configuration file to keep the user specific settings and the API Key.
+The tool will raise an exception if the configuration file is missing. The Veye uses the configuration file to keep settings and your API Key.
 
 #### create config file
 
@@ -82,11 +85,13 @@ $> veye search json --lang=r,php --page=2
 
 #you can cancel pagination with --no-pagination argument
 $> veye search junit --page 3 --no-pagination
+
+$> veye info --language=PHP --version='3.0.1' symfony/symfony --format=table
 ```
 
 ## Output formats
 
-All commands support format-flag, that allows you change output format.
+All commands support output format flag, that allows you change layout between human friendly display and machine readable formats.
 
 #### pretty print
 
@@ -121,8 +126,7 @@ It's designed after other ruby command-line tools.
  ![Json format](http://dl.dropbox.com/u/19578784/versioneye/search_json.png)
 
 #### Table view
-It's shows results as one Excel sheet - title and content.
-A Tabular view is best suited for bigger screens.
+It's shows results as a big Excel sheet and works best on bigger screens.
 
  ```bash
   $> veye search json --format=table
@@ -204,14 +208,14 @@ $> rake test TEST=test/file_you_changed.rb
 $> rubocop lib/your_file.rb
 ```
 
-## Furhter documentation
+## Further documentation
 
-More documentation can be found in the [wiki](https://github.com/versioneye/veye/wiki). 
+More documentation can be found in the [Veye wiki](https://github.com/versioneye/veye/wiki). 
 
 ## License
 The MIT License (MIT)
 
-Copyright (c)2015 **VersionEye GmbH**
+Copyright: (c) 2016 **VersionEye GmbH**
 
 
 [MIT licence](http://choosealicense.com/licenses/mit/)

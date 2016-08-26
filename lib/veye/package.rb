@@ -12,6 +12,7 @@ module Veye
       Set.new ["Clojure", "Java", "Javascript", "Node.JS", "PHP", "Python", "Ruby", "R"]
     end
 
+    #TODO remove it
     def self.parse_key(package_key)
       tokens = package_key.to_s.split('/')
       lang = tokens.first
