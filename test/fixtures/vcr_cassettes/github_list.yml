@@ -1,0 +1,79 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.versioneye.com/api/v2/github?api_key=f82943fbd363bc640782&page=1&private=false
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.10.0 (Ubuntu)
+      Date:
+      - Mon, 29 Aug 2016 07:48:34 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '7175'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - api_key=f82943fbd363bc640782
+      Etag:
+      - W/"29ee7380f253fffbe8e189e2b3c1be58"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 437db0af-3efb-4924-bc5a-8161d932fab7
+      X-Runtime:
+      - '0.062098'
+    body:
+      encoding: UTF-8
+      string: '{"repos":[{"name":"clj-docker","fullname":"tauho/clj-docker","language":"clojure","owner_login":"tauho","owner_type":"organization","description":"A
+        work in progress Docker API client.","private":false,"fork":true,"branches":null},{"name":"datomic_tester","fullname":"tauho/datomic_tester","language":"clojure","owner_login":"tauho","owner_type":"organization","description":"test
+        does datomic works properly on docker.","private":false,"fork":false,"branches":null},{"name":"docker-datomic-free","fullname":"tauho/docker-datomic-free","language":"shell","owner_login":"tauho","owner_type":"organization","description":"Source
+        of docker image for Datomic-free ","private":false,"fork":false,"branches":null},{"name":"foxy-template","fullname":"tauho/foxy-template","language":"css","owner_login":"tauho","owner_type":"organization","description":"Leiningen
+        template for FirefoxOS apps.","private":false,"fork":false,"branches":null},{"name":"http-kit","fullname":"tauho/http-kit","language":"java","owner_login":"tauho","owner_type":"organization","description":"http-kit
+        is a minimalist, event-driven, high-performance Clojure HTTP server/client
+        library with WebSocket and asynchronous support","private":false,"fork":true,"branches":null},{"name":"http-kit-fake","fullname":"tauho/http-kit-fake","language":"clojure","owner_login":"tauho","owner_type":"organization","description":"Fakes
+        HTTP requests using the Clojure http-kit client","private":false,"fork":true,"branches":null},{"name":"jubatus-vagrant","fullname":"tauho/jubatus-vagrant","language":"","owner_login":"tauho","owner_type":"organization","description":"Basic
+        Vagrantfile to get started with Jubatus ML server","private":false,"fork":false,"branches":null},{"name":"phoneword","fullname":"tauho/phoneword","language":"javascript","owner_login":"tauho","owner_type":"organization","description":"FirefoxOS
+        demo application by using ClojureScript","private":false,"fork":false,"branches":null},{"name":"provision","fullname":"tauho/provision","language":"shell","owner_login":"tauho","owner_type":"organization","description":"Deployment
+        scripts and Dockerfiles for managing cloud instances","private":false,"fork":false,"branches":null},{"name":"pult","fullname":"tauho/pult","language":"clojure","owner_login":"tauho","owner_type":"organization","description":"FirefoxOS
+        app: remote controller for OpenEMU or desktop","private":false,"fork":false,"branches":null},{"name":"pult-server","fullname":"tauho/pult-server","language":"clojure","owner_login":"tauho","owner_type":"organization","description":"server
+        for remote controller","private":false,"fork":false,"branches":null},{"name":"tauho-blog","fullname":"tauho/tauho-blog","language":"","owner_login":"tauho","owner_type":"organization","description":"blog
+        for tauho","private":false,"fork":false,"branches":null},{"name":"weebu","fullname":"tauho/weebu","language":"clojure","owner_login":"tauho","owner_type":"organization","description":"Webfrontend
+        for TauhoDB","private":false,"fork":false,"branches":null},{"name":"aifh","fullname":"timgluz/aifh","language":"c#","owner_login":"timgluz","owner_type":"user","description":"Artificial
+        Intelligence for Humans","private":false,"fork":true,"branches":null},{"name":"backbone_test","fullname":"timgluz/backbone_test","language":"javascript","owner_login":"timgluz","owner_type":"user","description":"Backbone+Require.JS
+        \u0026 Highchart to build dashboards","private":false,"fork":false,"branches":null},{"name":"catacumba","fullname":"timgluz/catacumba","language":"clojure","owner_login":"timgluz","owner_type":"user","description":"Asynchronous
+        web toolkit for clojure built on top of Ratpack / Netty","private":false,"fork":true,"branches":null},{"name":"chat-client","fullname":"timgluz/chat-client","language":"javascript","owner_login":"timgluz","owner_type":"user","description":"webchat
+        client for Igeolise demo-server","private":false,"fork":false,"branches":null},{"name":"chord","fullname":"timgluz/chord","language":"clojure","owner_login":"timgluz","owner_type":"user","description":"A
+        library designed to bridge the gap between the triad of CLJ/CLJS, web-sockets
+        and core.async.","private":false,"fork":true,"branches":null},{"name":"clj-http","fullname":"timgluz/clj-http","language":"clojure","owner_login":"timgluz","owner_type":"user","description":"An
+        idiomatic clojure http client wrapping the apache client. Offically supported
+        version.","private":false,"fork":true,"branches":null},{"name":"clj-http-fake","fullname":"timgluz/clj-http-fake","language":"clojure","owner_login":"timgluz","owner_type":"user","description":"Helper
+        for faking clj-http requests. For testing. You monster.","private":false,"fork":true,"branches":null},{"name":"clj-mml","fullname":"timgluz/clj-mml","language":"clojure","owner_login":"timgluz","owner_type":"user","description":"ClojureCLR
+        wrapper for MyMediaLite library","private":false,"fork":false,"branches":null},{"name":"clj-pypy","fullname":"timgluz/clj-pypy","language":"python","owner_login":"timgluz","owner_type":"user","description":"A
+        implementation of Clojure on PyPy","private":false,"fork":true,"branches":null},{"name":"clj-time","fullname":"timgluz/clj-time","language":"clojure","owner_login":"timgluz","owner_type":"user","description":"A
+        date and time library for Clojure, wrapping the Joda Time library.","private":false,"fork":true,"branches":null},{"name":"cljubatus","fullname":"timgluz/cljubatus","language":"","owner_login":"timgluz","owner_type":"user","description":"Clojure
+        client for Jubatus ML server","private":false,"fork":false,"branches":null},{"name":"clojure-cookbook","fullname":"timgluz/clojure-cookbook","language":"clojure","owner_login":"timgluz","owner_type":"user","description":"This
+        is the home of O''Reilly''s Clojure Cookbook - http://clojure-cookbook.com","private":false,"fork":true,"branches":null},{"name":"compojure-api","fullname":"timgluz/compojure-api","language":"clojure","owner_login":"timgluz","owner_type":"user","description":"Sweet
+        web apis with Compojure \u0026 Swagger","private":false,"fork":true,"branches":null},{"name":"datomic_in_action","fullname":"timgluz/datomic_in_action","language":"shell","owner_login":"timgluz","owner_type":"user","description":"My
+        presentation for CLJ/FIN with getting started examples.","private":false,"fork":false,"branches":null},{"name":"diff-match-patch","fullname":"timgluz/diff-match-patch","language":"java","owner_login":"timgluz","owner_type":"user","description":"Clojure
+        wrappers and helpers for google''s diff-match-patch Java libirary. ","private":false,"fork":false,"branches":null},{"name":"elasticsearch_example","fullname":"timgluz/elasticsearch_example","language":"javascript","owner_login":"timgluz","owner_type":"user","description":"","private":false,"fork":false,"branches":null},{"name":"elastisch","fullname":"timgluz/elastisch","language":"clojure","owner_login":"timgluz","owner_type":"user","description":"A
+        minimalistic Clojure client for ElasticSearch, supports both HTTP and native
+        transports","private":false,"fork":true,"branches":null}],"paging":{"current_page":1,"per_page":30,"total_pages":3,"total_entries":76}}'
+    http_version: 
+  recorded_at: Mon, 29 Aug 2016 07:48:34 GMT
+recorded_with: VCR 3.0.1
