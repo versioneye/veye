@@ -48,9 +48,10 @@ class ProjectCheckTest < Minitest::Test
       end
 
       rows = CSV.parse(output)
-      assert_equal ["nr", "name", "project_key", "public", "period", "source",
+      assert_equal ["nr", "name", "project_id", "public", "period", "source",
                     "dep_number", "out_number", "created_at"], rows[0]
-      assert_equal ["1", "OpenEJB :: Maven Plugins", nil, "false", "daily", "API", "11", "10"], rows[1].take(8)
+      assert_equal ["1", "OpenEJB :: Maven Plugins", "57c05d11864739001066e3f1", "false",
+                    "daily", "API", "11", "10"], rows[1].take(8)
     end
   end
 
@@ -79,7 +80,7 @@ class ProjectCheckTest < Minitest::Test
       rows = output.split(/\n/)
       assert_match(/\|\s+List of projects\s+\|/, rows[1])
       assert_match(
-        /\| index\s+\| name\s+\| project_key\s+\| private \| period \| source \| dependencies \| outdated \| created_at\s+\|/,
+        /\| index\s+\| name\s+\| project_id\s+\|\s+public\s+\| period \| source \| dependencies \| outdated \| created_at\s+\|/,
         rows[3]
       )
 
@@ -96,7 +97,7 @@ class ProjectCheckTest < Minitest::Test
       refute_nil output
       rows = output.split(/\n/)
       assert_equal "  1 - \e[32m\e[1mOpenEJB :: Maven Plugins\e[0m", rows[0]
-      assert_match( /\tProject key\s+:\s+/, rows[1] )
+      assert_match( /\tProject id\s+:\s+/, rows[1] )
       assert_equal "\tProject type   : Maven2", rows[2]
       assert_equal "\tPublic         : false", rows[3]
       assert_equal "\tPeriod         : daily", rows[4]
@@ -114,9 +115,9 @@ class ProjectCheckTest < Minitest::Test
 
       refute_nil output
       rows = CSV.parse(output)
-      assert_equal ["nr", "name", "project_key", "public", "period", "source",
+      assert_equal ["nr", "name", "project_id", "public", "period", "source",
                     "dep_number", "out_number", "created_at"], rows[0]
-      assert_equal ["1", "OpenEJB :: Maven Plugins", nil, "false"], rows[1].take(4)
+      assert_equal ["1", "OpenEJB :: Maven Plugins", @project_key, "false"], rows[1].take(4)
 
     end
   end
@@ -146,7 +147,7 @@ class ProjectCheckTest < Minitest::Test
       refute_nil output
       rows = output.split(/\n/)
       assert_match(/\|\s+List of projects\s+\|/, rows[1])
-      assert_match(/\|\s+index\s+|\s+name\s+\|\s+project_key\s+\|\s+private\s+\|/, rows[3])
+      assert_match(/\|\s+index\s+|\s+name\s+\|\s+project_id\s+\|\s+private\s+\|/, rows[3])
       assert_match(/\| 1\s+\|\s+OpenEJB :: Maven Plugins\s+\|/, rows[5])
     end
   end
@@ -159,7 +160,7 @@ class ProjectCheckTest < Minitest::Test
       refute_nil output
       rows = output.split(/\n/)
       assert_equal "  1 - \e[32m\e[1mOpenEJB :: Maven Plugins\e[0m", rows[0]
-      assert_equal "\tProject key    : \e[1m#{@project_key}\e[0m", rows[1]
+      assert_equal "\tProject id     : \e[1m#{@project_key}\e[0m", rows[1]
       assert_equal "\tProject type   : Maven2", rows[2]
       assert_equal "\tPublic         : false", rows[3]
       assert_equal "\tPeriod         : daily", rows[4]
@@ -177,9 +178,9 @@ class ProjectCheckTest < Minitest::Test
 
       refute_nil output
       rows = CSV.parse(output)
-      assert_equal ["nr", "name", "project_key", "public", "period", "source",
+      assert_equal ["nr", "name", "project_id", "public", "period", "source",
                     "dep_number", "out_number", "created_at"], rows[0]
-      assert_equal ["1", "OpenEJB :: Maven Plugins", nil, "false", "daily", "API", "11", "10"], rows[1].take(8)
+      assert_equal ["1", "OpenEJB :: Maven Plugins", @project_key, "false", "daily", "API", "11", "10"], rows[1].take(8)
     end
   end
 
@@ -210,7 +211,7 @@ class ProjectCheckTest < Minitest::Test
       refute_nil output
       rows = output.split(/\n/)
       assert_match(
-        /| index \| name\s+\| project_key\s\| private \| period \| source \|/, rows[4]
+        /| index \| name\s+\| project_id\s+\| private \| period \| source \|/, rows[4]
       )
       assert_match(/\| 1\s+\|\s+OpenEJB :: Maven Plugins\s+\|/, rows[5])
 
@@ -232,7 +233,7 @@ class ProjectCheckTest < Minitest::Test
       refute_nil output
       rows = output.split(/\n/)
       assert_equal "  1 - \e[32m\e[1mOpenEJB :: Maven Plugins\e[0m", rows[0]
-      assert_equal "\tProject key    : \e[1m#{@project_key}\e[0m", rows[1]
+      assert_equal "\tProject id     : \e[1m#{@project_key}\e[0m", rows[1]
       assert_equal "\tProject type   : Maven2", rows[2]
       assert_equal "\tPublic         : false", rows[3]
       assert_equal "\tPeriod         : daily", rows[4]
@@ -250,8 +251,8 @@ class ProjectCheckTest < Minitest::Test
 
       refute_nil output
       rows = CSV.parse(output)
-      assert_equal ["nr", "name", "project_key", "public", "period", "source", "dep_number", "out_number", "created_at"], rows[0]
-      assert_equal ["1", "OpenEJB :: Maven Plugins", nil, "false", "daily", "API", "11", "10"], rows[1].take(8)
+      assert_equal ["nr", "name", "project_id", "public", "period", "source", "dep_number", "out_number", "created_at"], rows[0]
+      assert_equal ["1", "OpenEJB :: Maven Plugins", @project_key, "false", "daily", "API", "11", "10"], rows[1].take(8)
     end
   end
 
@@ -281,7 +282,7 @@ class ProjectCheckTest < Minitest::Test
 
       rows = output.split(/\n/)
       assert_match(
-        /| index \| name\s+\| project_key\s\| private \| period \| source \|/, rows[4]
+        /| index \| name\s+\| project_id\s\| private \| period \| source \|/, rows[4]
       )
       assert_match(/\| 1\s+\| OpenEJB :: Maven Plugins\s+\|/, rows[5])
 

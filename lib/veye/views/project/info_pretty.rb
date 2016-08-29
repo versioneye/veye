@@ -9,9 +9,14 @@ module Veye
         results = [results] if results.is_a? Hash
 
         results.each_with_index do |result, index|
+          #BUG: API returns raw mongoID value as id when fetching a list of projects
+          if result['id'].is_a?(Hash)
+            result['id'] = result['id'].values.first 
+          end
+          
           project_name = "#{result['name']}".color(:green).bright
           printf("%3d - %s\n", index + 1, project_name)
-          printf("\t%-15s: %s\n", "Project key", "#{result['id']}".bright)
+          printf("\t%-15s: %s\n", "Project id", "#{result['id']}".bright)
           printf("\t%-15s: %s\n", "Project type", result['project_type'])
           printf("\t%-15s: %s\n", "Public", result['public'])
           printf("\t%-15s: %s\n", "Period", result['period'])
