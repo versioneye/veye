@@ -9,7 +9,13 @@ class BaseExecutor
     return if formatter.nil?
 
     formatter.before
-    formatter.format(results)
+
+    #if command uses s.o windowed output aka show only part of the items list
+    if options.has_key?(:n) or options.has_key?(:from)
+      formatter.format(results, options[:n].to_i, options[:from].to_i)
+    else
+      formatter.format(results)
+    end
     formatter.after(paging, options[:pagination])
   end
 

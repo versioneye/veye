@@ -49,6 +49,17 @@ module Veye
         end
       end
 
+      def self.get_version_list(api_key, prod_key, language)
+        lang = encode_language(language)
+        safe_prod_key = encode_prod_key(prod_key)
+      
+        qparams = {api_key: api_key}
+        product_api = Resource.new "#{RESOURCE_PATH}/#{lang}/#{safe_prod_key}/versions"
+        product_api.resource.get({params: qparams}) do |response, request, result|
+          JSONResponse.new(request, result, response)
+        end
+      end
+
       def self.get_follow_status(api_key, prod_key, language)
         product_api = Resource.new(RESOURCE_PATH)
         qparams = {api_key: api_key}

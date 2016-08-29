@@ -13,6 +13,7 @@ require_relative 'package/references_json.rb'
 require_relative 'package/references_pretty.rb'
 require_relative 'package/references_table.rb'
 
+require_relative 'package/versions_csv.rb'
 
 module Veye
   module Package

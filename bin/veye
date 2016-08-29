@@ -265,6 +265,26 @@ command :package do |c|
     end
   end
 
+  c.desc 'fetch list of versions'
+  c.arg_name 'prod_key'
+  c.command :versions do |csub|
+    csub.desc "number of versions to show"
+    csub.flag [:n, 'n-results'], :default_value => 10
+
+    csub.desc 'number of versions to skip'
+    csub.flag [:from], :default_value => 0
+
+    csub.action do |global_options, options, args|
+      help_now!("The product ID is unspecified".color(:red)) if args.empty?
+      error_msg = 'no language specified - use -l/--language/--language-name key'.color(:red)
+      help_now!(error_msg) if options[:language].nil?
+
+      prod_key = args.shift
+      api_key = global_options[:api_key]
+      Veye::Package::Versions.get_list(api_key, prod_key, options[:language], options[:n], options[:from], options)
+    end
+  end
+
   c.desc "check your following status"
   c.arg_name "prod_key"
   c.command :following do |following|

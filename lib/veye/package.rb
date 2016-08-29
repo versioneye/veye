@@ -2,6 +2,7 @@ require_relative 'package/info.rb'
 require_relative 'package/search.rb'
 require_relative 'package/follow.rb'
 require_relative 'package/references.rb'
+require_relative 'package/versions.rb'
 
 # -- define module constants here
 module Veye
