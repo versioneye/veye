@@ -6,6 +6,10 @@
 * add vulnerability field for product details [#6](https://github.com/versioneye/veye/issues/6)
 * **BREAKS** - refactored the `veye info` command, which expect that a product language is explicitly specified with `--language` flag and allows,
 new command looks like this now `bundle exec bin/veye info --language=PHP --version='3.0.1' symfony/symfony --format=table`
+* **BREAKS** - renamed the `products` command to `package`
+* **BREAKS** - moved `info` command under the `package` command
+* **BREAKS** - refactored others subcommands of the `package` to match with the `info` command.
+
 
 ## 0.2.1 - 2016-03-15
 

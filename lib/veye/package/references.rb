@@ -12,12 +12,10 @@ module Veye
         'table'     => Package::ReferencesTable.new
       }
 
-      def self.get_references(api_key, package_key, options = {})
-        prod_key, lang = Package.parse_key(package_key)
-        results = Veye::API::Package.get_references(
-          api_key, prod_key, lang, options[:page]
-        )
-        if valid_response?(results, "No references for: `#{package_key}`")
+      def self.get_references(api_key, prod_key, language='ruby', options = {})
+        results = Veye::API::Package.get_references(api_key, prod_key, language, options[:page])
+
+        if valid_response?(results, "No references for: `#{prod_key}`, language: #{language}")
           paging = results.data['paging']
           show_results(@output_formats, results.data, options, paging)
         end

@@ -78,7 +78,7 @@ command :search do |c|
   c.flag [:l, :language, 'language-name']
 
   c.desc 'filter result by Maven specific GroupId'
-  c.flag "group-id"
+  c.flag [:gid, "group-id"]
 
   c.desc "get next N results, by default it only return 30 results."
   c.flag [:page, 'page-number'], :default_value => 1
@@ -93,58 +93,10 @@ command :search do |c|
   c.action do |global_options, options, args|
     error_msg = "the search term is mandatory.".color(:red)
     help_now!(error_msg) if args.empty?
+
     api_key = global_options[:api_key]
     search_term = args.shift
     Veye::Package::Search.search(api_key, search_term, options)
-  end
-end
-
-desc 'returns package information'
-arg_name 'product_key'
-command :info do |c|
-  c.desc 'specify a language of the product'
-  c.flag [:l, :language, 'language-name']
-
-  c.desc 'specify a version of the product'
-  c.flag [:v, :version, 'version-id']
-
-  c.desc "change output format"
-  c.flag [:format, 'format-name'], :default_value => 'pretty'
-
-  c.action do |global_options, options, args|
-    error_msg = Rainbow("package_key is missing").red
-    help_now!(error_msg) if args.empty?
-
-    error_msg = 'no language specified - use -l/--language/--language-name key'.color(:red)
-    help_now!(error_msg) if options[:language].nil?
-
-    api_key = global_options[:api_key]
-    package_key = args.shift
-    Veye::Package::Info.get_package(api_key, package_key, options[:language], options[:version], options)
-  end
-end
-
-desc 'check a references of package'
-arg_name 'product_key'
-command :references do |c|
-  c.desc "change output format"
-  c.flag [:format, 'format-name'], :default_value => 'pretty'
-
-  c.desc "page number for pagination"
-  c.flag [:page, 'page-number'], :default_value => 1
-
-  c.desc "show paging information"
-  c.switch [:pagination, 'show-pagination'], :default_value => true,
-                                             :negatable => true
-
-
-  c.action do |global_options, options, args|
-    error_msg = Rainbow("package_key is missing").red
-    help_now!(error_msg) if args.empty?
-    package_key = args.shift
-
-    api_key = global_options[:api_key]
-    Veye::Package::References.get_references(api_key, package_key, options)
   end
 end
 
@@ -266,18 +218,64 @@ command :projects do |c|
 end
 
 desc "package related methods"
-command :products do |c|
+command :package do |c|
+  c.desc 'specify a language of the product'
+  c.flag [:l, :language, 'language-name']
+  
   c.desc "change output format"
   c.flag [:format, 'format-name'], :default_value => 'pretty'
+
+  c.desc 'returns package information'
+  c.arg_name 'prod_key'
+  c.command :info do |csub|
+    csub.desc 'specify a version of the product'
+    csub.flag [:v, :version, 'version-id']
+
+    csub.action do |global_options, options, args|
+      error_msg = Rainbow("The package ID is unspecified").red
+      help_now!(error_msg) if args.empty?
+
+      error_msg = 'no language specified - use -l/--language/--language-name key'.color(:red)
+      help_now!(error_msg) if options[:language].nil?
+
+      api_key = global_options[:api_key]
+      package_key = args.shift
+      Veye::Package::Info.get_package(api_key, package_key, options[:language], options[:version], options)
+    end
+  end
+
+  c.desc 'check a references of package'
+  c.arg_name 'prod_key'
+  c.command :references do |csub|
+    csub.desc "page number for pagination"
+    csub.flag [:page, 'page-number'], :default_value => 1
+
+    csub.desc "show paging information"
+    csub.switch [:pagination, 'show-pagination'], :default_value => true, :negatable => true
+
+    csub.action do |global_options, options, args|
+      error_msg = Rainbow("The package ID is unspecified").red
+      help_now!(error_msg) if args.empty?
+      error_msg = 'no language specified - use -l/--language/--language-name key'.color(:red)
+      help_now!(error_msg) if options[:language].nil?
+
+      prod_key = args.shift
+      api_key = global_options[:api_key]
+      Veye::Package::References.get_references(api_key, prod_key, options[:language], options)
+    end
+  end
 
   c.desc "check your following status"
   c.arg_name "prod_key"
   c.command :following do |following|
     following.action do |global_options, options, args|
-      help_now!("Product's key is missing".color(:red)) if args.empty?
+      help_now!("The product ID is unspecified".color(:red)) if args.empty?
+      error_msg = 'no language specified - use -l/--language/--language-name key'.color(:red)
+      help_now!(error_msg) if options[:language].nil?
+
       prod_key = args.shift
       api_key = global_options[:api_key]
-      Veye::Package::Follow.get_follow_status(api_key, prod_key)
+      Veye::Package::Follow.get_follow_status(api_key, prod_key, options[:language])
     end
   end
 
@@ -285,10 +283,13 @@ command :products do |c|
   c.arg_name "prod_key"
   c.command :follow do |follow|
     follow.action do |global_options, options, args|
-      help_now!("Product's key is missing".color(:red)) if args.empty?
+      help_now!("The product ID is unspecified".color(:red)) if args.empty?
+      error_msg = 'no language specified - use -l/--language/--language-name key'.color(:red)
+      help_now!(error_msg) if options[:language].nil?
+
       prod_key = args.shift
       api_key = global_options[:api_key]
-      Veye::Package::Follow.follow(api_key, prod_key)
+      Veye::Package::Follow.follow(api_key, prod_key, options[:language])
     end
   end
 
@@ -296,10 +297,13 @@ command :products do |c|
   c.arg_name "prod_key"
   c.command :unfollow do |unfollow|
     unfollow.action do |global_options, options, args|
-      help_now!("Product's key is missing".color(:red)) if args.empty?
+      help_now!("The product ID is unspecified".color(:red)) if args.empty?
+      error_msg = 'no language specified - use -l/--language/--language-name key'.color(:red)
+      help_now!(error_msg) if options[:language].nil?
+
       prod_key = args.shift
       api_key = global_options[:api_key]
-      Veye::Package::Follow.unfollow(api_key, prod_key)
+      Veye::Package::Follow.unfollow(api_key, prod_key, options[:language])
     end
   end
 end
