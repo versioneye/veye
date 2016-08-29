@@ -1,0 +1,44 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.versioneye.com/api/v2/products/search/veye?api_key=f82943fbd363bc640782&page=1&q=veye
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.10.0 (Ubuntu)
+      Date:
+      - Mon, 29 Aug 2016 08:36:20 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '221'
+      Connection:
+      - keep-alive
+      Etag:
+      - W/"ec1fb5ad8d35b82cdf9e922fc22f51bd"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - d83cec56-b396-4262-b88f-45267f35adce
+      X-Runtime:
+      - '0.014756'
+    body:
+      encoding: UTF-8
+      string: '{"query":{"q":"veye","lang":[],"g":null},"results":[{"name":"veye","language":"ruby","prod_key":"veye","version":"0.2.1","prod_type":"RubyGem"}],"paging":{"current_page":1,"per_page":30,"total_pages":1,"total_entries":1}}'
+    http_version: 
+  recorded_at: Mon, 29 Aug 2016 08:36:20 GMT
+recorded_with: VCR 3.0.1

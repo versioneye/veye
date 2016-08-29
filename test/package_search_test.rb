@@ -16,7 +16,7 @@ class PackageSearchTest < MiniTest::Test
       rows = output.split(/\n/)
       assert_equal "  1 - \e[32m\e[1mveye\e[0m", rows[0]
       assert_equal "\tProduct key    : veye", rows[1]
-      assert_equal "\tLatest version : \e[32m\e[1m0.1.1\e[0m", rows[2]
+      assert_equal "\tLatest version : \e[32m\e[1m0.2.1\e[0m", rows[2]
       assert_equal "\tLanguage       : ruby", rows[3]
     end
   end
@@ -30,7 +30,7 @@ class PackageSearchTest < MiniTest::Test
 
       rows = CSV.parse(output)
       assert_equal ["nr", "name", "version", "prod_key", "language", "group_id"], rows[0]
-      assert_equal ["1", "veye", "0.1.1", "veye", "ruby", nil], rows[1]
+      assert_equal ["1", "veye", "0.2.1", "veye", "ruby", nil], rows[1]
     end
   end
 
@@ -46,7 +46,7 @@ class PackageSearchTest < MiniTest::Test
       assert_equal "veye", res["name"]
       assert_equal "ruby", res["language"]
       assert_equal "veye", res["prod_key"]
-      assert_equal "0.1.1", res["version"]
+      assert_equal "0.2.1", res["version"]
       assert_equal "RubyGem", res["prod_type"]
     end
   end
@@ -61,7 +61,7 @@ class PackageSearchTest < MiniTest::Test
       rows = output.split(/\n/)
       assert_match(/\|\s+Package search\s+\|/, rows[1])
       assert_match(/\| index \| name \| version \| product_key \| language \|/, rows[3])
-      assert_match(/\| 1\s+\| veye \| 0.1.1\s+\| veye\s+\| ruby\s+\|/, rows[5])
+      assert_match(/\| 1\s+\| veye \| 0.2.1\s+\| veye\s+\| ruby\s+\|/, rows[5])
     end
   end
 end

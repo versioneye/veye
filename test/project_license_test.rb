@@ -4,17 +4,22 @@ require 'csv'
 class ProjectLicenseTest < MiniTest::Test
   def setup
     init_environment
-    @api_key = ENV["VEYE_API_KEY"]
-    @test_file = 'test/files/maven-1.0.1.pom.xml'
-
-    project_dt = upload_project(@api_key, @test_file)
-    @project_key = project_dt['id']
+    @api_key    = ENV["VEYE_API_KEY"]
+    @test_file  = 'test/files/maven-1.0.1.pom.xml'
+    @org_name   = 'veye_test'
+    @project_key = upload_project['id']
   end
 
-  def upload_project(api_key, test_file)
-    VCR.use_cassette('project_upload') do
+  def teardown
+    VCR.use_cassette('project_delete_for_licenses') do
+      Veye::Project::Check.delete_project(@api_key, @project_key)
+    end
+  end
+
+  def upload_project
+    VCR.use_cassette('project_upload_for_licenses') do
       output = capture_stdout do
-        Veye::Project::Check.upload(api_key, test_file, {format: 'json'})
+        Veye::Project::Check.upload(@api_key, @test_file, @org_name, nil, false, nil, {format: 'json'})
       end
 
       res = JSON.parse(output)
