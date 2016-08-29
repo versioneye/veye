@@ -38,7 +38,8 @@ class GithubImportTest < Minitest::Test
       dt = CSV.parse(res)
       assert_equal ["name", "language", "owner_login", "owner_type", "private", "fork", "branches", "imported_projects", "description"], dt[0]
       assert_equal ["versioneye/veye", "ruby", "versioneye", "organization", "false"], dt[1].take(5)
-      assert_equal ["false", nil, '|', "VersionEye command line tool implemented in Ruby"], dt[1].drop(5)
+      assert_equal ["false", nil, '57c3f017864739000eca5357|57c3f39712b5260016707bea',
+                    "VersionEye command line tool implemented in Ruby"], dt[1].drop(5)
     end
   end
 

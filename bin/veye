@@ -353,7 +353,7 @@ command :github do |c|
   c.flag [:branch], :default_value => "master"
 
   c.desc "specify the name of the project file"
-  c.flag [:file, 'file'], :default_value => nil
+  c.flag [:file, 'file', 'filename'], :default_value => nil
 
   c.action do |global_options, options, args|
     help_now!
@@ -405,7 +405,10 @@ command :github do |c|
       help_now!("the name of repository is mandatory".color(:red)) if args.empty?
       repo_name = args.shift
       api_key = global_options[:api_key]
-      Veye::Github::Import.import_repo(api_key, repo_name, options)
+      branch = (options[:branch] || 'master')
+      filename = (options['file'] || 'Gemfile')
+
+      Veye::Github::Import.import_repo(api_key, repo_name, branch, filename, options)
     end
   end # end of import
 
@@ -416,6 +419,7 @@ command :github do |c|
       help_now!("the name of repository is mandatory".color(:red)) if args.empty?
       repo_name = args.shift
       api_key = global_options[:api_key]
+
       Veye::Github::Delete.delete_repo(api_key, repo_name, options)
     end
   end

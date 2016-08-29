@@ -11,7 +11,7 @@ module Veye
         return nil if results.nil?
         repo = results['repo']
         imported_projects = results['imported_projects']
-        imported_project_names = imported_projects.map {|p| p['project_key']}
+        imported_project_names = imported_projects.map {|p| p['id']}
         printf(
           "%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
           repo['fullname'],
