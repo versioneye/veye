@@ -274,6 +274,9 @@ command :package do |c|
     csub.desc 'number of versions to skip'
     csub.flag [:from], :default_value => 0
 
+    csub.desc 'show all the items'
+    csub.switch [:all, 'no-filtering'], :default_value => true
+
     csub.action do |global_options, options, args|
       help_now!("The product ID is unspecified".color(:red)) if args.empty?
       error_msg = 'no language specified - use -l/--language/--language-name key'.color(:red)

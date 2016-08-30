@@ -1,3 +1,5 @@
+require 'naturalsorter'
+
 require_relative '../views/package.rb'
 require_relative '../base_executor.rb'
 
@@ -16,8 +18,15 @@ module Veye
         err_msg = "Found no versions for #{lang} package `#{prod_key}`"
 
         if valid_response?(results, err_msg)
-          #filter out extra rows and show only items in the window
-          filtered_items = results.data['versions'].to_a.drop(from).take(n)
+          sorted_items = results.data['versions'].to_a.sort do |a, b| 
+            Naturalsorter::Sorter.bigger?(a['version'], b['version']) ? -1 : 1
+          end
+
+          filtered_items =  if options.has_key?('all') and options['all'] == true
+                              sorted_items
+                            else
+                              sorted_items.to_a.drop(from).take(n)
+                            end
           results.data['versions'] = filtered_items
 
           show_results(@output_formats, results.data, options)

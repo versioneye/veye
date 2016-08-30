@@ -41,4 +41,5 @@ spec = Gem::Specification.new do |s|
   s.add_runtime_dependency('rainbow',           '~> 2.0')
   s.add_runtime_dependency('terminal-table',    '~> 1.4')
   s.add_runtime_dependency('render-as-markdown','~> 0')
+  s.add_runtime_dependency('naturalsorter',     '= 3.0.14')
 end
