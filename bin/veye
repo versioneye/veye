@@ -281,7 +281,9 @@ command :package do |c|
 
       prod_key = args.shift
       api_key = global_options[:api_key]
-      Veye::Package::Versions.get_list(api_key, prod_key, options[:language], options[:n], options[:from], options)
+      Veye::Package::Versions.get_list(
+        api_key, prod_key, options[:language], options[:n].to_i, options[:from].to_i, options
+      )
     end
   end
 

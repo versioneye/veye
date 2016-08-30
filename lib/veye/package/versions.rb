@@ -6,9 +6,9 @@ module Veye
     class Versions < BaseExecutor
       @output_formats = {
         'csv'     => Package::VersionsCSV.new,
-        #'json'    => Package::VersionsJSON.new,
-        #'pretty'  => Package::VersionsPretty.new,
-        #'table'   => Package::VersionsTable.new
+        'json'    => Package::VersionsJSON.new,
+        'pretty'  => Package::VersionsPretty.new,
+        'table'   => Package::VersionsTable.new
       }
     
       def self.get_list(api_key, prod_key, lang = 'ruby', n = 10, from = 0, options = {})
@@ -17,8 +17,8 @@ module Veye
 
         if valid_response?(results, err_msg)
           #filter out extra rows and show only items in the window
-          items = results.data['versions'].to_a.drop(from).take(n)
-          results.data['versions'] = items
+          filtered_items = results.data['versions'].to_a.drop(from).take(n)
+          results.data['versions'] = filtered_items
 
           show_results(@output_formats, results.data, options)
         end

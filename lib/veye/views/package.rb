@@ -14,6 +14,9 @@ require_relative 'package/references_pretty.rb'
 require_relative 'package/references_table.rb'
 
 require_relative 'package/versions_csv.rb'
+require_relative 'package/versions_json.rb'
+require_relative 'package/versions_pretty.rb'
+require_relative 'package/versions_table.rb'
 
 module Veye
   module Package

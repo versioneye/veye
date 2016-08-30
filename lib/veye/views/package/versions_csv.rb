@@ -8,7 +8,7 @@ module Veye
         super(headers)
       end
 
-      def format(results, n = 0, from = 0)
+      def format(results, n = 10, from = 0)
         prod_dt = results
 
         results['versions'].to_a.each_with_index do |ver, i|
