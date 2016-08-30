@@ -278,7 +278,7 @@ command :package do |c|
     csub.flag [:from], :default_value => 0
 
     csub.desc 'show all the items'
-    csub.switch [:all, 'no-filtering'], :default_value => true
+    csub.switch [:all, 'no-filtering'], :default_value => false
 
     csub.action do |global_options, options, args|
       help_now!("The product ID is unspecified".color(:red)) if args.empty?
