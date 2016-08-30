@@ -18,12 +18,9 @@ class ProjectLicenseTest < MiniTest::Test
 
   def upload_project
     VCR.use_cassette('project_upload_for_licenses') do
-      output = capture_stdout do
-        Veye::Project::Check.upload(@api_key, @test_file, @org_name, nil, false, nil, {format: 'json'})
-      end
-
-      res = JSON.parse(output)
-      res["projects"]
+      res = Veye::API::Project.upload(@api_key, @test_file, @org_name, nil, false)
+      refute_nil 'Failed to create a project for licenses spec'
+      res.data
     end
   end
 

@@ -1,0 +1,105 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://www.versioneye.com/api/v2/projects
+    body:
+      encoding: ASCII-8BIT
+      string: "--450514\r\nContent-Disposition: form-data; name=\"upload\"; filename=\"maven-1.0.1.pom.xml\"\r\nContent-Type:
+        application/xml\r\n\r\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!--\n
+        \ Licensed to the Apache Software Foundation (ASF) under one or more\n   contributor
+        license agreements.  See the NOTICE file distributed with\n   this work for
+        additional information regarding copyright ownership.\n   The ASF licenses
+        this file to You under the Apache License, Version 2.0\n   (the \"License\");
+        you may not use this file except in compliance with\n   the License.  You
+        may obtain a copy of the License at\n\n       http://www.apache.org/licenses/LICENSE-2.0\n\n
+        \   Unless required by applicable law or agreed to in writing, software\n
+        \   distributed under the License is distributed on an \"AS IS\" BASIS,\n
+        \   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n
+        \   See the License for the specific language governing permissions and\n
+        \   limitations under the License.\n  -->\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\n
+        \        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0
+        http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n\n
+        \ <parent>\n    <artifactId>openejb</artifactId>\n    <groupId>org.apache.openejb</groupId>\n
+        \   <version>4.5.1</version>\n  </parent>\n\n  <groupId>org.apache.openejb.maven</groupId>\n
+        \ <version>1.0.1</version>\n  <artifactId>maven</artifactId>\n  <packaging>pom</packaging>\n
+        \ <name>OpenEJB :: Maven Plugins</name>\n\n  <modules>\n    <module>tomee-maven-plugin</module>\n
+        \   <module>tomee-embedded-maven-plugin</module>\n    <module>openejb-embedded-maven-plugin</module>\n
+        \   <module>maven-util</module>\n    <module>tomee-webapp-archetype</module>\n
+        \ </modules>\n\n  <dependencyManagement>\n    <dependencies>\n      <dependency>\n
+        \       <groupId>org.apache.maven.plugin-tools</groupId>\n        <artifactId>maven-plugin-annotations</artifactId>\n
+        \       <version>3.1</version>\n      </dependency>\n      <dependency>\n
+        \       <groupId>org.codehaus.plexus</groupId>\n        <artifactId>plexus-utils</artifactId>\n
+        \       <version>3.0.1</version>\n      </dependency>\n      <dependency>\n
+        \       <groupId>org.apache.maven</groupId>\n        <artifactId>maven-plugin-api</artifactId>\n
+        \       <version>${maven.version}</version>\n      </dependency>\n      <dependency>\n
+        \       <groupId>org.apache.maven</groupId>\n        <artifactId>maven-project</artifactId>\n
+        \       <version>${maven.version}</version>\n      </dependency>\n      <dependency>\n
+        \       <groupId>org.apache.maven</groupId>\n        <artifactId>maven-core</artifactId>\n
+        \       <version>${maven.version}</version>\n      </dependency>\n      <dependency>\n
+        \       <groupId>org.apache.maven</groupId>\n        <artifactId>maven-artifact</artifactId>\n
+        \       <version>${maven.version}</version>\n      </dependency>\n      <dependency>\n
+        \       <groupId>org.sonatype.aether</groupId>\n        <artifactId>aether-api</artifactId>\n
+        \       <version>${aether.version}</version>\n      </dependency>\n      <dependency>\n
+        \       <groupId>org.apache.openejb</groupId>\n        <artifactId>openejb-core</artifactId>\n
+        \       <version>${openejb.version}</version>\n      </dependency>\n      <dependency>\n
+        \       <groupId>org.apache.openejb</groupId>\n        <artifactId>openejb-client</artifactId>\n
+        \       <version>${openejb.version}</version>\n      </dependency>\n    </dependencies>\n
+        \ </dependencyManagement>\n\n  <properties>\n    <maven.version>2.2.1</maven.version>\n
+        \ </properties>\n\n  <build>\n    <plugins>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n
+        \       <artifactId>maven-plugin-plugin</artifactId>\n        <version>3.1</version>\n
+        \       <executions>\n          <execution>\n            <id>mojo-descriptor</id>\n
+        \           <goals>\n              <goal>descriptor</goal>\n            </goals>\n
+        \         </execution>\n        </executions>\n        <configuration>\n          <goalPrefix>${maven-plugin.prefix}</goalPrefix>\n
+        \         <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>\n
+        \       </configuration>\n      </plugin>\n    </plugins>\n  </build>\n\n
+        \ <reporting>\n    <plugins>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n
+        \       <artifactId>maven-plugin-plugin</artifactId>\n        <version>3.0</version>\n
+        \     </plugin>\n    </plugins>\n  </reporting>\n</project>\n\r\n--450514\r\nContent-Disposition:
+        form-data; name=\"api_key\"\r\n\r\nf82943fbd363bc640782\r\n--450514\r\nContent-Disposition:
+        form-data; name=\"orga_name\"\r\n\r\nveye_test\r\n--450514\r\nContent-Disposition:
+        form-data; name=\"team_name\"\r\n\r\nveye_cli_tool\r\n--450514\r\nContent-Disposition:
+        form-data; name=\"temporary\"\r\n\r\nfalse\r\n--450514\r\nContent-Disposition:
+        form-data; name=\"visibility\"\r\n\r\npublic\r\n--450514--\r\n"
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Length:
+      - '4745'
+      Content-Type:
+      - multipart/form-data; boundary=450514
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Server:
+      - nginx/1.10.0 (Ubuntu)
+      Date:
+      - Tue, 30 Aug 2016 15:32:46 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '4928'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - api_key=f82943fbd363bc640782
+      Etag:
+      - W/"2bb32e56543609c09cb85edb53547b03"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 57f01370-d788-421e-a2f2-0d79e22c9b6a
+      X-Runtime:
+      - '0.589945'
+    body:
+      encoding: UTF-8
+      string: '{"id":"57c5a71e12b526000ee359e1","name":"OpenEJB :: Maven Plugins","project_type":"Maven2","organisation":{"name":"veye_test","company":"VersionEye","location":"Mannheim"},"public":true,"private_scm":false,"period":"daily","source":"API","dep_number":11,"out_number":10,"licenses_red":0,"licenses_unknown":3,"sv_count":0,"created_at":"2016-08-30T15:32:46.403Z","updated_at":"2016-08-30T15:32:46.784Z","license_whitelist":null,"dependencies":[{"name":"maven-plugin-annotations","prod_key":"org.apache.maven.plugin-tools/maven-plugin-annotations","group_id":"org.apache.maven.plugin-tools","artifact_id":"maven-plugin-annotations","language":"java","version_current":"3.4","version_requested":"3.1","comparator":"=","unknown":false,"outdated":true,"stable":true,"licenses":[{"name":"Apache-2.0","url":"http://www.apache.org/licenses/LICENSE-2.0","on_whitelist":null,"on_cwl":null}],"security_vulnerabilities":null},{"name":"plexus-utils","prod_key":"org.codehaus.plexus/plexus-utils","group_id":"org.codehaus.plexus","artifact_id":"plexus-utils","language":"java","version_current":"3.0.24","version_requested":"3.0.1","comparator":"=","unknown":false,"outdated":true,"stable":true,"licenses":[{"name":"Apache-2.0","url":"http://www.apache.org/licenses/LICENSE-2.0.txt","on_whitelist":null,"on_cwl":null}],"security_vulnerabilities":null},{"name":"maven-plugin-api","prod_key":"org.apache.maven/maven-plugin-api","group_id":"org.apache.maven","artifact_id":"maven-plugin-api","language":"java","version_current":"3.3.9","version_requested":"2.2.1","comparator":"=","unknown":false,"outdated":true,"stable":true,"licenses":[{"name":"Apache-2.0","url":"http://www.apache.org/licenses/LICENSE-2.0.txt","on_whitelist":null,"on_cwl":null}],"security_vulnerabilities":null},{"name":"maven-project","prod_key":"org.apache.maven/maven-project","group_id":"org.apache.maven","artifact_id":"maven-project","language":"java","version_current":"2.2.1","version_requested":"2.2.1","comparator":"=","unknown":false,"outdated":false,"stable":true,"licenses":[{"name":"Apache-2.0","url":"http://www.apache.org/licenses/LICENSE-2.0.txt","on_whitelist":null,"on_cwl":null}],"security_vulnerabilities":null},{"name":"maven-core","prod_key":"org.apache.maven/maven-core","group_id":"org.apache.maven","artifact_id":"maven-core","language":"java","version_current":"3.3.9","version_requested":"2.2.1","comparator":"=","unknown":false,"outdated":true,"stable":true,"licenses":[{"name":"Apache-2.0","url":"http://www.apache.org/licenses/LICENSE-2.0.txt","on_whitelist":null,"on_cwl":null}],"security_vulnerabilities":null},{"name":"maven-artifact","prod_key":"org.apache.maven/maven-artifact","group_id":"org.apache.maven","artifact_id":"maven-artifact","language":"java","version_current":"3.3.9","version_requested":"2.2.1","comparator":"=","unknown":false,"outdated":true,"stable":true,"licenses":[{"name":"Apache-2.0","url":"http://www.apache.org/licenses/LICENSE-2.0.txt","on_whitelist":null,"on_cwl":null}],"security_vulnerabilities":null},{"name":"aether-api","prod_key":"org.sonatype.aether/aether-api","group_id":"org.sonatype.aether","artifact_id":"aether-api","language":"java","version_current":"1.13.1","version_requested":"${aether.version}","comparator":"=","unknown":false,"outdated":true,"stable":true,"licenses":[],"security_vulnerabilities":null},{"name":"openejb-core","prod_key":"org.apache.openejb/openejb-core","group_id":"org.apache.openejb","artifact_id":"openejb-core","language":"java","version_current":"4.7.4","version_requested":"${openejb.version}","comparator":"=","unknown":false,"outdated":true,"stable":true,"licenses":[],"security_vulnerabilities":null},{"name":"openejb-client","prod_key":"org.apache.openejb/openejb-client","group_id":"org.apache.openejb","artifact_id":"openejb-client","language":"java","version_current":"4.7.4","version_requested":"${openejb.version}","comparator":"=","unknown":false,"outdated":true,"stable":true,"licenses":[],"security_vulnerabilities":null},{"name":"maven-plugin-plugin","prod_key":"org.apache.maven.plugins/maven-plugin-plugin","group_id":"org.apache.maven.plugins","artifact_id":"maven-plugin-plugin","language":"java","version_current":"3.4","version_requested":"3.1","comparator":"=","unknown":false,"outdated":true,"stable":true,"licenses":[{"name":"Apache-2.0","url":"http://www.apache.org/licenses/LICENSE-2.0.txt","on_whitelist":null,"on_cwl":null}],"security_vulnerabilities":null},{"name":"maven-plugin-plugin","prod_key":"org.apache.maven.plugins/maven-plugin-plugin","group_id":"org.apache.maven.plugins","artifact_id":"maven-plugin-plugin","language":"java","version_current":"3.4","version_requested":"3.0","comparator":"=","unknown":false,"outdated":true,"stable":true,"licenses":[{"name":"Apache-2.0","url":"http://www.apache.org/licenses/LICENSE-2.0.txt","on_whitelist":null,"on_cwl":null}],"security_vulnerabilities":null}],"child_ids":[],"parent_id":null}'
+    http_version: 
+  recorded_at: Tue, 30 Aug 2016 15:32:46 GMT
+recorded_with: VCR 3.0.1

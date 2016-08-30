@@ -35,7 +35,7 @@ module Veye
         end
       end
 
-      def self.upload(api_key, filename, org_name = nil, team_name = nil, temporary = false, visibility = 'public')
+      def self.upload(api_key, filename, org_name = nil, team_name = nil, temporary = false, public =true, name = nil)
         project_api = Resource.new(RESOURCE_PATH)
         file_path = check_file(filename)
         return if file_path.nil?
@@ -47,16 +47,17 @@ module Veye
         }
         upload_data[:orga_name] = org_name.to_s.strip unless org_name.to_s.empty?
         upload_data[:team_name] = team_name.to_s.strip unless team_name.to_s.empty?
-        upload_data[:temporary] = true if temporary == true
-        upload_data[:visibility] = 'private' if visibility.to_s.strip != 'public'
+        upload_data[:temporary] = temporary
+        upload_data[:visibility] = (public == true ? 'public' : 'private')
+        upload_data[:name]      = name.to_s.strip unless name.to_s.strip.empty?
 
         project_api.resource.post(upload_data) do |response, request, result, &block|
           JSONResponse.new(request, result, response)
         end
       end
 
-      def self.update(api_key, project_key, filename)
-        project_api = Resource.new("#{RESOURCE_PATH}/#{project_key}")
+      def self.update(api_key, project_id, filename)
+        project_api = Resource.new("#{RESOURCE_PATH}/#{project_id}")
         file_path = check_file(filename)
         return if file_path.nil?
 

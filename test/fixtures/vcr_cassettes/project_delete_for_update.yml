@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: delete
-    uri: https://www.versioneye.com/api/v2/projects/57c5aa23864739001076eb5f?api_key=f82943fbd363bc640782
+    uri: https://www.versioneye.com/api/v2/projects/57c5a71e12b526000ee359e1?api_key=f82943fbd363bc640782
     body:
       encoding: US-ASCII
       string: ''
@@ -21,7 +21,7 @@ http_interactions:
       Server:
       - nginx/1.10.0 (Ubuntu)
       Date:
-      - Tue, 30 Aug 2016 15:45:40 GMT
+      - Tue, 30 Aug 2016 15:32:48 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -35,12 +35,12 @@ http_interactions:
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - 1e7f7369-6242-4fe4-815c-0233ca63bd97
+      - 02a4bc29-72f3-4dd6-ad9f-4b59888116f4
       X-Runtime:
-      - '0.080671'
+      - '0.086069'
     body:
       encoding: UTF-8
       string: '{"success":true,"message":"Project deleted successfully."}'
     http_version: 
-  recorded_at: Tue, 30 Aug 2016 15:45:40 GMT
+  recorded_at: Tue, 30 Aug 2016 15:32:48 GMT
 recorded_with: VCR 3.0.1

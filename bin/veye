@@ -139,11 +139,14 @@ command :projects do |c|
 	c.desc 'filter by team name'
 	c.flag [:team, 'team-name']
 
-	c.desc 'specify project visibility when uploading a new project'
-	c.flag [:public, 'is-public'], :default_value => true
+  c.desc 'add memorizable, meaningful project name'
+  c.flag [:name, 'project-name']
+
+	c.desc 'upload as public project'
+	c.switch [:public], :default_value => true, :negatable => true
 
 	c.desc 'mark it as temporary project when uploading a new project'
-	c.flag [:temp, :temporary], :default_value => false
+	c.switch [:temp, :temporary], :default_value => false, :negatable => true
 
   c.desc "show all projects"
   c.command :list do |list|

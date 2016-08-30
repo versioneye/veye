@@ -7,18 +7,15 @@ class ProjectCheckTest < Minitest::Test
     @api_key = ENV['VEYE_API_KEY']
     @test_file = "test/files/maven-1.0.1.pom.xml"
    	@org_name  = 'veye_test'
- 
+    @team_name = 'veye_cli_tool'
+
     @project_key = upload_project["id"]
   end
 
   def upload_project
     VCR.use_cassette('project_upload') do
-      output = capture_stdout do
-        Veye::Project::Check.upload(@api_key, @test_file, @org_name, nil, true, nil, {format: 'json'})
-      end
-
-      res = JSON.parse(output)
-      res["projects"]
+      res = Veye::API::Project.upload(@api_key, @test_file, @org_name, nil, true)
+      res.data
     end
   end
 
@@ -88,10 +85,11 @@ class ProjectCheckTest < Minitest::Test
     end
   end
 
+
   def test_upload_default
     VCR.use_cassette('project_upload') do
       output = capture_stdout do
-        Veye::Project::Check.upload(@api_key, @test_file, @org_name, nil, true, nil, {format: 'pretty'})
+        Veye::Project::Check.upload(@api_key, @test_file, @org_name, @team_name, {format: 'pretty'})
       end
 
       refute_nil output
@@ -99,7 +97,7 @@ class ProjectCheckTest < Minitest::Test
       assert_equal "  1 - \e[32m\e[1mOpenEJB :: Maven Plugins\e[0m", rows[0]
       assert_match( /\tProject id\s+:\s+/, rows[1] )
       assert_equal "\tProject type   : Maven2", rows[2]
-      assert_equal "\tPublic         : false", rows[3]
+      assert_equal "\tPublic         : true", rows[3]
       assert_equal "\tPeriod         : daily", rows[4]
       assert_equal "\tSource         : API", rows[5]
       assert_equal "\tDependencies   : \e[1m11\e[0m", rows[6]
@@ -110,14 +108,14 @@ class ProjectCheckTest < Minitest::Test
   def test_upload_csv
     VCR.use_cassette('project_upload') do
       output = capture_stdout do
-        Veye::Project::Check.upload(@api_key, @test_file, @org_name, nil, true, nil, {format: "csv"})
+        Veye::Project::Check.upload(@api_key, @test_file, @org_name, @team_name, {format: "csv"})
       end
 
       refute_nil output
       rows = CSV.parse(output)
       assert_equal ["nr", "name", "project_id", "public", "period", "source",
                     "dep_number", "out_number", "created_at"], rows[0]
-      assert_equal ["1", "OpenEJB :: Maven Plugins", @project_key, "false"], rows[1].take(4)
+      assert_equal ["1", "OpenEJB :: Maven Plugins", @project_key, "true"], rows[1].take(4)
 
     end
   end
@@ -125,14 +123,14 @@ class ProjectCheckTest < Minitest::Test
   def test_upload_json
     VCR.use_cassette('project_upload') do
       output = capture_stdout do
-        Veye::Project::Check.upload(@api_key, @test_file, @org_name, nil, true, nil, {format: "json"})
+        Veye::Project::Check.upload(@api_key, @test_file, @org_name, @team_name, {format: "json"})
       end
 
       refute_nil output
       res = JSON.parse(output)
       assert_equal "OpenEJB :: Maven Plugins", res["projects"]["name"]
       assert_equal "Maven2", res["projects"]["project_type"]
-      assert_equal false, res["projects"]["public"]
+      assert_equal true, res["projects"]["public"]
       assert_equal "daily", res["projects"]["period"]
       assert_equal "API", res["projects"]["source"]
     end
@@ -141,7 +139,7 @@ class ProjectCheckTest < Minitest::Test
   def test_upload_table
     VCR.use_cassette('project_upload') do
       output = capture_stdout do
-        Veye::Project::Check.upload(@api_key, @test_file, @org_name, nil, true, nil, {format: "table"})
+        Veye::Project::Check.upload(@api_key, @test_file, @org_name, @team_name, {format: "table"})
       end
 
       refute_nil output
@@ -152,60 +150,93 @@ class ProjectCheckTest < Minitest::Test
     end
   end
 
+  def upload_update_project
+    proj_dt = {}
+    VCR.use_cassette('project_upload_for_update') do
+      res = Veye::API::Project.upload(@api_key, @test_file, @org_name, @team_name, false)
+      refute_nil res, 'upload_update_project: failed to create a project for the update tests'
+      proj_dt = res.data
+    end
+
+    proj_dt
+  end
+
+  def delete_update_project(proj_id)
+    VCR.use_cassette('project_delete_for_update') do
+      Veye::API::Project.delete_project(@api_key, proj_id)
+    end
+  end
+
   def test_update_default
+    proj_dt = upload_update_project
+
     VCR.use_cassette('project_update') do
       output = capture_stdout do
-        Veye::Project::Check.update(@api_key, @project_key, @test_file, {})
+        Veye::Project::Check.update(@api_key, proj_dt['id'], @test_file, {})
       end
       refute_nil output
       rows = output.split(/\n/)
       assert_equal "  1 - \e[32m\e[1mOpenEJB :: Maven Plugins\e[0m", rows[0]
-      assert_equal "\tProject id     : \e[1m#{@project_key}\e[0m", rows[1]
+      assert_equal "\tProject id     : \e[1m#{proj_dt['id']}\e[0m", rows[1]
       assert_equal "\tProject type   : Maven2", rows[2]
-      assert_equal "\tPublic         : false", rows[3]
+      assert_equal "\tPublic         : true", rows[3]
       assert_equal "\tPeriod         : daily", rows[4]
       assert_equal "\tSource         : API", rows[5]
       assert_equal "\tDependencies   : \e[1m11\e[0m", rows[6]
       assert_equal "\tOutdated       : \e[31m10\e[0m", rows[7]
     end
+  
+  ensure
+    delete_update_project(proj_dt['id'])
   end
 
   def test_update_csv
+    proj_dt = upload_update_project
+
     VCR.use_cassette('project_update') do
       output = capture_stdout do
-        Veye::Project::Check.update(@api_key, @project_key, @test_file, {format: 'csv'})
+        Veye::Project::Check.update(@api_key, proj_dt['id'], @test_file, {format: 'csv'})
       end
 
       refute_nil output
       rows = CSV.parse(output)
       assert_equal ["nr", "name", "project_id", "public", "period", "source",
                     "dep_number", "out_number", "created_at"], rows[0]
-      assert_equal ["1", "OpenEJB :: Maven Plugins", @project_key, "false", "daily", "API", "11", "10"], rows[1].take(8)
+      assert_equal ["1", "OpenEJB :: Maven Plugins", proj_dt['id'], "true", "daily", "API", "11", "10"], rows[1].take(8)
     end
+
+  ensure
+    delete_update_project(proj_dt['id'])
   end
 
   def test_update_json
+    proj_dt = upload_update_project
+
     VCR.use_cassette('project_update') do
       output = capture_stdout do
-        Veye::Project::Check.update(@api_key, @project_key, @test_file, {format: 'json'})
+        Veye::Project::Check.update(@api_key, proj_dt['id'], @test_file, {format: 'json'})
       end
 
       refute_nil output
       res = JSON.parse(output)
       proj = res["projects"]
-      assert_equal @project_key, proj['id']
+      assert_equal proj_dt['id'], proj['id']
       assert_equal "OpenEJB :: Maven Plugins", proj["name"]
       assert_equal "Maven2", 	proj["project_type"]
-      assert_equal false, 		proj["public"]
+      assert_equal true, 		proj["public"]
       assert_equal "API", 		proj["source"]
       assert_equal 11, 				proj["dependencies"].count
     end
+  ensure
+    delete_update_project(proj_dt['id'])
   end
 
   def test_update_table
+    proj_dt = upload_update_project
+
     VCR.use_cassette('project_update') do
       output = capture_stdout do
-        Veye::Project::Check.update(@api_key, @project_key, @test_file, {format: 'table'})
+        Veye::Project::Check.update(@api_key, proj_dt['id'], @test_file, {format: 'table'})
       end
 
       refute_nil output
@@ -222,6 +253,8 @@ class ProjectCheckTest < Minitest::Test
 
       assert_match(/\| 1\s+\|\s+maven-plugin-annotations\s+\|/, rows[12])
     end
+  ensure
+    delete_update_project(proj_dt['id'])
   end
 
   def test_get_project_default
@@ -235,7 +268,7 @@ class ProjectCheckTest < Minitest::Test
       assert_equal "  1 - \e[32m\e[1mOpenEJB :: Maven Plugins\e[0m", rows[0]
       assert_equal "\tProject id     : \e[1m#{@project_key}\e[0m", rows[1]
       assert_equal "\tProject type   : Maven2", rows[2]
-      assert_equal "\tPublic         : false", rows[3]
+      assert_equal "\tPublic         : true", rows[3]
       assert_equal "\tPeriod         : daily", rows[4]
       assert_equal "\tSource         : API", rows[5]
       assert_equal "\tDependencies   : \e[1m11\e[0m", rows[6]
@@ -252,7 +285,7 @@ class ProjectCheckTest < Minitest::Test
       refute_nil output
       rows = CSV.parse(output)
       assert_equal ["nr", "name", "project_id", "public", "period", "source", "dep_number", "out_number", "created_at"], rows[0]
-      assert_equal ["1", "OpenEJB :: Maven Plugins", @project_key, "false", "daily", "API", "11", "10"], rows[1].take(8)
+      assert_equal ["1", "OpenEJB :: Maven Plugins", @project_key, "true", "daily", "API", "11", "10"], rows[1].take(8)
     end
   end
 
@@ -265,7 +298,7 @@ class ProjectCheckTest < Minitest::Test
       refute_nil output, "test_get_project_json output cant be empty"
       doc = JSON.parse(output)
       proj = doc["projects"]
-      assert_equal false, 	proj["public"]
+      assert_equal true, 	proj["public"]
       assert_equal "API", 	proj["source"]
       assert_equal "daily", proj["period"]
       assert_equal 11, 			proj["dependencies"].count

@@ -39,8 +39,11 @@ module Veye
         end
       end
 
-      def self.upload(api_key, filename, org_name = 'private', team_name = nil, temporary = false, visibility = 'public', options)
-        results = Veye::API::Project.upload(api_key, filename, org_name, team_name, temporary, visibility)
+      def self.upload(api_key, filename, org_name = 'private', team_name = nil, options)
+
+        results = Veye::API::Project.upload(
+          api_key, filename, org_name, team_name, options[:temporary], options[:public], options[:name]
+        )
 
         valid_response?(results, 'Upload failed.')
         show_results(@output_formats, results.data, options)
