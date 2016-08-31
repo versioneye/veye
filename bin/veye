@@ -108,6 +108,34 @@ command :check do |c|
   c.desc "change output format"
   c.flag [:format, 'format-name'], :default_value => 'pretty'
 
+  c.desc "filter by organisation name"
+	c.flag [:org, 'org-name'], :default_value => 'private'
+
+	c.desc 'filter by team name'
+	c.flag [:team, 'team-name']
+
+  c.desc 'add memorizable, meaningful project name'
+  c.flag [:name, 'project-name']
+
+	c.desc 'upload as public project'
+	c.switch [:public], :default_value => true, :negatable => true
+
+	c.desc 'mark it as temporary project when uploading a new project'
+	c.switch [:temp, :temporary], :default_value => false, :negatable => true
+
+  c.desc "show all dependencies"
+  c.switch [:all, 'show-all'], default_value: false
+
+  c.desc 'show only dependencies which has major version difference'
+  c.switch [:major], :default_value => false, :negatable => true
+
+  c.desc 'show only dependencies which has minor version difference'
+  c.switch [:minor], :default_value => false, :negatable => true
+
+  c.desc 'show only dependencies which has patch version difference'
+  c.switch [:patch], :default_value => false, :negatable => true
+
+
   c.action do |global_options, options, args|
     file_path = args.shift
     file_path ||= Dir.pwd
@@ -130,9 +158,6 @@ command :projects do |c|
   c.desc "change output format"
   c.flag [:format, 'format-name'], :default_value => 'pretty'
 
-  c.desc "show all dependencies"
-  c.flag [:all, 'show-all'], default_value: false
-
 	c.desc "filter by organisation name"
 	c.flag [:org, 'org-name'], :default_value => 'private'
 
@@ -147,6 +172,18 @@ command :projects do |c|
 
 	c.desc 'mark it as temporary project when uploading a new project'
 	c.switch [:temp, :temporary], :default_value => false, :negatable => true
+
+  c.desc "show all dependencies"
+  c.switch [:all, 'show-all'], default_value: false
+
+  c.desc 'show only dependencies which has major version difference'
+  c.switch [:major], :default_value => false, :negatable => true
+
+  c.desc 'show only dependencies which has minor version difference'
+  c.switch [:minor], :default_value => false, :negatable => true
+
+  c.desc 'show only dependencies which has patch version difference'
+  c.switch [:patch], :default_value => false, :negatable => true
 
   c.desc "show all projects"
   c.command :list do |list|

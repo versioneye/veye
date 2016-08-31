@@ -4,11 +4,18 @@
 ## Next release
 
 * add vulnerability field for product details [#6](https://github.com/versioneye/veye/issues/6)
-* **BREAKS** - refactored the `veye info` command, which expect that a product language is explicitly specified with `--language` flag and allows,
+* **BREAKING** - refactored the `veye info` command, which expect that a product language is explicitly specified with `--language` flag and allows,
 new command looks like this now `bundle exec bin/veye info --language=PHP --version='3.0.1' symfony/symfony --format=table`
-* **BREAKS** - renamed the `products` command to `package`
-* **BREAKS** - moved `info` command under the `package` command
-* **BREAKS** - refactored others subcommands of the `package` to match with the `info` command.
+* **BREAKING** - renamed the `products` command to `package`
+* **BREAKING** - moved `info` command under the `package` command
+* **BREAKING** - refactored others subcommands of the `package` to match with the `info` command.
+* **BREAKING** - project commands accept --all as flag, but not attribute with value
+* add `--private` flag for the `project check` command, possible to mark project visibility when checking project file
+* add `--temp` flag for the the `project check` command, possible to create temporary projects;
+* add `--all`, `--major`, `--minor`, `--patch` flag for all the __projects__ command, including the check command; those flags allow filter outdated dependencies by SemVer scopes;
+* project dependencies are now sorted by `upgrade_complexity_heuristics`, which heuristic metric that gives an rough estimation how difficult upgrading to a current version will be;
+* all the output of `project` commands include now the `upgrade_complexity_heuristics`
+
 
 
 ## 0.2.1 - 2016-03-15

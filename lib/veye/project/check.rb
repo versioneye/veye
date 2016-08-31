@@ -33,9 +33,11 @@ module Veye
         results = Veye::API::Project.get_project(api_key, project_key)
         err_msg = "No data for the project: `#{project_key}`"
         valid_response?(results, err_msg)
-        show_results(@output_formats, results.data, options)
+
+        proj_dt = results.data
+        show_results(@output_formats, proj_dt, options)
         if options[:format] != 'json'
-          show_dependencies(@dependency_output_formats, results.data, options)
+          show_dependencies(@dependency_output_formats, proj_dt['dependencies'], options)
         end
       end
 
@@ -48,7 +50,7 @@ module Veye
         valid_response?(results, 'Upload failed.')
         show_results(@output_formats, results.data, options)
         if options[:format] != 'json'
-          show_dependencies(@dependency_output_formats, results.data, options)
+          show_dependencies(@dependency_output_formats, results.data['dependencies'], options)
         end
       end
 
@@ -57,7 +59,7 @@ module Veye
         valid_response?(results, 'Re-upload failed.')
         show_results(@output_formats, results.data, options)
         if options[:format] != 'json'
-          show_dependencies(@dependency_output_formats, results.data, options)
+          show_dependencies(@dependency_output_formats, results.data['dependencies'], options)
         end
       end
 
@@ -82,10 +84,12 @@ module Veye
         project_settings['projects'].each do |filename, project_id|
           filepath = "#{path}/#{filename}"
           results = if project_id.to_s.empty?
-                      Veye::API::Project.upload(api_key, filepath)
+                      Veye::API::Project.upload(api_key, filepath, options[:org], options[:team],
+                                                options[:temporary], options[:public], options[:name])
                     else
                       Veye::API::Project.update(api_key, project_id, filepath)
                     end
+
           error_msg = "Failed to check dependencies for `#{filename.to_s.color(:red)}`"
           if valid_response?(results, error_msg)
             deps[filename] = results.data
@@ -101,6 +105,7 @@ module Veye
           files.to_a.join(', ').to_s.color(:green),
           "veye.json".color(:yellow)
         )
+        options[:all] = true #hack
         show_bulk_dependencies(@dependency_output_formats, deps, options)
       end
 
