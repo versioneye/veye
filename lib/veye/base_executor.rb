@@ -78,6 +78,7 @@ class BaseExecutor
       deps.each {|d| filtered_deps << d if d[:upgrade][:dv_major] > 0}
     end
 
+    #add only package which has minor change and may have patch changes
     if options.fetch(:minor, false) == true
       deps.each do |d|
         if d[:upgrade][:dv_minor] > 0 and d[:upgrade][:dv_major] == 0
@@ -86,6 +87,7 @@ class BaseExecutor
       end
     end
 
+    #add only packages which has only patches, and skip all the minor and major changes
     if options.fetch(:patch, false)  == true
       deps.each do |d|
         if d[:upgrade][:dv_patch] > 0 and d[:upgrade][:dv_minor] == 0 and d[:upgrade][:dv_major] == 0
@@ -97,6 +99,8 @@ class BaseExecutor
     #remove duplicates if user attached multiple filter flags
     already_seen_keys = Set.new
     filtered_deps.reduce([]) do |acc, dep|
+      next unless dep.has_key?('prod_key')
+
       unless already_seen_keys.include?(dep['prod_key'])
         acc << dep
         already_seen_keys << dep['prod_key']
