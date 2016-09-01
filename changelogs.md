@@ -10,11 +10,12 @@ new command looks like this now `bundle exec bin/veye info --language=PHP --vers
 * **BREAKING** - moved `info` command under the `package` command
 * **BREAKING** - refactored others subcommands of the `package` to match with the `info` command.
 * **BREAKING** - project commands accept --all as flag, but not attribute with value
-* add `--private` flag for the `project check` command, possible to mark project visibility when checking project file
+* add `--private` flag for the `project check` command, possible to mark project visibility when checking project file [#25](https://github.com/versioneye/veye/issues/25)
 * add `--temp` flag for the the `project check` command, possible to create temporary projects;
-* add `--all`, `--major`, `--minor`, `--patch` flag for all the __projects__ command, including the check command; those flags allow filter outdated dependencies by SemVer scopes;
+* add `--all`, `--major`, `--minor`, `--patch` flag for all the __projects__ command, including the check command; those flags allow filter outdated dependencies by SemVer scopes; [#23](https://github.com/versioneye/veye/issues/23)
 * project dependencies are now sorted by `upgrade_complexity_heuristics`, which heuristic metric that gives an rough estimation how difficult upgrading to a current version will be;
 * all the output of `project` commands include now the `upgrade_complexity_heuristics`
+* add `merge` and `unmerge` subcommands under the `projects` command, which allows to attach child project to the parent_project. [#30](https://github.com/versioneye/veye/issues/30)
 
 
 

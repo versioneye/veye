@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://www.versioneye.com/api/v2/projects/57c82a4312b526001687878e/merge/57c82a438647390016710be2?api_key=f82943fbd363bc640782
+    uri: https://www.versioneye.com/api/v2/projects/57c82a4312b526001687878e/unmerge/57c82a438647390016710be2?api_key=f82943fbd363bc640782
     body:
       encoding: US-ASCII
       string: ''

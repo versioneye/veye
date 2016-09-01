@@ -22,6 +22,28 @@ module Veye
       dv_score: 0.0 # total dv score on logarithmic scale
     }
 
+    #-- project commands
+    def self.merge(api_key, parent_id, child_id)
+      if parent_id.to_s.empty? or child_id.to_s.empty?
+        printf("%s\n", "parent_id or child_id was unspecified".color(:red))
+        return
+      end
+
+      res = Veye::API::Project.merge(api_key, parent_id, child_id)
+      printf("success: %s\n", res.data.fetch('success', false))
+    end
+
+    def self.unmerge(api_key, parent_id, child_id)
+      if parent_id.to_s.empty? or child_id.to_s.empty?
+        printf("%s\n", "parent_id or child_id was unspecified".color(:red))
+        return
+      end
+
+      res = Veye::API::Project.unmerge(api_key, parent_id, child_id)
+      printf("success: %s\n", res.data.fetch('success', false) )
+    end
+
+    #-- helper functions
     def self.supported_files
       @supported_files
     end

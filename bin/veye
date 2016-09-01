@@ -245,6 +245,32 @@ command :projects do |c|
     end
   end
 
+  c.desc "merge child project with the parent project"
+  c.arg_name "parent_child_ids", multiple: true
+  c.command :merge do |merge|
+    merge.action do |global_options, options, args|
+      help_now!("You forgot to specify parent id and child project id".color(:red)) if args.empty?
+      help_now!("You forgot to specify child project id".color(:red)) if args.size == 1
+      
+      parent_id, child_id = args
+      api_key = global_options[:api_key]
+      Veye::Project.merge(api_key, parent_id, child_id)
+    end
+  end
+
+  c.desc "unmerges child project from the parent project"
+  c.arg_name "parent_child_ids", multiple: true
+  c.command :unmerge do |unmerge|
+    unmerge.action do |global_options, options, args|
+      help_now!("You forgot to specify parent id and child project id".color(:red)) if args.empty?
+      help_now!("You forgot to specify child project id".color(:red)) if args.size == 1
+ 
+      parent_id, child_id = args
+      api_key = global_options[:api_key]
+      Veye::Project.unmerge(api_key, parent_id, child_id)
+    end
+  end
+
   c.desc "delete project"
   c.arg_name "project_key"
   c.command :delete do |delete|

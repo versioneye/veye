@@ -170,11 +170,9 @@ class ProjectTest < Minitest::Test
     end
 
     VCR.use_cassette('project_unmerge') do
-      res = Veye::API::Project.merge(@api_key, parent_id, child_id)
+      res = Veye::API::Project.unmerge(@api_key, parent_id, child_id)
       assert_equal true, res.success
       assert_equal true, res.data['success']
-
-      p "#-- unmerge data:", res.data
     end
     #delete projects
     delete_project(parent_id, 'merge_parent')
