@@ -13,10 +13,9 @@ module Veye
         'table'   => Github::InfoTable.new
       }
 
-      def self.import_repo(api_key, repo_name, options)
-        results = Veye::API::Github.import_repo(
-          api_key, repo_name, options[:branch], options[:file]
-        )
+      def self.import_repo(api_key, repo_name, branch = 'master', filename = 'Gemfile', options = {})
+        results = Veye::API::Github.import_repo( api_key, repo_name, branch, filename)
+
         catch_request_error(results, "Can not find repository `#{repo_name}`")
         show_results(@output_formats, results.data, options, nil)
       end

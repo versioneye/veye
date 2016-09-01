@@ -17,7 +17,7 @@ class GithubInfoTest < Minitest::Test
       refute_nil output
       rows = output.split(/\n/)
       assert_equal "\t\e[32mversioneye/veye\e[0m - \e[1mruby\e[0m", rows[0]
-      assert_equal "\tDescription    : VersionEye command line tool ", rows[1]
+      assert_equal "\tDescription    : VersionEye command line tool implemented in Ruby" , rows[1]
       assert_equal "\tOwner login    : versioneye", rows[2]
       assert_equal "\tOwner type     : organization", rows[3]
       assert_equal "\tPrivate        : false", rows[4]
@@ -37,7 +37,7 @@ class GithubInfoTest < Minitest::Test
       assert_equal ["name", "language", "owner_login", "owner_type", "private", "fork", "branches", "imported_projects", "description"], rows[0]
       assert_equal(
         ["versioneye/veye", "ruby", "versioneye", "organization", "false", "false",
-         nil, nil, "VersionEye command line tool "],
+         nil, nil, "VersionEye command line tool implemented in Ruby"],
         rows[1]
       )
     end

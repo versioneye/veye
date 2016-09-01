@@ -4,7 +4,7 @@ module Veye
   module Project
     class DependencyCSV < BaseCSV
       def initialize
-        headings = "nr,name,prod_key,outdated,current,requested,stable,licenses"
+        headings = "nr,name,prod_key,outdated,current,requested,stable,licenses,upgrade_cost"
         super(headings)
       end
 
@@ -22,15 +22,23 @@ module Veye
       end
 
       def print_line(result, i)
-        printf("%d,%s,%s,%s,%s,%s,%s,%s\n",
-               i,
-               result['name'],
-               result['prod_key'],
-               result['outdated'],
-               result['version_current'],
-               result['version_requested'],
-               result['stable'],
-               result['licenses'].to_a.map {|x| x['name']}.join(';'))
+        upgrade_cost = if result.has_key?(:upgrade)
+                        "#{result[:upgrade][:difficulty]}(#{result[:upgrade][:dv_score]})"
+                       else
+                        nil
+                       end
+        printf(
+          "%d,%s,%s,%s,%s,%s,%s,'%s','%s'\n",
+           i,
+           result['name'],
+           result['prod_key'],
+           result['outdated'],
+           result['version_current'],
+           result['version_requested'],
+           result['stable'],
+           result['licenses'].to_a.map {|x| x['name']}.join(';'),
+           upgrade_cost
+        )
       end
 
       def print_line_with_filename(result, i, filename)

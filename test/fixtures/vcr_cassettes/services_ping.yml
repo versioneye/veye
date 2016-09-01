@@ -19,28 +19,26 @@ http_interactions:
       message: OK
     headers:
       Server:
-      - nginx/1.4.6 (Ubuntu)
+      - nginx/1.10.0 (Ubuntu)
       Date:
-      - Mon, 17 Aug 2015 16:35:41 GMT
+      - Mon, 29 Aug 2016 08:36:19 GMT
       Content-Type:
       - application/json
       Content-Length:
       - '33'
       Connection:
       - keep-alive
-      Strict-Transport-Security:
-      - max-age=31536000
       Etag:
       - W/"a11f1444ce560d703c09ea68efefc054"
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - dc66866f-7d6f-41ae-8695-a827909396a5
+      - f5082a3b-656d-42ee-b823-d7232e388e98
       X-Runtime:
-      - '0.056825'
+      - '0.004560'
     body:
       encoding: UTF-8
       string: '{"success":true,"message":"pong"}'
     http_version: 
-  recorded_at: Mon, 17 Aug 2015 16:35:26 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Mon, 29 Aug 2016 08:36:19 GMT
+recorded_with: VCR 3.0.1

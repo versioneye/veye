@@ -4,5 +4,5 @@ dep-doc:
 build:
 	bash scripts/build.sh
 
-release:
+release: build
 	bash scripts/release.sh

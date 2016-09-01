@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: delete
-    uri: https://www.versioneye.com/api/v2/github/versioneye:veye?api_key=316dbd6b80b053f5b1e5&branch=master
+    uri: https://www.versioneye.com/api/v2/github/versioneye:veye?api_key=f82943fbd363bc640782&branch=master
     body:
       encoding: US-ASCII
       string: ''
@@ -19,9 +19,9 @@ http_interactions:
       message: OK
     headers:
       Server:
-      - nginx/1.4.6 (Ubuntu)
+      - nginx/1.10.0 (Ubuntu)
       Date:
-      - Sat, 12 Mar 2016 18:45:38 GMT
+      - Mon, 29 Aug 2016 08:34:33 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -29,18 +29,18 @@ http_interactions:
       Connection:
       - keep-alive
       Set-Cookie:
-      - api_key=316dbd6b80b053f5b1e5
+      - api_key=f82943fbd363bc640782
       Etag:
       - W/"7363e85fe9edee6f053a4b319588c086"
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - 3dc80523-b4a4-4112-90f6-bc99e3af1e0d
+      - a8546d86-e4be-4d63-be11-b4bcecd0e6cb
       X-Runtime:
-      - '0.269159'
+      - '0.177030'
     body:
       encoding: UTF-8
       string: '{"success":true}'
     http_version: 
-  recorded_at: Sat, 12 Mar 2016 18:38:17 GMT
+  recorded_at: Mon, 29 Aug 2016 08:34:33 GMT
 recorded_with: VCR 3.0.1

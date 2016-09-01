@@ -78,7 +78,7 @@ command :search do |c|
   c.flag [:l, :language, 'language-name']
 
   c.desc 'filter result by Maven specific GroupId'
-  c.flag "group-id"
+  c.flag [:gid, "group-id"]
 
   c.desc "get next N results, by default it only return 30 results."
   c.flag [:page, 'page-number'], :default_value => 1
@@ -93,48 +93,10 @@ command :search do |c|
   c.action do |global_options, options, args|
     error_msg = "the search term is mandatory.".color(:red)
     help_now!(error_msg) if args.empty?
+
     api_key = global_options[:api_key]
     search_term = args.shift
     Veye::Package::Search.search(api_key, search_term, options)
-  end
-end
-
-desc 'returns package information'
-arg_name 'product_key'
-command :info do |c|
-  c.desc "change output format"
-  c.flag [:format, 'format-name'], :default_value => 'pretty'
-
-  c.action do |global_options, options, args|
-    error_msg = Rainbow("package_key is missing").red
-    help_now!(error_msg) if args.empty?
-    api_key = global_options[:api_key]
-    package_key = args.shift
-    Veye::Package::Info.get_package(api_key, package_key, options)
-  end
-end
-
-desc 'check a references of package'
-arg_name 'product_key'
-command :references do |c|
-  c.desc "change output format"
-  c.flag [:format, 'format-name'], :default_value => 'pretty'
-
-  c.desc "page number for pagination"
-  c.flag [:page, 'page-number'], :default_value => 1
-
-  c.desc "show paging information"
-  c.switch [:pagination, 'show-pagination'], :default_value => true,
-                                             :negatable => true
-
-
-  c.action do |global_options, options, args|
-    error_msg = Rainbow("package_key is missing").red
-    help_now!(error_msg) if args.empty?
-    package_key = args.shift
-
-    api_key = global_options[:api_key]
-    Veye::Package::References.get_references(api_key, package_key, options)
   end
 end
 
@@ -145,6 +107,34 @@ arg_name 'product_file'
 command :check do |c|
   c.desc "change output format"
   c.flag [:format, 'format-name'], :default_value => 'pretty'
+
+  c.desc "filter by organisation name"
+	c.flag [:org, 'org-name'], :default_value => 'private'
+
+	c.desc 'filter by team name'
+	c.flag [:team, 'team-name']
+
+  c.desc 'add memorizable, meaningful project name'
+  c.flag [:name, 'project-name']
+
+	c.desc 'upload as public project'
+	c.switch [:public], :default_value => true, :negatable => true
+
+	c.desc 'mark it as temporary project when uploading a new project'
+	c.switch [:temp, :temporary], :default_value => false, :negatable => true
+
+  c.desc "show all dependencies"
+  c.switch [:all, 'show-all'], default_value: false
+
+  c.desc 'show only dependencies which has major version difference'
+  c.switch [:major], :default_value => false, :negatable => true
+
+  c.desc 'show only dependencies which has minor version difference'
+  c.switch [:minor], :default_value => false, :negatable => true
+
+  c.desc 'show only dependencies which has patch version difference'
+  c.switch [:patch], :default_value => false, :negatable => true
+
 
   c.action do |global_options, options, args|
     file_path = args.shift
@@ -168,14 +158,39 @@ command :projects do |c|
   c.desc "change output format"
   c.flag [:format, 'format-name'], :default_value => 'pretty'
 
+	c.desc "filter by organisation name"
+	c.flag [:org, 'org-name'], :default_value => 'private'
+
+	c.desc 'filter by team name'
+	c.flag [:team, 'team-name']
+
+  c.desc 'add memorizable, meaningful project name'
+  c.flag [:name, 'project-name']
+
+	c.desc 'upload as public project'
+	c.switch [:public], :default_value => true, :negatable => true
+
+	c.desc 'mark it as temporary project when uploading a new project'
+	c.switch [:temp, :temporary], :default_value => false, :negatable => true
+
   c.desc "show all dependencies"
-  c.flag [:all, 'show-all'], default_value: false
+  c.switch [:all, 'show-all'], default_value: false
+
+  c.desc 'show only dependencies which has major version difference'
+  c.switch [:major], :default_value => false, :negatable => true
+
+  c.desc 'show only dependencies which has minor version difference'
+  c.switch [:minor], :default_value => false, :negatable => true
+
+  c.desc 'show only dependencies which has patch version difference'
+  c.switch [:patch], :default_value => false, :negatable => true
 
   c.desc "show all projects"
   c.command :list do |list|
     list.action do |global_options, options, args|
       api_key = global_options[:api_key]
-      Veye::Project::Check.get_list(api_key, options)
+
+      Veye::Project::Check.get_list(api_key, options[:org], options[:team], options)
     end
   end
 
@@ -198,7 +213,11 @@ command :projects do |c|
       help_now!("The filepath is missing.".color(:red)) if args.empty?
       filename = args.shift
       api_key = global_options[:api_key]
-      Veye::Project::Check.upload(api_key, filename, options)
+			org_name = (options[:org] || 'private')
+			is_temp  = (options[:temp] == true)
+			visibility = (options[:public] == false ? 'private' : 'public')
+
+      Veye::Project::Check.upload(api_key, filename, org_name, options[:team], is_temp, visibility, options)
    end
   end
 
@@ -226,6 +245,32 @@ command :projects do |c|
     end
   end
 
+  c.desc "merge child project with the parent project"
+  c.arg_name "parent_child_ids", multiple: true
+  c.command :merge do |merge|
+    merge.action do |global_options, options, args|
+      help_now!("You forgot to specify parent id and child project id".color(:red)) if args.empty?
+      help_now!("You forgot to specify child project id".color(:red)) if args.size == 1
+      
+      parent_id, child_id = args
+      api_key = global_options[:api_key]
+      Veye::Project.merge(api_key, parent_id, child_id)
+    end
+  end
+
+  c.desc "unmerges child project from the parent project"
+  c.arg_name "parent_child_ids", multiple: true
+  c.command :unmerge do |unmerge|
+    unmerge.action do |global_options, options, args|
+      help_now!("You forgot to specify parent id and child project id".color(:red)) if args.empty?
+      help_now!("You forgot to specify child project id".color(:red)) if args.size == 1
+ 
+      parent_id, child_id = args
+      api_key = global_options[:api_key]
+      Veye::Project.unmerge(api_key, parent_id, child_id)
+    end
+  end
+
   c.desc "delete project"
   c.arg_name "project_key"
   c.command :delete do |delete|
@@ -239,18 +284,89 @@ command :projects do |c|
 end
 
 desc "package related methods"
-command :products do |c|
+command :package do |c|
+  c.desc 'specify a language of the product'
+  c.flag [:l, :language, 'language-name']
+  
   c.desc "change output format"
   c.flag [:format, 'format-name'], :default_value => 'pretty'
+
+  c.desc 'returns package information'
+  c.arg_name 'prod_key'
+  c.command :info do |csub|
+    csub.desc 'specify a version of the product'
+    csub.flag [:v, :version, 'version-id']
+
+    csub.action do |global_options, options, args|
+      error_msg = Rainbow("The package ID is unspecified").red
+      help_now!(error_msg) if args.empty?
+
+      error_msg = 'no language specified - use -l/--language/--language-name key'.color(:red)
+      help_now!(error_msg) if options[:language].nil?
+
+      api_key = global_options[:api_key]
+      package_key = args.shift
+      Veye::Package::Info.get_package(api_key, package_key, options[:language], options[:version], options)
+    end
+  end
+
+  c.desc 'check a references of package'
+  c.arg_name 'prod_key'
+  c.command :references do |csub|
+    csub.desc "page number for pagination"
+    csub.flag [:page, 'page-number'], :default_value => 1
+
+    csub.desc "show paging information"
+    csub.switch [:pagination, 'show-pagination'], :default_value => true, :negatable => true
+
+    csub.action do |global_options, options, args|
+      error_msg = Rainbow("The package ID is unspecified").red
+      help_now!(error_msg) if args.empty?
+      error_msg = 'no language specified - use -l/--language/--language-name key'.color(:red)
+      help_now!(error_msg) if options[:language].nil?
+
+      prod_key = args.shift
+      api_key = global_options[:api_key]
+      Veye::Package::References.get_references(api_key, prod_key, options[:language], options)
+    end
+  end
+
+  c.desc 'fetch list of versions'
+  c.arg_name 'prod_key'
+  c.command :versions do |csub|
+    csub.desc "number of versions to show"
+    csub.flag [:n, 'n-results'], :default_value => 10
+
+    csub.desc 'number of versions to skip'
+    csub.flag [:from], :default_value => 0
+
+    csub.desc 'show all the items'
+    csub.switch [:all, 'no-filtering'], :default_value => false
+
+    csub.action do |global_options, options, args|
+      help_now!("The product ID is unspecified".color(:red)) if args.empty?
+      error_msg = 'no language specified - use -l/--language/--language-name key'.color(:red)
+      help_now!(error_msg) if options[:language].nil?
+
+      prod_key = args.shift
+      api_key = global_options[:api_key]
+      Veye::Package::Versions.get_list(
+        api_key, prod_key, options[:language], options[:n].to_i, options[:from].to_i, options
+      )
+    end
+  end
 
   c.desc "check your following status"
   c.arg_name "prod_key"
   c.command :following do |following|
     following.action do |global_options, options, args|
-      help_now!("Product's key is missing".color(:red)) if args.empty?
+      help_now!("The product ID is unspecified".color(:red)) if args.empty?
+      error_msg = 'no language specified - use -l/--language/--language-name key'.color(:red)
+      help_now!(error_msg) if options[:language].nil?
+
       prod_key = args.shift
       api_key = global_options[:api_key]
-      Veye::Package::Follow.get_follow_status(api_key, prod_key)
+      Veye::Package::Follow.get_follow_status(api_key, prod_key, options[:language])
     end
   end
 
@@ -258,10 +374,13 @@ command :products do |c|
   c.arg_name "prod_key"
   c.command :follow do |follow|
     follow.action do |global_options, options, args|
-      help_now!("Product's key is missing".color(:red)) if args.empty?
+      help_now!("The product ID is unspecified".color(:red)) if args.empty?
+      error_msg = 'no language specified - use -l/--language/--language-name key'.color(:red)
+      help_now!(error_msg) if options[:language].nil?
+
       prod_key = args.shift
       api_key = global_options[:api_key]
-      Veye::Package::Follow.follow(api_key, prod_key)
+      Veye::Package::Follow.follow(api_key, prod_key, options[:language])
     end
   end
 
@@ -269,10 +388,13 @@ command :products do |c|
   c.arg_name "prod_key"
   c.command :unfollow do |unfollow|
     unfollow.action do |global_options, options, args|
-      help_now!("Product's key is missing".color(:red)) if args.empty?
+      help_now!("The product ID is unspecified".color(:red)) if args.empty?
+      error_msg = 'no language specified - use -l/--language/--language-name key'.color(:red)
+      help_now!(error_msg) if options[:language].nil?
+
       prod_key = args.shift
       api_key = global_options[:api_key]
-      Veye::Package::Follow.unfollow(api_key, prod_key)
+      Veye::Package::Follow.unfollow(api_key, prod_key, options[:language])
     end
   end
 end
@@ -326,7 +448,7 @@ command :github do |c|
   c.flag [:branch], :default_value => "master"
 
   c.desc "specify the name of the project file"
-  c.flag [:file, 'file'], :default_value => nil
+  c.flag [:file, 'file', 'filename'], :default_value => nil
 
   c.action do |global_options, options, args|
     help_now!
@@ -378,7 +500,10 @@ command :github do |c|
       help_now!("the name of repository is mandatory".color(:red)) if args.empty?
       repo_name = args.shift
       api_key = global_options[:api_key]
-      Veye::Github::Import.import_repo(api_key, repo_name, options)
+      branch = (options[:branch] || 'master')
+      filename = (options['file'] || 'Gemfile')
+
+      Veye::Github::Import.import_repo(api_key, repo_name, branch, filename, options)
     end
   end # end of import
 
@@ -389,6 +514,7 @@ command :github do |c|
       help_now!("the name of repository is mandatory".color(:red)) if args.empty?
       repo_name = args.shift
       api_key = global_options[:api_key]
+
       Veye::Github::Delete.delete_repo(api_key, repo_name, options)
     end
   end

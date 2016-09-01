@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://www.versioneye.com/api/v2/products/ruby/ruby/follow.json?api_key=316dbd6b80b053f5b1e5
+    uri: https://www.versioneye.com/api/v2/products/ruby/ruby/follow.json?api_key=f82943fbd363bc640782
     body:
       encoding: US-ASCII
       string: ''
@@ -19,9 +19,9 @@ http_interactions:
       message: OK
     headers:
       Server:
-      - nginx/1.4.6 (Ubuntu)
+      - nginx/1.10.0 (Ubuntu)
       Date:
-      - Sat, 12 Mar 2016 19:54:58 GMT
+      - Fri, 26 Aug 2016 13:07:08 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -29,18 +29,18 @@ http_interactions:
       Connection:
       - keep-alive
       Set-Cookie:
-      - api_key=316dbd6b80b053f5b1e5
+      - api_key=f82943fbd363bc640782
       Etag:
       - W/"8ab7070f3b063b2378ca199ebe369d32"
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - 66273def-95b3-4f4b-829f-edc92439f590
+      - f5173c8c-da0d-435c-af3f-53c3e515dd43
       X-Runtime:
-      - '0.784801'
+      - '0.426928'
     body:
       encoding: UTF-8
       string: '{"username":"timgluz","prod_key":"ruby","follows":false}'
     http_version: 
-  recorded_at: Sat, 12 Mar 2016 19:47:37 GMT
+  recorded_at: Fri, 26 Aug 2016 13:07:08 GMT
 recorded_with: VCR 3.0.1

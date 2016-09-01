@@ -2,6 +2,7 @@ require_relative 'package/info.rb'
 require_relative 'package/search.rb'
 require_relative 'package/follow.rb'
 require_relative 'package/references.rb'
+require_relative 'package/versions.rb'
 
 # -- define module constants here
 module Veye
@@ -12,6 +13,7 @@ module Veye
       Set.new ["Clojure", "Java", "Javascript", "Node.JS", "PHP", "Python", "Ruby", "R"]
     end
 
+    #TODO remove it
     def self.parse_key(package_key)
       tokens = package_key.to_s.split('/')
       lang = tokens.first

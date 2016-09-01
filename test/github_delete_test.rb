@@ -6,7 +6,7 @@ class GithubDeleteTest < Minitest::Test
     @api_key = ENV['VEYE_API_KEY']
     @repo_name = 'versioneye/veye'
     @branch = "master"
-    @opts = {branch: @branch}
+    @filename = 'Gemfile.lock'
 
     import_project
   end
@@ -14,14 +14,16 @@ class GithubDeleteTest < Minitest::Test
   def import_project
     #import project before testing
     VCR.use_cassette('github_import') do
-      Veye::API::Github.import_repo(@api_key, @repo_name, @branch, 'Gemfile.locl')
+      res = Veye::API::Github.import_repo(@api_key, @repo_name, @branch, @filename)      
+
+      refute_nil res, "Import failed"
     end
   end
 
   def test_delete_default
     VCR.use_cassette('github_delete') do
       res = capture_stdout do 
-        Veye::Github::Delete.delete_repo(@api_key, @repo_name, @opts)
+        Veye::Github::Delete.delete_repo(@api_key, @repo_name, @branch, {})
       end
 
       refute_nil res, "No command output"

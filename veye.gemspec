@@ -27,18 +27,20 @@ spec = Gem::Specification.new do |s|
   s.executables << 'veye'
 
   s.add_development_dependency('rake',  '~> 11.1')
-  s.add_development_dependency('minitest',  '~> 5.8')
-  s.add_development_dependency('minitest-reporters', '~> 1.0')
-  s.add_development_dependency('vcr',  '~> 3.0.1')
-  s.add_development_dependency('webmock',  '~> 1.11')
+  s.add_development_dependency('minitest',  '~> 5.9')
+  s.add_development_dependency('minitest-reporters', '~> 1.1')
+  s.add_development_dependency('vcr',  '~> 3.0')
+  s.add_development_dependency('webmock',  '~> 2.1')
   s.add_development_dependency('rdoc',  '~> 4.2')
   s.add_development_dependency('aruba', '~> 0.14')
   s.add_development_dependency('rubocop', '~> 0.38')
 
-  s.add_runtime_dependency('gli',               '= 2.13.4')
-  s.add_runtime_dependency('rest-client',       '~> 1.8')
-  s.add_runtime_dependency('awesome_print',     '~> 1.6')
+  s.add_runtime_dependency('gli',               '~> 2.14')
+  s.add_runtime_dependency('rest-client',       '~> 2.0')
+  s.add_runtime_dependency('awesome_print',     '~> 1.7')
   s.add_runtime_dependency('rainbow',           '~> 2.0')
-  s.add_runtime_dependency('terminal-table',    '~> 1.4')
+  s.add_runtime_dependency('terminal-table',    '~> 1.7')
   s.add_runtime_dependency('render-as-markdown','~> 0')
+  s.add_runtime_dependency('naturalsorter',     '~> 3.0')
+  s.add_runtime_dependency('semverly',          '~> 1.0')
 end

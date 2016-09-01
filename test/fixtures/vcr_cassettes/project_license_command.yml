@@ -1,0 +1,49 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.versioneye.com/api/v2/projects/57c83cd512b52600121e9161/licenses?api_key=f82943fbd363bc640782
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.0 (darwin14.4.0 x86_64) ruby/2.2.1p85
+      Host:
+      - www.versioneye.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.10.0 (Ubuntu)
+      Date:
+      - Thu, 01 Sep 2016 14:36:06 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '906'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - api_key=f82943fbd363bc640782
+      Etag:
+      - W/"bcc3569705470ce364b2bb0a0fa008d1"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - d947a521-970c-4cc1-9f3d-60c50cab0ba2
+      X-Runtime:
+      - '0.107967'
+    body:
+      encoding: UTF-8
+      string: '{"success":true,"licenses":{"Apache-2.0":[{"name":"maven-plugin-annotations","prod_key":"org.apache.maven.plugin-tools/maven-plugin-annotations"},{"name":"plexus-utils","prod_key":"org.codehaus.plexus/plexus-utils"},{"name":"maven-plugin-api","prod_key":"org.apache.maven/maven-plugin-api"},{"name":"maven-project","prod_key":"org.apache.maven/maven-project"},{"name":"maven-core","prod_key":"org.apache.maven/maven-core"},{"name":"maven-artifact","prod_key":"org.apache.maven/maven-artifact"},{"name":"openejb-core","prod_key":"org.apache.openejb/openejb-core"},{"name":"openejb-client","prod_key":"org.apache.openejb/openejb-client"},{"name":"maven-plugin-plugin","prod_key":"org.apache.maven.plugins/maven-plugin-plugin"},{"name":"maven-plugin-plugin","prod_key":"org.apache.maven.plugins/maven-plugin-plugin"}],"EPL-1.0,
+        Apache-2.0":[{"name":"aether-api","prod_key":"org.sonatype.aether/aether-api"}]}}'
+    http_version: 
+  recorded_at: Thu, 01 Sep 2016 14:36:06 GMT
+recorded_with: VCR 3.0.3

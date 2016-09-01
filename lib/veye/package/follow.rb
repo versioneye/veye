@@ -14,26 +14,26 @@ module Veye
         )
       end
 
-      def self.get_follow_status(api_key, package_key)
-        prod_key, lang = Package.parse_key(package_key)
+      def self.get_follow_status(api_key, prod_key, lang)
         results = Veye::API::Package.get_follow_status(api_key, prod_key, lang)
-        if valid_response?(results, 'Didnt get any response.')
+        
+        if valid_response?(results, "Failed to follow #{lang} package #{prod_key}.")
           show_result(results)
         end
       end
 
-      def self.follow(api_key, package_key)
-        prod_key, lang = Package.parse_key(package_key)
+      def self.follow(api_key, prod_key, lang)
         results = Veye::API::Package.follow(api_key, prod_key, lang)
-        if valid_response?(results, 'Cant follow.')
+        
+        if valid_response?(results, "Cant follow #{lang} package #{prod_key}.")
           show_result(results)
         end
       end
 
-      def self.unfollow(api_key, package_key)
-        prod_key, lang = Package.parse_key(package_key)
+      def self.unfollow(api_key, prod_key, lang)
         results = Veye::API::Package.unfollow(api_key, prod_key, lang)
-        if valid_response?(results, 'Cant unfollow.')
+        
+        if valid_response?(results, "Cant unfollow #{lang} package #{prod_key} .")
           show_result(results)
         end
       end

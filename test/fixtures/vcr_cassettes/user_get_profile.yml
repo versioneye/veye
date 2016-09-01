@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://www.versioneye.com/api/v2/me?api_key=316dbd6b80b053f5b1e5
+    uri: https://www.versioneye.com/api/v2/me?api_key=f82943fbd363bc640782
     body:
       encoding: US-ASCII
       string: ''
@@ -19,28 +19,28 @@ http_interactions:
       message: OK
     headers:
       Server:
-      - nginx/1.4.6 (Ubuntu)
+      - nginx/1.10.0 (Ubuntu)
       Date:
-      - Sat, 12 Mar 2016 18:09:49 GMT
+      - Fri, 26 Aug 2016 13:07:27 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '184'
+      - '216'
       Connection:
       - keep-alive
       Set-Cookie:
-      - api_key=316dbd6b80b053f5b1e5
+      - api_key=f82943fbd363bc640782
       Etag:
-      - W/"de44d4714a0668b151f1f0e8c4c8b832"
+      - W/"86e6b2048f2efe0bfd7a0f037fb96528"
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - aa30f364-c95c-4347-9baa-75f06df1c8b8
+      - da3f767e-3875-4a51-a194-ac4acd5d7954
       X-Runtime:
-      - '0.075969'
+      - '0.096941'
     body:
       encoding: UTF-8
-      string: '{"fullname":"Tim Gluz","username":"timgluz","email":"timgluz@gmail.com","admin":false,"deleted_user":false,"notifications":{"new":0,"total":2467},"enterprise_projects":1,"active":true}'
+      string: '{"fullname":"Tim Gluz","username":"timgluz","email":"timgluz@gmail.com","admin":false,"deleted_user":false,"notifications":{"new":0,"total":3015},"enterprise_projects":1,"rate_limit":50,"comp_limit":50,"active":true}'
     http_version: 
-  recorded_at: Sat, 12 Mar 2016 18:02:28 GMT
+  recorded_at: Fri, 26 Aug 2016 13:07:27 GMT
 recorded_with: VCR 3.0.1

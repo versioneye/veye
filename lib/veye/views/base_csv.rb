@@ -19,7 +19,7 @@ class BaseCSV
     end
   end
 
-  def format(results)
+  def format(results, n = 0, from = 0)
     raise NotImplementedError
   end
 end

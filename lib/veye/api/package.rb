@@ -17,11 +17,14 @@ module Veye
       end
 
       # returns package information
-      def self.get_package(api_key, prod_key, language)
+      def self.get_package(api_key, prod_key, language, version = nil)
         lang = encode_language(language)
         safe_prod_key = encode_prod_key(prod_key)
+        
         qparams = {}
         qparams[:api_key] = api_key if api_key.to_s.size > 0
+        qparams[:prod_version] = version.to_s.strip unless version.to_s.empty?
+
         product_api = Resource.new "#{RESOURCE_PATH}/#{lang}/#{safe_prod_key}"
         product_api.resource.get({params: qparams}) do |response, request, result|
           JSONResponse.new(request, result, response)
@@ -46,6 +49,17 @@ module Veye
         end
       end
 
+      def self.get_version_list(api_key, prod_key, language)
+        lang = encode_language(language)
+        safe_prod_key = encode_prod_key(prod_key)
+      
+        qparams = {api_key: api_key}
+        product_api = Resource.new "#{RESOURCE_PATH}/#{lang}/#{safe_prod_key}/versions"
+        product_api.resource.get({params: qparams}) do |response, request, result|
+          JSONResponse.new(request, result, response)
+        end
+      end
+
       def self.get_follow_status(api_key, prod_key, language)
         product_api = Resource.new(RESOURCE_PATH)
         qparams = {api_key: api_key}
@@ -53,7 +67,7 @@ module Veye
         safe_prod_key = encode_prod_key(prod_key)
         path = "#{lang}/#{safe_prod_key}/follow.json"
         product_api.resource[path].get({params: qparams}) do |response, request, result|
-          Veye::API::JSONResponse.new(request, result, response)
+          JSONResponse.new(request, result, response)
         end
       end
 

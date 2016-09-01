@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: delete
-    uri: https://www.versioneye.com/api/v2/projects/maven2_openejb_maven_plugins_2?api_key=316dbd6b80b053f5b1e5
+    uri: https://www.versioneye.com/api/v2/projects/57c59b4812b526000ee32df7?api_key=f82943fbd363bc640782
     body:
       encoding: US-ASCII
       string: ''
@@ -19,9 +19,9 @@ http_interactions:
       message: OK
     headers:
       Server:
-      - nginx/1.4.6 (Ubuntu)
+      - nginx/1.10.0 (Ubuntu)
       Date:
-      - Sun, 08 Nov 2015 16:41:58 GMT
+      - Tue, 30 Aug 2016 14:42:18 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -29,18 +29,18 @@ http_interactions:
       Connection:
       - keep-alive
       Set-Cookie:
-      - api_key=316dbd6b80b053f5b1e5
+      - api_key=f82943fbd363bc640782
       Etag:
       - W/"75b42f14626fd9c08be1551bde4fd46c"
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - 8b1f341b-201c-4c60-8ae4-27afe9811d7a
+      - 9c6ecac4-0b51-4655-b8a1-b00f60046d4d
       X-Runtime:
-      - '0.309610'
+      - '0.078280'
     body:
       encoding: UTF-8
       string: '{"success":true,"message":"Project deleted successfully."}'
     http_version: 
-  recorded_at: Sun, 08 Nov 2015 16:38:53 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Tue, 30 Aug 2016 14:42:18 GMT
+recorded_with: VCR 3.0.1

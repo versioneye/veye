@@ -10,7 +10,7 @@ class PackageReferenceTest < MiniTest::Test
   def test_reference_with_results
     VCR.use_cassette('package_reference') do
       output = capture_stdout do
-        Veye::Package::References.get_references(@api_key, 'ruby/ruby', {})
+        Veye::Package::References.get_references(@api_key, 'ruby', 'ruby', {})
       end
       refute_nil output, "Command output was nil"
       rows = output.split(/\n/)
@@ -25,7 +25,7 @@ class PackageReferenceTest < MiniTest::Test
   def test_reference_csv_format
     VCR.use_cassette('package_reference') do
       output = capture_stdout do
-        Veye::Package::References.get_references(@api_key, 'ruby/ruby', {format: 'csv'})
+        Veye::Package::References.get_references(@api_key, 'ruby', 'ruby', {format: 'csv'})
       end
       refute_nil output, "Command output was nil"
       rows = CSV.parse(output)
@@ -37,7 +37,7 @@ class PackageReferenceTest < MiniTest::Test
   def test_reference_json_format
     VCR.use_cassette('package_reference') do
       output = capture_stdout do
-        Veye::Package::References.get_references(@api_key, 'ruby/ruby', {format: 'json'})
+        Veye::Package::References.get_references(@api_key, 'ruby', 'ruby', {format: 'json'})
       end
       refute_nil output, "Command output was nil"
       dt = JSON.parse(output)
@@ -53,7 +53,7 @@ class PackageReferenceTest < MiniTest::Test
   def test_reference_table_format
     VCR.use_cassette('package_reference') do
       output = capture_stdout do
-        Veye::Package::References.get_references(@api_key, 'ruby/ruby', {format: 'table'})
+        Veye::Package::References.get_references(@api_key, 'ruby', 'ruby', {format: 'table'})
       end
       refute_nil output, "Command output was nil"
       rows = output.split(/\n/)

@@ -33,6 +33,21 @@ class PackageTest < Minitest::Test
     end
   end
 
+  def test_version_list_api_call
+    VCR.use_cassette('package_versions') do
+      res = Veye::API::Package.get_version_list(@api_key, 'ruby', 'ruby')
+      refute_nil res
+      assert_equal 200, res.code
+      assert_equal true, res.success
+      assert_equal 'ruby', res.data['name']
+      assert_equal 'ruby', res.data['language']
+      assert_equal '0.1.0', res.data['version']
+      assert_equal 'RubyGem', res.data['prod_type']
+      assert_equal 1, res.data['versions'].count
+      assert_equal '0.1.0', res.data['versions'].first['version']
+    end
+  end
+
   def test_get_follow_status_api_call
     VCR.use_cassette('package_follow_status') do
       res = Veye::API::Package.get_follow_status(@api_key, 'ruby', 'ruby')

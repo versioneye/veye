@@ -5,7 +5,7 @@ http_interactions:
     uri: https://www.versioneye.com/api/v2/github/versioneye:veye
     body:
       encoding: US-ASCII
-      string: api_key=ba7d93beb5de7820764e&branch=master&file=Gemfile.lock
+      string: api_key=f82943fbd363bc640782&branch=master&file=Gemfile.lock
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -23,31 +23,29 @@ http_interactions:
       message: Created
     headers:
       Server:
-      - nginx/1.4.6 (Ubuntu)
+      - nginx/1.10.0 (Ubuntu)
       Date:
-      - Fri, 14 Aug 2015 15:13:33 GMT
+      - Mon, 29 Aug 2016 08:34:33 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '821'
+      - '1425'
       Connection:
       - keep-alive
-      Strict-Transport-Security:
-      - max-age=31536000
       Set-Cookie:
-      - api_key=ba7d93beb5de7820764e; secure
+      - api_key=f82943fbd363bc640782
       Etag:
-      - W/"2f06df5540d8ed9db0699f432ca1c462"
+      - W/"41258e8c5045e2ad16def5153b3515ee"
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - 982539e7-0de1-4454-aa63-5ee5e4aaf49b
+      - 648ea50f-48ec-443a-874c-d57e3c6ad378
       X-Runtime:
-      - '5.444198'
+      - '4.552390'
     body:
       encoding: UTF-8
       string: '{"repo":{"name":"veye","fullname":"versioneye/veye","language":"ruby","owner_login":"versioneye","owner_type":"organization","description":"VersionEye
-        command line tool ","private":false,"fork":false,"branches":null,"git_url":"git://github.com/versioneye/veye.git","html_url":"https://github.com/versioneye/veye","created_at":"2012-12-27T11:15:03.000+00:00","cached_at":"2015-08-13T10:42:23.754+00:00","size":706,"homepage":null},"imported_projects":[{"id":"55ce0593cb3745000b00369d","project_key":"rubygem_versioneye_veye_1","name":"versioneye/veye","project_type":"RubyGem","public":true,"private_scm":false,"period":"daily","source":"github","dep_number":37,"out_number":7,"licenses_red":0,"licenses_unknown":3,"created_at":"2015-08-14T15:13:23.112Z","updated_at":"2015-08-14T15:13:24.471Z","license_whitelist":null}]}'
+        command line tool implemented in Ruby","private":false,"fork":false,"branches":null,"git_url":"git://github.com/versioneye/veye.git","html_url":"https://github.com/versioneye/veye","created_at":"2012-12-27T11:15:03.000+00:00","cached_at":"2016-08-23T13:37:23.241+00:00","size":365,"homepage":"https://www.versioneye.com"},"imported_projects":[{"id":"57c3f017864739000eca5357","name":"versioneye/veye","project_type":"RubyGem","organisation":{"name":"private","company":"private","location":""},"public":true,"private_scm":false,"period":"daily","source":"github","dep_number":46,"out_number":26,"licenses_red":0,"licenses_unknown":3,"sv_count":0,"created_at":"2016-08-29T08:19:35.015Z","updated_at":"2016-08-29T08:34:33.066Z","license_whitelist":null,"child_ids":["57c3f39712b5260016707bea"],"parent_id":null},{"id":"57c3f39712b5260016707bea","name":"versioneye/veye","project_type":"RubyGem","organisation":{"name":"private","company":"private","location":""},"public":true,"private_scm":false,"period":"daily","source":"github","dep_number":46,"out_number":26,"licenses_red":0,"licenses_unknown":3,"sv_count":0,"created_at":"2016-08-29T08:34:31.020Z","updated_at":"2016-08-29T08:34:33.027Z","license_whitelist":null,"child_ids":[],"parent_id":"57c3f017864739000eca5357"}]}'
     http_version: 
-  recorded_at: Fri, 14 Aug 2015 15:13:24 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Mon, 29 Aug 2016 08:34:33 GMT
+recorded_with: VCR 3.0.1

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://www.versioneye.com/api/v2/projects?api_key=316dbd6b80b053f5b1e5
+    uri: https://www.versioneye.com/api/v2/projects?api_key=f82943fbd363bc640782&orga_name=veye_test
     body:
       encoding: US-ASCII
       string: ''
@@ -19,30 +19,30 @@ http_interactions:
       message: OK
     headers:
       Server:
-      - nginx/1.4.6 (Ubuntu)
+      - nginx/1.10.0 (Ubuntu)
       Date:
-      - Sun, 08 Nov 2015 16:41:50 GMT
+      - Tue, 30 Aug 2016 15:10:39 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '5030'
+      - '2160'
       Connection:
       - keep-alive
       Set-Cookie:
-      - api_key=316dbd6b80b053f5b1e5
+      - api_key=f82943fbd363bc640782
       Etag:
-      - W/"888a282d4275215afe3ce10841bba281"
+      - W/"6d21f7c07a35fbfb69c011070425be00"
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - c928cbac-7185-48e7-aefe-b83e89fcdc17
+      - 2946d10e-de8d-44af-a231-2548a8491aec
       X-Runtime:
-      - '0.047549'
+      - '0.390203'
     body:
       encoding: UTF-8
-      string: '[{"id":"52126476632bac1ae3007c88","project_key":"lein_project_clj_1","name":"bugtraqer","project_type":"Lein","public":false,"period":"weekly","source":"upload","dep_number":9,"out_number":8,"licenses_red":0,"licenses_unknown":3,"dep_number_sum":9,"out_number_sum":8,"licenses_red_sum":0,"licenses_unknown_sum":3,"license_whitelist_name":null,"created_at":"19.08.2013-18:31","updated_at":"19.08.2013-18:31"},{"id":"5137276ccb665d000200434d","project_key":"lein_project_clj_1","name":"droplocally2","project_type":"Lein","public":true,"period":"weekly","source":"upload","dep_number":22,"out_number":21,"licenses_red":0,"licenses_unknown":8,"dep_number_sum":22,"out_number_sum":21,"licenses_red_sum":0,"licenses_unknown_sum":8,"license_whitelist_name":null,"created_at":"06.03.2013-11:24","updated_at":"06.03.2013-11:24"},{"id":"563f7a55c5999a000901a538","project_key":"rubygem_gemfile_1","name":"Gemfile","project_type":"RubyGem","public":true,"period":"daily","source":"API","dep_number":17,"out_number":3,"licenses_red":0,"licenses_unknown":1,"dep_number_sum":17,"out_number_sum":3,"licenses_red_sum":0,"licenses_unknown_sum":1,"license_whitelist_name":null,"created_at":"08.11.2015-16:37","updated_at":"08.11.2015-16:37"},{"id":"563f7a57c5999a000901a55b","project_key":"maven2_openejb_maven_plugins_2","name":"OpenEJB
-        :: Maven Plugins","project_type":"Maven2","public":true,"period":"daily","source":"API","dep_number":11,"out_number":10,"licenses_red":0,"licenses_unknown":3,"dep_number_sum":11,"out_number_sum":10,"licenses_red_sum":0,"licenses_unknown_sum":3,"license_whitelist_name":null,"created_at":"08.11.2015-16:37","updated_at":"08.11.2015-16:37"},{"id":"563f7acac5999a000d01a34a","project_key":"maven2_openejb_maven_plugins_2","name":"OpenEJB
-        :: Maven Plugins","project_type":"Maven2","public":true,"period":"daily","source":"API","dep_number":11,"out_number":10,"licenses_red":0,"licenses_unknown":3,"dep_number_sum":11,"out_number_sum":10,"licenses_red_sum":0,"licenses_unknown_sum":3,"license_whitelist_name":null,"created_at":"08.11.2015-16:39","updated_at":"08.11.2015-16:39"},{"id":"562f3cfae346d7000e03b41a","project_key":"lein_project_clj_4","name":"project.clj","project_type":"Lein","public":true,"period":"daily","source":"API","dep_number":20,"out_number":7,"licenses_red":0,"licenses_unknown":0,"dep_number_sum":20,"out_number_sum":7,"licenses_red_sum":0,"licenses_unknown_sum":0,"license_whitelist_name":null,"created_at":"27.10.2015-08:59","updated_at":"27.10.2015-08:59"},{"id":"5335a8fc7bae4bff0f000858","project_key":"lein_tauho_clj_docker_1","name":"tauho/clj-docker","project_type":"Lein","public":true,"period":"weekly","source":"github","dep_number":8,"out_number":6,"licenses_red":0,"licenses_unknown":3,"dep_number_sum":8,"out_number_sum":6,"licenses_red_sum":0,"licenses_unknown_sum":3,"license_whitelist_name":null,"created_at":"28.03.2014-16:53","updated_at":"28.03.2014-16:53"},{"id":"54a85ce827b014fea1000491","project_key":"lein_tauho_pult_1","name":"tauho/pult","project_type":"Lein","public":false,"period":"daily","source":"github","dep_number":13,"out_number":11,"licenses_red":0,"licenses_unknown":0,"dep_number_sum":13,"out_number_sum":11,"licenses_red_sum":0,"licenses_unknown_sum":0,"license_whitelist_name":null,"created_at":"03.01.2015-21:19","updated_at":"03.01.2015-21:19"},{"id":"54b0048c2eea78036b00011f","project_key":"lein_tauho_pult_server_1","name":"tauho/pult-server","project_type":"Lein","public":true,"period":"daily","source":"github","dep_number":17,"out_number":14,"licenses_red":0,"licenses_unknown":1,"dep_number_sum":17,"out_number_sum":14,"licenses_red_sum":0,"licenses_unknown_sum":1,"license_whitelist_name":null,"created_at":"09.01.2015-16:40","updated_at":"09.01.2015-16:40"},{"id":"542c33c6beeeee1440000096","project_key":"lein_timgluz_herald_services_1","name":"timgluz/herald.services","project_type":"Lein","public":false,"period":"weekly","source":"github","dep_number":11,"out_number":8,"licenses_red":0,"licenses_unknown":1,"dep_number_sum":11,"out_number_sum":8,"licenses_red_sum":0,"licenses_unknown_sum":1,"license_whitelist_name":null,"created_at":"01.10.2014-17:03","updated_at":"01.10.2014-17:03"},{"id":"53662093051e5cc140000010","project_key":"lein_timgluz_shaman_1","name":"timgluz/shaman","project_type":"Lein","public":true,"period":"weekly","source":"github","dep_number":12,"out_number":11,"licenses_red":0,"licenses_unknown":4,"dep_number_sum":12,"out_number_sum":11,"licenses_red_sum":0,"licenses_unknown_sum":4,"license_whitelist_name":null,"created_at":"04.05.2014-11:12","updated_at":"04.05.2014-11:12"},{"id":"55dc6de68d9c4b00210007bf","project_key":"rubygem_versioneye_veye_1","name":"versioneye/veye","project_type":"RubyGem","public":true,"period":"daily","source":"github","dep_number":43,"out_number":18,"licenses_red":0,"licenses_unknown":3,"dep_number_sum":43,"out_number_sum":18,"licenses_red_sum":0,"licenses_unknown_sum":3,"license_whitelist_name":null,"created_at":"25.08.2015-13:30","updated_at":"25.08.2015-13:30"}]'
-    http_version: 
-  recorded_at: Sun, 08 Nov 2015 16:38:45 GMT
-recorded_with: VCR 2.9.3
+      string: '[{"id":{"$oid":"57c05d11864739001066e3f1"},"ids":"57c05d11864739001066e3f1","name":"OpenEJB
+        :: Maven Plugins","project_type":"Maven2","organisation":{"name":"veye_test","company":"VersionEye","location":"Mannheim"},"public":false,"private_scm":false,"period":"daily","source":"API","dep_number":11,"out_number":10,"licenses_red":0,"licenses_unknown":3,"dep_number_sum":11,"out_number_sum":10,"licenses_red_sum":0,"licenses_unknown_sum":3,"license_whitelist_name":null,"created_at":"2016-08-26T15:15:30.021Z","updated_at":"2016-08-26T15:15:30.427Z"},{"id":{"$oid":"57c59f6a864739000ed5cfbb"},"ids":"57c59f6a864739000ed5cfbb","name":"OpenEJB
+        :: Maven Plugins","project_type":"Maven2","organisation":{"name":"veye_test","company":"VersionEye","location":"Mannheim"},"public":true,"private_scm":false,"period":"daily","source":"API","dep_number":11,"out_number":10,"licenses_red":0,"licenses_unknown":3,"dep_number_sum":11,"out_number_sum":10,"licenses_red_sum":0,"licenses_unknown_sum":3,"license_whitelist_name":null,"created_at":"2016-08-30T14:59:54.255Z","updated_at":"2016-08-30T14:59:54.638Z"}]'
+    http_version:
+  recorded_at: Tue, 30 Aug 2016 15:10:40 GMT
+recorded_with: VCR 3.0.1

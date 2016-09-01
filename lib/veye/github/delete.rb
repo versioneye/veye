@@ -4,10 +4,8 @@ module Veye
   module Github
     # Delete class include methods to cleanup projects imported from Github
     class Delete < BaseExecutor
-      def self.delete_repo(api_key, repo_name, options)
-        response = Veye::API::Github.delete_repo(
-          api_key, repo_name, options[:branch]
-        )
+      def self.delete_repo(api_key, repo_name, branch = 'master', options = {})
+        response = Veye::API::Github.delete_repo(api_key, repo_name, branch)
         show_result(response)
       end
 

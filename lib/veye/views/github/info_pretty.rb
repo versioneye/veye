@@ -9,7 +9,7 @@ module Veye
         repo = result['repo']
         projects = result['imported_projects']
         if projects
-          project_names = projects.map {|x| x['project_key']}
+          project_names = projects.map {|x| x['id']}
         else
           project_names = []
         end
