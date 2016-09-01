@@ -8,9 +8,15 @@ module Veye
   # projects on VersionEye and presenting results
   # on command line.
   module Project
+
+    #source: https://raw.githubusercontent.com/versioneye/versioneye-core/master/lib/versioneye/services/project_service.rb
     @supported_files = [
-      'project\.clj', 'bower\.json', 'project\.json', 'gemfile',
-      'gemfile\.lock', '*\.gradle', '*\.sbt', '*\.pom\.xml', 'podfile'
+      'project\.clj\z', 'bower\.json\z', 'project\.json\z', 'gemfile\z',
+      'gemfile\.lock\z', '*\.gradle\z', '*\.sbt\z', '*\.pom\.xml\z', 'podfile\z',
+      '*\.podspec\z', 'Podfile\.lock\z', 'composer\.lock\z', 'composer\.json\z', 
+      'project\.json\z', 'packages\.config\z', 'packages\.json\z', 'requirements\.txt\z',
+      'biicode\.conf\z', 'Berksfile\.lock\z', 'Berksfile\z', 'cpanfile\z', '*\.nuspec\z',
+      'setup\.py\z', '*\.pom\z', 'external_dependencies.xml\z'
     ]
 
     @default_upgrade_heuristics = {

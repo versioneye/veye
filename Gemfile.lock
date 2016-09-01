@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    veye (0.2.2.pre.dev)
+    veye (0.3.0.pre.RC1)
       awesome_print (~> 1.7)
       gli (~> 2.14)
       naturalsorter (~> 3.0)
