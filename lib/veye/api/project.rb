@@ -110,6 +110,32 @@ module Veye
         end
       end
 
+
+      def self.merge(api_key, parent_id, child_id)
+        if parent_id.to_s.empty? or child_id.to_s.empty?
+          printf("api.project.merge: neither ParentID or ChildId can not be empty")
+          return
+        end
+
+        project_api = Resource.new("#{RESOURCE_PATH}/#{parent_id}/merge/#{child_id}")
+        qparams = {params: {api_key: api_key}}
+        project_api.resource.get(qparams) do |response, request, result|
+          JSONResponse.new(request, result, response)
+        end
+      end
+
+      def self.unmerge(api_key, parent_id, child_id)
+        if parent_id.to_s.empty? or child_id.to_s.empty?
+          printf("api.project.unmerge: neither ParentID or ChildID can not be empty")
+          return
+        end
+
+        project_api = Resource.new("#{RESOURCE_PATH}/#{parent_id}/unmerge/#{child_id}")
+        qparams = {params: {api_key: api_key}}
+        project_api.resource.get(qparams) do |response, request, result|
+          JSONResponse.new(request, result, response)
+        end
+      end
     end
   end
 end

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://www.versioneye.com/api/v2/projects/57c5aa23864739001076eb5f/licenses?api_key=f82943fbd363bc640782
+    uri: https://www.versioneye.com/api/v2/projects/57c59b4812b526000ee32df7/licenses?api_key=f82943fbd363bc640782
     body:
       encoding: US-ASCII
       string: ''
