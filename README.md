@@ -3,7 +3,7 @@
 [![Dependency Status](https://www.versioneye.com/user/projects/57c995a4968d640049e12849/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57c995a4968d640049e12849)[![Join the chat at https://gitter.im/versioneye/veye](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/versioneye/veye?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
-**veye** is a command line tool for [VersionEye](https://www.versioneye.com/). It is a wrapper around the [VersionEye API](https://www.versioneye.com/api), implemented in Ruby. The tool allows you to write scripts for continuous updating and due diligence. 
+**veye** is a command line tool and Ruby client for [VersionEye](https://www.versioneye.com/). The tool allows you to write scripts for continuous updating and due diligence tasks. 
 
 Most endpoints require an API key, which you can get [here](https://www.versioneye.com/settings/api) and i recommend you to use an organization API-key.
 
@@ -11,7 +11,7 @@ Most endpoints require an API key, which you can get [here](https://www.versione
 
  * Take advantage of the extended search to find any library you look for.
  * Follow and track your favorite software packages via RSS feed.
- * Leave comments and add additional meta information to the libraries to improve the quality of the data.
+ * Keep eye out-dated packages.
  * Contribute to this crowdsourcing project to make the world a better place for software developers.
 
 ![Main help](http://g.recordit.co/4Mb8lBYwfG.gif)
@@ -26,7 +26,7 @@ Most endpoints require an API key, which you can get [here](https://www.versione
   $> veye change_key a124423233
 ```
 
-More commands are documented in [Veye/CLI wiki](https://github.com/versioneye/veye/wiki)
+More commands are in [Veye/CLI wiki](https://github.com/versioneye/veye/wiki), but i recommend to consult with [bin/veye](https://github.com/versioneye/veye/blob/master/bin/veye) file as not all the attributes and commandline flags are not documented.
 
 ## Getting started for developers
 
