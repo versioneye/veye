@@ -44,6 +44,9 @@ flag :timeout, :default_value => 180
 desc 'force open timeout (in seconds)'
 flag :open_timeout, :default_value => 20
 
+desc 'set log level'
+flag :log_level, :default_value => 'debug'
+
 pre do |global_options, command, args|
   check_config_file
   $global_options = init_environment

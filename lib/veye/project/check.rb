@@ -24,6 +24,7 @@ module Veye
       }
 
       def self.get_list(api_key, org_name = 'private', team_name = nil, options)
+        Veye.logger.info "Fetching a list of project for #{org_name}, team:#{team_name}"
         results = Veye::API::Project.get_list(api_key, org_name, team_name)
         valid_response?(results, 'Can not read list of projects.')
         show_results(@output_formats, results.data, options)

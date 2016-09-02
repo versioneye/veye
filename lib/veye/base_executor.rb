@@ -22,6 +22,7 @@ class BaseExecutor
   def self.valid_response?(response, msg)
     if response.nil? || response.success != true
       printf "#{msg.to_s.color(:red)}: #{response.data}\n"
+      Veye.logger.error "API returned error - #{response.code}, #{response.data}"
       return false
     end
 

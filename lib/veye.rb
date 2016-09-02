@@ -2,6 +2,7 @@
 # you just need to require this one file in your bin file
 require 'rest-client'
 require 'yaml'
+require 'logger'
 
 require 'veye/helpers/format_helpers.rb'
 
@@ -30,7 +31,7 @@ end
 
 def check_config_file
   unless config_exists?
-    p format(
+    printf(
       "%s: %s\n",
       'config file doesnt exist.'.color(:red),
       'Use `veye initconfig` to initialize settings file.'
@@ -57,7 +58,7 @@ end
 def check_api_key(global_opts)
   result = false
   if global_opts[:api_key].nil? || global_opts[:api_key].match("add your api key")
-    print format(
+    printf(
       "%s: %s\n",
       'Warning: API key is missing.'.color(:yellow),
       'You cant access private data.'
@@ -74,9 +75,31 @@ def save_configs
   File.open(filepath, 'w') do |f|
     f.puts $global_options.to_yaml
   end
-  print format(
+  printf(
     "%s: %s",
     'Success'.color(:green),
     "new settings are saved into file: `#{filepath}`"
   )
+end
+
+
+#-- initialize logger
+module Veye
+  class << self
+    attr_writer :logger
+
+    def logger
+      @logger ||= Logger.new('veye.log').tap do |log|
+        log.level = case $global_options.fetch(:log_level, 'debug')
+                    when 'info'   then Logger::INFO
+                    when 'debug'  then Logger::DEBUG 
+                    when 'warn'   then Logger::INFO
+                    when 'error'  then Logger::ERROR
+                    when 'fatal'  then Logger::FATAL
+                    else Logger::DEBUG
+                    end
+        log.progname = self.name
+      end
+    end
+  end
 end

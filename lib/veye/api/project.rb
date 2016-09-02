@@ -36,6 +36,7 @@ module Veye
       end
 
       def self.upload(api_key, filename, org_name = nil, team_name = nil, temporary = false, public =true, name = nil)
+        Veye.logger.info("Uploading `#{filename}` under #{org_name}, temporary? #{temporary}, organization? #{public} ")
         project_api = Resource.new(RESOURCE_PATH)
         file_path = check_file(filename)
         return if file_path.nil?
