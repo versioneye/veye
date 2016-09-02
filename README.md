@@ -1,7 +1,6 @@
 # Veye
 
-[![Dependency Status](https://www.versioneye.com/user/projects/57c0303c939fc600508e8b9a/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57c0303c939fc600508e8b9a)
-[![Join the chat at https://gitter.im/versioneye/veye](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/versioneye/veye?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Dependency Status](https://www.versioneye.com/user/projects/57c995a4968d640049e12849/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57c995a4968d640049e12849)[![Join the chat at https://gitter.im/versioneye/veye](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/versioneye/veye?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
 **veye** is a command line tool for [VersionEye](https://www.versioneye.com/). It is a wrapper around the [VersionEye API](https://www.versioneye.com/api), implemented in Ruby. The tool allows you to write scripts for continuous updating and due diligence. 
@@ -15,7 +14,7 @@ Most endpoints require an API key, which you can get [here](https://www.versione
  * Leave comments and add additional meta information to the libraries to improve the quality of the data.
  * Contribute to this crowdsourcing project to make the world a better place for software developers.
 
-![Main help](http://dl.dropbox.com/u/19578784/versioneye/cli_start_page.png)
+![Main help](http://g.recordit.co/4Mb8lBYwfG.gif)
 
 
 ## Getting started with RubyGems
@@ -26,6 +25,8 @@ Most endpoints require an API key, which you can get [here](https://www.versione
   $> veye initconfig
   $> veye change_key a124423233
 ```
+
+More commands are documented in [Veye/CLI wiki](https://github.com/versioneye/veye/wiki)
 
 ## Getting started for developers
 
@@ -49,10 +50,24 @@ Most endpoints require an API key, which you can get [here](https://www.versione
   $> veye help
   $> veye ping
   ```
+  
+#### With docker
+It ables to try different version of Rubies, without going to through big install-festival.
+
+
+```
+$> make build
+$> docker run -it --rm -v "$PWD:/usr/src/veye" ruby:2.3 /bin/sh
+$> cd /usr/src/veye
+$> gem install veye.gem
+$> veye
+```
 
 ## Initial configuration
 
-The tool will raise an exception if the configuration file is missing. The Veye uses the configuration file to keep settings and your API Key.
+If you see the `cant find configfile` error after installing the Veye gem then this means the configuration file is missing and it must be created before it can run any commands.
+
+The Veye uses the configuration file to keep settings and your API Key.
 
 #### create config file
 
@@ -191,7 +206,7 @@ There may be a situation when you need to update/re-write saved config file. The
 
 ## Contributing
 
-All contributions are welcome - comments, new ideas, help with documentation & help with features;
+All contributions are welcome - comments, new ideas, **help with documentation** & help with features;
 
 #### Running tests
 
