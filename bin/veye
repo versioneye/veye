@@ -515,8 +515,9 @@ command :github do |c|
       help_now!("the name of repository is mandatory".color(:red)) if args.empty?
       repo_name = args.shift
       api_key = global_options[:api_key]
+      branch = (options[:branch] || 'master')
 
-      Veye::Github::Delete.delete_repo(api_key, repo_name, options)
+      Veye::Github::Delete.delete_repo(api_key, repo_name, branch, options)
     end
   end
 end #end of github comamnd
