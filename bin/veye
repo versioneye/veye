@@ -216,11 +216,9 @@ command :projects do |c|
       help_now!("The filepath is missing.".color(:red)) if args.empty?
       filename = args.shift
       api_key = global_options[:api_key]
-			org_name = (options[:org] || 'private')
-			is_temp  = (options[:temp] == true)
-			visibility = (options[:public] == false ? 'private' : 'public')
+      org_name = (options[:org] || 'private')
 
-      Veye::Project::Check.upload(api_key, filename, org_name, options[:team], is_temp, visibility, options)
+      Veye::Project::Check.upload(api_key, filename, org_name, options[:team], options)
    end
   end
 
