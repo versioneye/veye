@@ -13,7 +13,8 @@ $global_options = {
   server: 'www.versioneye.com',
   path: 'api/v2',
   port: nil,
-  timeout: 30
+  timeout: 90,
+  open_timeout: 10
 }
 $global_options[:url] = Veye::API::Resource.build_url($global_options)
 

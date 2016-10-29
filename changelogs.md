@@ -3,6 +3,12 @@
 
 ## Next release
 
+## 0.3.2 - 2016-10-29
+
+* **BUG** - open_timeout parameter wasnt defaulted when using veye as library; [#52](https://github.com/versioneye/veye/issues/52)
+
+* **BUG** -markdown formatter missed license information after refactoring; [#53](https://github.com/versioneye/veye/issues/53)
+
 ## 0.3.1 - 2016-09-05
 
 * **FIX** - function signature mismatch in the `project check` command
